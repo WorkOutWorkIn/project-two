@@ -7,6 +7,14 @@ padding: 0;
   display: flex;
 }
 
+.left {
+justify-content: start;
+}
+
+.right {
+justify-content: end;  
+}
+
 .center {
 justify-content: center;
 align-items: center;
@@ -44,7 +52,8 @@ justify-content: start;
 .chatbox__display {
 border: 1px solid black;
 width: 100%;
-padding: 4vh
+padding: 4vh;
+flex-flow: column
 }
 
 .chatbox__text {
