@@ -2,12 +2,16 @@ import React from "react";
 import { useState, useEffect } from "react"
 import './Chatbox.css';
 import { database } from "../Db/Firebase";
-import { collection, query, getDocs, addDoc, orderBy, doc, getDoc, docs, where } from "firebase/firestore"
-import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
+import { collection, query, getDocs, doc, getDoc,  where } from "firebase/firestore"
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { Link, Route, } from 'react-router-dom'
+import Chatbox from "./Chatbox";
 
-export default function ChatsOverview() {
+export default function ChatsOverview(props) {
 
+
+  //useEffect for user auth
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
@@ -16,15 +20,15 @@ export default function ChatsOverview() {
       } else setCurrentUser(null)
     });
   }, [])
-
+  const navigate = useNavigate()
   const [currentUser, setCurrentUser] = useState({})
   const [chats, setChats] = useState([])
-  const [chatIDs, setChatIDs] = useState([])
-  const [bothUserIDs, setBothUserIDs] = useState([])
-  const [otherUserID, setOtherUserID] = useState([])
+  const [otherUserIDs, setOtherUserIDs] = useState([])
   const [otherUsersInfo, setOtherUsersInfo] = useState([])
+  const [finalChatsInfo, setFinalChatsInfo] = useState([])
+  const [stateCount, setStateCount] = useState(0)
 
-  //useEffect to check get the user's chats
+//useEffect to get the user's chats
 useEffect(() => {
   const chatListRef = collection(database, "matches");
   getDocs(query(chatListRef, where('users', 'array-contains', `${currentUser.uid}`))).then(chats => {
@@ -33,70 +37,98 @@ useEffect(() => {
       data: chat.data(),
       id: chat.id
     }))
-    console.log("all of the users chats: ", myChats)
     setChats(myChats)
+    
   }).catch((error) => { alert(error.message) })
   }, [currentUser])
 
-  useEffect(() => {
-    chats.forEach(chat => {
-      chatIDs.push(chat.id)
-    })
-    console.log("all the chat IDs: ", chatIDs)
+
+  //useEffect to get other users ids based off from the chatID
+useEffect(() => {
+for (let i=0;i<chats.length;i++){
+  if (currentUser.uid === chats[i].data.users[0] && !otherUserIDs.includes(chats[i].data.users[1]))
+  {
+    setOtherUserIDs(arr=> [...arr, chats[i].data.users[1]])
+  } else if (currentUser.uid === chats[i].data.users[1] && !otherUserIDs.includes(chats[i].data.users[0])){
+    setOtherUserIDs(arr => [...arr, chats[i].data.users[0]])
+  }
+}
+setStateCount(1)
+
+ // eslint-disable-next-line
   }, [chats])
 
-  async function storeChatIDsInArray() {
-
-  }
-
-async function getAllUsersIDFunction (){
-  for (let ID of chatIDs) {
-    await getAllUsersID(ID)
-    console.log("array of user IDs for all chat:", bothUserIDs)
-  }
-}
-
-
-
-function storeOtherUsersID() {
-    for (let i = 0; i<bothUserIDs.length; i++){
-      if (bothUserIDs[i][0] === currentUser.uid){
-        otherUserID.push(bothUserIDs[i][1])
-      } else otherUserID.push(bothUserIDs[i][0])
-    }
-    setOtherUserID(otherUserID)
-    console.log(otherUserID)
-  }
-
-  async function getAllUsersID(chatRoomID) {
-    try {
-      const usersListRef = doc(database, "matches", `${chatRoomID}`);
-      const users = await getDoc(query(usersListRef))
-      let usersArray = users.data().users
-      // setBothUserIDs()
-      bothUserIDs.push(usersArray)
-      // console.log(bothUserIDs)
-    } catch (error) { alert(error.message) }
-    return
-  }
-
-
-
-  async function getOtherUsersInfo (ID) {
-    try {
+  //useEffect to get other users' info
+useEffect(() => {
+function getOtherUsersInfo(ID) {
       const userInformationListRef = doc(database, "users", `${ID}`, "profile", `${ID}profile`);
-      const userInfo = await getDoc(query(userInformationListRef))
-      let userInfoToUse = userInfo.data()
-      otherUsersInfo.push(userInfoToUse)
-    } catch (error) { alert(error.message) }
-    console.log(otherUsersInfo)
+      const userInfo = getDoc(query(userInformationListRef)).then((response)=>{
+        let userInfoToUse = response.data()
+        setOtherUsersInfo(arr => [...arr, userInfoToUse])
+      })
+  }
+
+  otherUserIDs.forEach(userID=>{
+    getOtherUsersInfo(userID)
+  })
+  
+  // eslint-disable-next-line
+  }, [otherUserIDs])
+
+  useEffect(() => {
+
+    for (let i = 0; i < chats.length; i++) {
+      setFinalChatsInfo(arr => [...arr, { chatID: chats[i].id, usersInfo: otherUsersInfo[i] }])
+    }
+  }, [otherUsersInfo])
+
+
+  useEffect(() => {
+    props.setFinalChatsInfoTrigger(finalChatsInfo)
+  }, [finalChatsInfo])
+
+
+
+  return (
+    
+    <div>
+      {currentUser.displayName}  
+      <button onClick={() => console.log("chats: ", chats, "other user IDs: ", otherUserIDs)}>console logs</button>
+      <button onClick={() => console.log("finalchatsinfo: ", finalChatsInfo)}>console logs</button>
+
+      
+      {finalChatsInfo ? <div>      {finalChatsInfo.map(chat =>
+        <div key={chat.chatID}>
+          <div>{chat.usersInfo.name}{chat.usersInfo.url}{chat.chatID}</div>
+          <Link to={`/${chat.chatID}`}>Go there</Link>
+          
+        </div>)}</div> : null}
+    </div>
+  )
 }
 
-  async function getOtherUsersInfoFunction () {
-    otherUserID.forEach(userID => {
-      getOtherUsersInfo(userID)
-    })
-  }
+// {
+//   finalChatsInfo.map(chat =>
+//     <div key={chat.ID}>
+//       <div>{chat.usersInfo.name}{chat.usersInfo.url}</div>
+//       <button onClick={goToChat} value={chat.chatID}>go to this chat</button>
+
+
+//     </div>)
+// }
+
+{/* <Link to={`/chat/${user.uid}`}>Go to this chatroom</Link> */}
+
+//   useEffect(() => {
+// for (let i=0;i<chats.length;i++){
+//   if (currentUser.uid === chats[i].data.users[0] && !otherUserIDs.includes(chats[i].data.users[1]))
+//   {
+//     otherUserIDs.push(chats[i].data.users[1])
+//   } else if (currentUser.uid === chats[i].data.users[1] && !otherUserIDs.includes(chats[i].data.users[0])){
+//     otherUserIDs.push(chats[i].data.users[0])
+//   }
+// }
+//   }, [chats])
 
 //get chat ID - done
 //store chat ID in array - done
@@ -104,22 +136,43 @@ function storeOtherUsersID() {
 //store otheruserIDs in an array  - done
 //display otheruserIDs' profile details via map function
 
-  return (
-    <div>
-      {currentUser.displayName}
-      <button onClick={storeChatIDsInArray}>Store Chat IDs in array format</button>
-      <button onClick={getAllUsersIDFunction}>Get both users' ID from the chat ID</button>
-      <button onClick={storeOtherUsersID}>Get only the other users' ID in the chat and put them in an array</button>
-      <button onClick={getOtherUsersInfoFunction}>Get the other users' profile details </button>
 
-      {otherUsersInfo.map(user =>
-        <div key={user.uid}>
-          <div>{user.age}{user.name}{user.uid}</div>
-        </div>)}
+// async function storeChatIDsInArray() {
+//   chats.forEach(chat => {
+//     chatIDs.push(chat.id)
+//   })
+//   console.log("all the chat IDs: ", chatIDs)
+// }
 
-    </div>
-  )
-}
+// async function getAllUsersIDFunction() {
+//   for (let ID of chatIDs) {
+//     await getAllUsersID(ID)
+//     console.log("array of user IDs for all chat:", bothUserIDs)
+//   }
+// }
+
+// function storeOtherUsersID() {
+//   for (let i = 0; i < bothUserIDs.length; i++) {
+//     if (bothUserIDs[i][0] === currentUser.uid) {
+//       otherUserID.push(bothUserIDs[i][1])
+//     } else otherUserID.push(bothUserIDs[i][0])
+//   }
+//   setOtherUserID(otherUserID)
+//   console.log(otherUserID)
+// }
+
+// async function getAllUsersID(chatRoomID) {
+//   try {
+//     const usersListRef = doc(database, "matches", `${chatRoomID}`);
+//     const users = await getDoc(query(usersListRef))
+//     let usersArray = users.data().users
+//     // setBothUserIDs()
+//     bothUserIDs.push(usersArray)
+//     // console.log(bothUserIDs)
+//   } catch (error) { alert(error.message) }
+//   return
+// }
+
 
   // async function storeOtherUsersInfo(userID) {
   //   try {

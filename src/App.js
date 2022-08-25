@@ -7,25 +7,27 @@ import Home from "./Components/Home";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useState, useEffect } from "react"
 import ChatsOverview from "./Components/ChatsOverviewPage";
-
+import { useNavigate } from "react-router-dom";
 
 function App() {
-
-
+  const navigate = useNavigate();
   const [user, setCurrentUser] = useState("")
+  const [currentChats, setCurrentChats] = useState("")
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log(user.displayName, "signed in!")
         setCurrentUser(user)
       } else setCurrentUser(null)
     });
   }, [])
 
-
+  function setCurrentChatsInfo(e) {
+    setCurrentChats(e)
+  }
 
   return (
+
     <div>
       <nav id="navbar"
         style={{
@@ -43,17 +45,24 @@ function App() {
         <Link to="/chats">See All Chats</Link>
         {!user ? <Link to="/register">Register</Link> : null}
         {!user ? <Link to="/signIn">Sign in</Link> : null}
-        <Link to="/chat">See Chatbox</Link>
+
       </nav>
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/chats" element={user ? <ChatsOverview /> : <Navigate to="/signIn" />} />
+        <Route path="/chats" element={<ChatsOverview setFinalChatsInfoTrigger={(e) => setCurrentChatsInfo(e)} />} />
         <Route path="/register" element={!user ? <RegisterPage /> : <Navigate to="/chat" />} />
         <Route path="/signIn" element={<SignInPage />} />
-        <Route path="/chat" element={user ? <Chatbox /> : <Navigate to="/" />} />
+
+        {currentChats.length > 0 ?
+          currentChats.map(chat => {
+            return <Route key={chat.chatID} path={`/${chat.chatID}`} element={<Chatbox chatRoomID={chat.chatID} otherUserID={chat.usersInfo.uid} otherUserInfo={chat.usersInfo} />} />
+          })
+          : null}
+
       </Routes>
     </div>
+
   );
 }
 

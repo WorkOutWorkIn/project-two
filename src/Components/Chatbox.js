@@ -12,66 +12,7 @@ import { useNavigate } from "react-router-dom";
 //once we have the recipients UID, we use it to search within the users collection to pull out their name and the random fun fact
 // 
 
-export default function Chatbox() {
-
-  const navigate = useNavigate();
-  const [messages, setMessages] = useState([])
-  const [currentMessage, setCurrentMessage] = useState("")
-  const [currentUser, setCurrentUser] = useState({})
-  const [otherUserID, setOtherUserID] = useState("")
-  const [userInfo, setUserInfo] = useState({})
-
-  //chatRoomID taken from when a user clicks to enter a specific chat
-  const chatRoomID = "EjdSdVX0F6dcvdz5MNUk"
-
-  async function setUserFunction(array) {
-    setOtherUserID(array)
-  }
-
-  async function setUserInfoFunction(object) {
-    setUserInfo(object)
-  }
-
-  async function getUsersInformation() {
-    try {
-      const usersListRef = doc(database, "matches", `${chatRoomID}`);
-      const users = await getDoc(query(usersListRef))
-      let usersArray = users.data().users
-      await setUserFunction(usersArray[1])
-    } catch (error) { alert(error.message) }
-  }
-
-  async function setUsersProfileInformation() {
-    try {
-      const userInformationListRef = doc(database, "users", `${otherUserID}`, "profile", `${otherUserID}profile`);
-      const userInfo = await getDoc(query(userInformationListRef))
-      let userInfoToUse = userInfo.data()
-      await setUserInfoFunction(userInfoToUse)
-    } catch (error) { alert(error.message) }
-  }
-
-  function getMessages() {
-    const messageListRef = collection(database, "matches", `${chatRoomID}`, "messages");
-    getDocs(query(messageListRef, orderBy('createdAt')))
-      .then(response => {
-        const message = response.docs.map(doc =>
-        ({
-          data: doc.data(),
-          id: doc.id,
-        }))
-        setMessages(message)
-      }).catch((error) => { alert(error.message) })
-  }
-
-
-  function handleSubmit() {
-    const messageListRef = collection(database, "matches", `${chatRoomID}`, "messages")
-    addDoc(messageListRef, { message: currentMessage, displayName: currentUser.displayName, senderID: currentUser.uid, createdAt: serverTimestamp(), timestamp: new Date().toLocaleString([], { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }) }).then(response => {
-    }).catch(error => { console.log(error.message) })
-    setCurrentMessage("")
-    getMessages()
-    console.log(currentUser)
-  }
+export default function Chatbox(props) {
 
   //check user auth then set currentUser properties as the user taken from auth
   useEffect(() => {
@@ -82,6 +23,71 @@ export default function Chatbox() {
       } else setCurrentUser(null)
     });
   }, [])
+
+  const navigate = useNavigate();
+  const [messages, setMessages] = useState([])
+  const [currentMessage, setCurrentMessage] = useState("")
+  const [currentUser, setCurrentUser] = useState({})
+  const [otherUserID, setOtherUserID] = useState("")
+  const [userInfo, setUserInfo] = useState({})
+
+  //chatRoomID taken from when a user clicks to enter a specific chat
+  const chatRoomID = "EjdSdVX0F6dcvdz5MNUk"//props.chatRoomID
+  const otherUserIDTest = "c2La9FfDgdSMgbSZdK8ZL1Qhd0j1"//props.userID change to otherUserID once set up props
+  const otherUserInfo = {}//props.user
+
+  // async function setUserFunction(array) {
+  //   setOtherUserID(array)
+  // }
+
+  // async function setUserInfoFunction(object) {
+  //   setUserInfo(object)
+  // }
+
+  // async function getUsersInformation() {
+  //   try {
+  //     const usersListRef = doc(database, "matches", `${chatRoomID}`);
+  //     const users = await getDoc(query(usersListRef))
+  //     let usersArray = users.data().users
+  //     await setUserFunction(usersArray[1])
+  //   } catch (error) { alert(error.message) }
+  // }
+
+  // async function setUsersProfileInformation() {
+  //   try {
+  //     const userInformationListRef = doc(database, "users", `${otherUserID}`, "profile", `${otherUserID}profile`);
+  //     const userInfo = await getDoc(query(userInformationListRef))
+  //     let userInfoToUse = userInfo.data()
+  //     await setUserInfoFunction(userInfoToUse)
+  //   } catch (error) { alert(error.message) }
+  // }
+
+
+  useEffect(() => {
+
+    const messageListRef = collection(database, "matches", `${props.chatRoomID}`, "messages");
+    getDocs(query(messageListRef, orderBy('createdAt')))
+      .then(response => {
+        const message = response.docs.map(doc =>
+        ({
+          data: doc.data(),
+          id: doc.id,
+        }))
+        setMessages(message)
+      })
+
+  }, [messages])
+
+
+
+  function handleSubmit() {
+    const messageListRef = collection(database, "matches", `${props.chatRoomID}`, "messages")
+    addDoc(messageListRef, { message: currentMessage, displayName: currentUser.displayName, senderID: currentUser.uid, createdAt: serverTimestamp(), timestamp: new Date().toLocaleString([], { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }) }).then(response => {
+    }).catch(error => { console.log(error.message) })
+    setCurrentMessage("")
+  }
+
+
 
   //sign out the user and navigate back to home page
   function signingOut() {
@@ -95,12 +101,12 @@ export default function Chatbox() {
   }
 
 
-
+  // chatRoomID = { chat.chatID } otherUserID = { chat.usersInfo.uid } otherUserInfo = { chat.usersInfo }
   return (
     <div className="chatbox flex center">
       <div className="chatbox__header flex left">
         {/* templated message, taking in other user's displayName */}
-        <p>It's a match! You and {userInfo.name} like each other!<br />
+        <p>It's a match! You and {props.otherUserInfo.name} like each other!<br />
           Get to know each other and if sparks fly, take the conversation offline to meet up in person.<br />
           This chat closes automatically after 7 days of inactivity</p>
       </div>
@@ -108,12 +114,13 @@ export default function Chatbox() {
 
       {/* random fact about user plus other user */}
       <div className="chatbox__other flex">
-        <p>Here's a random fact about {userInfo.name}:<br />
-          {userInfo.randomfact}
+        <p>Here's a random fact about {props.otherUserInfo.name}:<br />
+          {props.otherUserInfo.randomfact}
+
         </p>
       </div>
       <div className="chatbox__main flex">
-        <p>Random fact about you that was shared to {userInfo.name}:<br />
+        <p>Random fact about you that was shared to {props.otherUserInfo.name}:<br />
           (USER'S FUN FACT)
         </p>
       </div>
@@ -135,11 +142,13 @@ export default function Chatbox() {
       </div>
       <br />
       <div className="chatbox__text">
+
+
         Functional testing buttons<br />
         <button onClick={signingOut}>Sign Out!</button>
-        <button onClick={getMessages}>Get Messages!</button>
-        <button onClick={getUsersInformation}>Get User's info</button>
-        <button onClick={setUsersProfileInformation}>Set User's info</button>
+        {/* <button onClick={getMessages}>Get Messages!</button> */}
+        {/* <button onClick={getUsersInformation}>Get User's info</button>
+        <button onClick={setUsersProfileInformation}>Set User's info</button> */}
       </div>
 
     </div>
