@@ -1,13 +1,13 @@
 import React from "react";
 
 export const SidebarData = [
-  // {
-  //   title: "Home",
-  //   path: "/",
-  //   cName: "nav-text",
-  // },
   {
-    title: "MatchMage",
+    title: "Profile",
+    path: "/",
+    cName: "nav-text",
+  },
+  {
+    title: "Matches",
     path: "/",
     cName: "nav-text",
   },
@@ -17,13 +17,8 @@ export const SidebarData = [
     cName: "nav-text",
   },
   {
-    title: "Profile",
-    path: "/profile",
-    cName: "nav-text",
-  },
-  {
     title: "Preferences",
-    path: "/preferences",
+    path: "/profile",
     cName: "nav-text",
   },
   {
