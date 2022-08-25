@@ -1,6 +1,6 @@
 import "./App.css";
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Links, Link } from "react-router-dom";
 import { createContext, useState, useEffect } from "react";
 import LandingPage from "./Components/LandingPage";
 import Preferences from "./Components/Preferences";
@@ -12,10 +12,9 @@ import { onAuthStateChanged, updateProfile } from "firebase/auth";
 import { auth } from "./Db/Firebase";
 import ProfilePage from "./Components/ProfilePage";
 
-export const UserContext = createContext();
 import Modal from "./Components/Modal";
 import UserCards from "./Components/UserCards";
-
+export const UserContext = createContext();
 function App() {
   const [user, setUser] = useState("");
 
@@ -34,22 +33,13 @@ function App() {
         <Sidebar />
 
         <header className="App-header">
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
+          {/* <Link to="/login" />
+          <Link to="/signup" updateUser={setUser} />
 
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup updateUser={setUser} />} />
-
-            <Route
-              path="/preferences"
-              element={<Preferences CurrentUser={user} />}
-            />
-            <Route path="/profile" element={<Profile CurrentUser={user} />} />
-            <Route
-              path="/profilepage"
-              element={<ProfilePage CurrentUser={user} />}
-            />
-          </Routes>
+          <Link to="/preferences" CurrentUser={user} />
+          <Link to="/profile" CurrentUser={user} />
+          <Link to="/profilepage" CurrentUser={user} /> */}
+          <Link to="/usercards" state={user} />
         </header>
       </div>
     </UserContext.Provider>

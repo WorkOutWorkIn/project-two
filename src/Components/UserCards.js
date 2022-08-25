@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   collectionGroup,
   query,
@@ -19,10 +19,13 @@ import {
 import { database as db } from "../Db/Firebase";
 import "./UserCards.css";
 import Modal from "./Modal";
+import { UserContext } from "../App";
+import { useLocation } from "react-router-dom";
 
-const UserCards = () => {
-  let contextData = useContext(UserContext);
-  console.log(contextData);
+const UserCards = (props) => {
+  const location = useLocation();
+  const data = location.state;
+  console.log(data, "data");
 
   const [options, setOptions] = useState([]);
   const [optionsQuery, setOptionsQuery] = useState([]);
