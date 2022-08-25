@@ -1,0 +1,103 @@
+.option-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 20vh;
+}
+
+.actual-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.image {
+  position: relative;
+  width: 20vh;
+  height: 20vh;
+  background-size: cover;
+  background-position: center;
+  margin: 2em;
+  border-radius: 20px;
+  display: flex;
+}
+
+.modal-container {
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  background-color: bisque;
+  width: 40vw;
+  height: 50vh;
+  border-radius: 20px;
+  flex-direction: column;
+}
+
+.love-potion {
+  width: 5em;
+  margin-bottom: 2em;
+  filter: drop-shadow(5px 5px 5px #222);
+  animation: fadeGlow 0.2s alternate infinite;
+}
+
+@keyframes fadeGlow {
+  from {
+    opacity: 0.8;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.match-text-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: 2em;
+  margin-top: 2em;
+}
+
+.match-text-container > button {
+  cursor: pointer;
+}
+
+h3 {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  text-align: end;
+  margin-left: 0.5em;
+  margin-bottom: 0;
+}
+
+.exit-button {
+  /* position: absolute;
+  margin-top: -33em;
+  margin-right: -38em; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 3em;
+  width: 3em;
+  background-color: transparent;
+  border: none;
+  margin-left: 2em;
+  margin-bottom: 4em;
+}
+
+.x-icon {
+  width: 150%;
+  height: 100%;
+  display: flex;
+  transition: transform 0.3s ease-in;
+  cursor: pointer;
+}
+
+.x-icon:hover {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 2em black);
+}

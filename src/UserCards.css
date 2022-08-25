@@ -1,0 +1,45 @@
+.swipe-container {
+  z-index: 0;
+  height: 80vh;
+  width: 70vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swipe {
+  position: absolute;
+  width: 600px;
+  padding: 20px;
+  max-width: 70vw;
+  height: 50vh;
+  border-radius: 20px;
+  opacity: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.card {
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+.popup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40vh;
+  width: 60vw;
+  z-index: 1;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
