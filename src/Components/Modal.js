@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Modal.css";
-import lovePotion from "./misc/love-potion.png";
-import xIcon from "./misc/x-icon.png";
+import lovePotion from "../misc/love-potion.png";
+import xIcon from "../misc/x-icon.png";
 
 const Modal = (props) => {
   // if (!open) return null;

@@ -13,8 +13,8 @@ import { auth } from "./Db/Firebase";
 import ProfilePage from "./Components/ProfilePage";
 
 export const UserContext = createContext();
-import Modal from "./Modal";
-import UserCards from "./UserCards";
+import Modal from "./Components/Modal";
+import UserCards from "./Components/UserCards";
 
 function App() {
   const [user, setUser] = useState("");

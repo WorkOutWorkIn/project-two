@@ -16,7 +16,7 @@ import {
   setDoc,
   addDoc,
 } from "firebase/firestore";
-import { database as db } from "./Db/Firebase";
+import { database as db } from "../Db/Firebase";
 import "./UserCards.css";
 import Modal from "./Modal";
 
