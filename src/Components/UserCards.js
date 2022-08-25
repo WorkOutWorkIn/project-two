@@ -21,6 +21,9 @@ import "./UserCards.css";
 import Modal from "./Modal";
 
 const UserCards = () => {
+  let contextData = useContext(UserContext);
+  console.log(contextData);
+
   const [options, setOptions] = useState([]);
   const [optionsQuery, setOptionsQuery] = useState([]);
   const [currentUser, setCurrentPlayer] = useState(
