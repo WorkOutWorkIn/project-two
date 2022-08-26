@@ -20,7 +20,7 @@ export default function Login(props) {
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        props.updateUser(userCredential.user);
+        props.updateUser(userCredential);
 
         console.log("Signed in! Welcome!", userCredential.user);
       })
