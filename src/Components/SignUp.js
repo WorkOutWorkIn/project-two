@@ -21,7 +21,7 @@ export default function Signup(props) {
     createUserWithEmailAndPassword(auth, email, password)
       .then(async (cred) => {
         console.log("Signed Up", cred.user.uid);
-        props.updateUser(cred);
+        // props.updateUser(cred);
         // navigate("/");
         return cred;
       })

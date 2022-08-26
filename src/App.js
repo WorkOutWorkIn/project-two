@@ -23,7 +23,7 @@ function App() {
     });
 
     return unsubscribe;
-  }, []);
+  }, [user]);
 
   console.log(user);
   return (
@@ -35,18 +35,15 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
 
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup updateUser={setUser} />} />
+            <Route path="/login" element={<Login updateUser={setUser} />} />
+            <Route path="/signup" element={<Signup />} />
 
             <Route
               path="/preferences"
               element={<Preferences CurrentUser={user} />}
             />
             <Route path="/profile" element={<Profile CurrentUser={user} />} />
-            <Route
-              path="/profilepage"
-              element={<ProfilePage CurrentUser={user} />}
-            />
+            <Route path="/profilepage" element={<ProfilePage />} />
           </Routes>
         </header>
       </div>
