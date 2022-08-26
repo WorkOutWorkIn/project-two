@@ -1,3 +1,9 @@
+.popup-container {
+  height: 60vh;
+  width: 70vw;
+  color: black;
+}
+
 .option-container {
   display: flex;
   flex-direction: row;
@@ -11,12 +17,13 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  height: 50vh;
 }
 
 .image {
   position: relative;
-  width: 20vh;
-  height: 20vh;
+  width: 30vh;
+  height: 30vh;
   background-size: cover;
   background-position: center;
   margin: 2em;
@@ -29,8 +36,9 @@
   display: flex;
   justify-content: center;
   background-color: bisque;
-  width: 40vw;
-  height: 50vh;
+
+  width: 50vw;
+  height: 60vh;
   border-radius: 20px;
   flex-direction: column;
 }
@@ -62,6 +70,9 @@
 
 .match-text-container > button {
   cursor: pointer;
+  height: 5em;
+  width: 8em;
+  background: transparent;
 }
 
 h3 {
@@ -74,30 +85,19 @@ h3 {
 }
 
 .exit-button {
-  /* position: absolute;
-  margin-top: -33em;
-  margin-right: -38em; */
   display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
+  align-items: flex-start;
   height: 3em;
   width: 3em;
   background-color: transparent;
   border: none;
   margin-left: 2em;
-  margin-bottom: 4em;
-}
-
-.x-icon {
-  width: 150%;
-  height: 100%;
-  display: flex;
-  transition: transform 0.3s ease-in;
   cursor: pointer;
+  background: url("../misc/x-icon.png");
+  background-size: cover;
 }
-
-.x-icon:hover {
-  transform: scale(1.2);
+/* 
+.exit-button:hover {
+  transform: scale(1.3);
   filter: drop-shadow(0 0 2em black);
-}
+} */

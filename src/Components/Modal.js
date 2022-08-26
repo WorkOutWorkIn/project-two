@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Modal.css";
 import lovePotion from "../misc/love-potion.png";
 import xIcon from "../misc/x-icon.png";
+import { Link } from "react-router-dom";
 
 const Modal = (props) => {
   // if (!open) return null;
@@ -21,14 +22,11 @@ const Modal = (props) => {
   return (
     <div>
       <div className="modal-container">
-        <button className="exit-button">
-          <img
-            src={xIcon}
-            alt="X"
-            className="x-icon"
-            onClick={() => props.setModalOpen(false)}
-          />
-        </button>
+        <button
+          className="exit-button"
+          onClick={() => props.setModalOpen(false)}
+        />
+
         <div className="actual-content">
           <div className="option-container">
             <div className="person" key={options[0].name}>
@@ -52,7 +50,9 @@ const Modal = (props) => {
           </div>
           <div className="match-text-container">
             You've matched!
-            <button>Would you like to send a message?</button>
+            <Link to="/profile">
+              <button>Would you like to send a message?</button>
+            </Link>
           </div>
         </div>
       </div>

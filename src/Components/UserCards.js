@@ -21,8 +21,9 @@ import "./UserCards.css";
 import Modal from "./Modal";
 import { UserContext } from "../App";
 import { useLocation } from "react-router-dom";
+import xIcon from "../misc/pixel-x.png";
 
-const UserCards = (props) => {
+const UserCards = () => {
   console.log("in usercards");
   const location = useLocation();
   const data = location.state;
@@ -36,9 +37,9 @@ const UserCards = (props) => {
   const [currentUser, setCurrentPlayer] = useState(
     "ieqGIcqbaWRj8THgFqZ6SaAa8EH2"
   );
-  const [searchQuery, setSearchQuery] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [currentOption, setCurrentOption] = useState({});
+  const [flyOff, setFlyOff] = useState(false);
 
   useEffect(() => {
     const getUsers = async () => {
@@ -113,7 +114,6 @@ const UserCards = (props) => {
         const q = getDoc(queryRef).then((snapshot) => {
           console.log(snapshot.data().uid, person.uid);
           if (snapshot.data().uid !== person.uid) {
-            setSearchQuery([...searchQuery, person.uid]);
             generateArray();
             console.log("user does not exist in current hearts");
           } else {
@@ -156,17 +156,14 @@ const UserCards = (props) => {
           </div>
           <div className="buttons">
             <button
-              className="no-thanks"
+              className="x-button"
               onClick={() => handleClickX(person, index)}
-            >
-              ❌
-            </button>
+            />
+
             <button
-              className="yes-please"
+              className="heart-button"
               onClick={() => handleClickYes(person, index)}
-            >
-              ♥
-            </button>
+            />
           </div>
         </div>
       ))}
