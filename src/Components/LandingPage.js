@@ -14,7 +14,7 @@ export default function MainPage() {
 
   return (
     <div>
-      {/* <h1 style={{ color: "black" }}>MatchMage</h1>
+      <h1 style={{ color: "black" }}>MatchMage</h1>
       <Link to="/signup">
         <Button variant="text" onSubmit={handleSubmit}>
           Register
@@ -22,8 +22,7 @@ export default function MainPage() {
       </Link>
       <Link to="/login">
         <Button variant="text">Log In</Button>
-      </Link> */}
-      <UserCards />
+      </Link>
     </div>
   );
 }
