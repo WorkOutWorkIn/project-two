@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "../App.css";
 import { database } from "../Db/Firebase";
 import {
   doc,
@@ -14,11 +15,14 @@ import {
 import AliceCarousel from "react-alice-carousel";
 import { onAuthStateChanged } from "@firebase/auth";
 import { auth } from "../Db/Firebase";
-import { set } from "@firebase/database";
-import { async } from "q";
+import "react-alice-carousel/lib/alice-carousel.css";
+import { left } from "@popperjs/core";
 
 export default function ProfilePage(props) {
-  const [CurrentUser, setCurrentUser] = useState("");
+  const [userName, SetUserName] = useState([]);
+  const [promptfield, SetPromptfield] = useState([]);
+  const [bio, SetBio] = useState([]);
+  const [funfact, setFunfact] = useState([]);
   const [profileData, setProfileData] = useState([]);
   const [profileImage, setProfileImage] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -66,18 +70,25 @@ export default function ProfilePage(props) {
     console.log(profileData);
   }, []);
 
-  const getImage = async () => {
+  const getInfo = () => {
+    SetUserName(profileData.name);
+    SetPromptfield(profileData.promptfield);
+    SetBio(profileData.bio);
+    setFunfact(profileData.funfact);
     setProfileImage(profileData.image);
   };
 
   useEffect(() => {
-    getImage();
+    getInfo();
     console.log(profileImage);
   });
 
+  // image carousell
   const items = profileImage?.map((data) => {
     return (
-      <img src={data} alt={data} height="400" style={{ marginBottom: 10 }} />
+      <div key={data}>
+        <img src={data} alt={data} height="400" style={{ marginBottom: 10 }} />
+      </div>
     );
   });
 
@@ -85,28 +96,58 @@ export default function ProfilePage(props) {
     0: {
       items: 2,
     },
-    512: {
+
+    1024: {
       items: 4,
     },
   };
 
+  const stagePadding = {
+    paddingLeft: 50,
+    paddingRight: 100,
+  };
+
+  // profile info
+  // const displayName =
+
+  // const displayBio =
+
+  // const displayFunFact =
+
   return (
     <div>
       <h1>Profile Page</h1>
-
       {loading}
       {error}
-      {/* carousell on top */}
-      {/* <button onClick={getUsersProfile}> get Data</button> */}
-      <AliceCarousel
-        mouseTracking
-        infinite
-        autoPlayInterval={2000}
-        animationDuration={1500}
-        items={items}
-        // responsive={responsive}
-      />
-      {/* map information accordingly */}
+      <div className="card">
+        {/* carousell on top */}
+        {/* <button onClick={getUsersProfile}> get Data</button> */}
+        <AliceCarousel
+          mouseTracking
+          // infinite
+          // autoPlayInterval={2000}
+          // animationDuration={1500}
+          stagePadding={stagePadding}
+          items={items}
+          responsive={responsive}
+          disableSlideInfo
+        />
+        <div className="container">
+          {/* map information accordingly */}
+
+          <p>name:</p>
+          <p>{userName}</p>
+
+          <br />
+          <p>bio:</p>
+          <p>{promptfield}</p>
+
+          <p>{bio}</p>
+          <br />
+          <p>FunFact:</p>
+          <p>{funfact}</p>
+        </div>
+      </div>
     </div>
   );
 }
