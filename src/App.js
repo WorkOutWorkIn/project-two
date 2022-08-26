@@ -1,6 +1,6 @@
 import "./App.css";
 import React from "react";
-import { Links, Link } from "react-router-dom";
+import { Links, Link, Route, Routes } from "react-router-dom";
 import { createContext, useState, useEffect } from "react";
 import LandingPage from "./Components/LandingPage";
 import Preferences from "./Components/Preferences";
@@ -33,13 +33,30 @@ function App() {
         <Sidebar />
 
         <header className="App-header">
-          {/* <Link to="/login" />
-          <Link to="/signup" updateUser={setUser} />
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
 
-          <Link to="/preferences" CurrentUser={user} />
-          <Link to="/profile" CurrentUser={user} />
-          <Link to="/profilepage" CurrentUser={user} /> */}
-          <Link to="/usercards" state={user} />
+            <Route path="/login" element={<Login updateUser={setUser} />} />
+            <Route path="/signup" element={<Signup updateUser={setUser} />} />
+
+            <Route
+              path="/preferences"
+              element={<Preferences CurrentUser={user} />}
+            />
+            <Route path="/profile" element={<Profile CurrentUser={user} />} />
+            <Route
+              path="/profilepage"
+              element={<ProfilePage CurrentUser={user} />}
+            />
+          </Routes>
+          {/* <LandingPage />
+          <Link to="./login" />
+          <Link to="./signup" updateUser={setUser} />
+
+          <Link to="/preferences" state={user} />
+          <Link to="/profile" state={user} />
+          <Link to="/profilepage" state={user} />
+          <Link to="/usercards" state={user} /> */}
         </header>
       </div>
     </UserContext.Provider>

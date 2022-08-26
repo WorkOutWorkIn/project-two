@@ -23,9 +23,13 @@ import { UserContext } from "../App";
 import { useLocation } from "react-router-dom";
 
 const UserCards = (props) => {
+  console.log("in usercards");
   const location = useLocation();
   const data = location.state;
   console.log(data, "data");
+
+  const contextData = useContext(UserContext);
+  console.log(contextData, "context data");
 
   const [options, setOptions] = useState([]);
   const [optionsQuery, setOptionsQuery] = useState([]);

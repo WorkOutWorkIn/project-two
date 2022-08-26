@@ -17,17 +17,15 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<App />}>
-        {/* <Route path="/" element={<LandingPage />} />
+      <Route path="/" element={<App />} />
+      <Route path="/usercards" element={<UserCards />} />
 
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-
-        <Route path="/preferences" element={<Preferences />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/profilepage" element={<ProfilePage />} /> */}
-        <Route path="/usercards" element={<UserCards />} />
-      </Route>
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/landingpage" element={<LandingPage />}></Route>
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/preferences" element={<Preferences />} />
+      <Route path="/profilepage" element={<ProfilePage />} />
     </Routes>
   </BrowserRouter>
 );
