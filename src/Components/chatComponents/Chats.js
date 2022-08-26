@@ -3,18 +3,12 @@ import { useState, useEffect } from "react"
 import { database } from "../Db/Firebase";
 import { collection, query, getDocs, doc, getDoc, where } from "firebase/firestore"
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import UserDetails from "../components/UserDetails";
+import UserDetails from "./UserDetails"
 
-export default function ChatsOverview(props) {
+export default function Chats(props) {
 
-  useEffect(() => {
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setCurrentUser(user)
-      } else setCurrentUser(null)
-    });
-  }, [])
+  const user = useContext(UserContext);
+  setCurrentUser(user)
 
   const [currentUser, setCurrentUser] = useState({})
   const [chats, setChats] = useState([])

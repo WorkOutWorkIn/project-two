@@ -11,8 +11,8 @@ import Sidebar from "./Components/Sidebar";
 import { onAuthStateChanged, updateProfile } from "firebase/auth";
 import { auth } from "./Db/Firebase";
 import ProfilePage from "./Components/ProfilePage";
-import Chats from './components/Chats'
-import Chatbox from "./components/Chatbox";
+import Chats from './components/chatComponents/Chats'
+import Chatbox from "./components/chatComponents/Chatbox";
 
 
 export const UserContext = createContext();
@@ -52,6 +52,7 @@ function App() {
             />
             <Route path="/profile" element={<Profile CurrentUser={user} />} />
             <Route path="/profilepage" element={<ProfilePage />} />
+            <Route path="/chats" element={<Chats />} />
             {currentChats.length > 0 ?
               currentChats.map(chat => {
                 return <Route key={chat.chatID} path={`/${chat.chatID}`} element={<Chatbox chatRoomID={chat.chatID} otherUserID={chat.usersInfo.uid} otherUserInfo={chat.usersInfo} />} />

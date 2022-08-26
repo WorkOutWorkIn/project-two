@@ -1,34 +1,22 @@
 import React from "react";
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 // import './Chatbox.css';
 import { database } from "../Db/Firebase";
 import { collection, getDocs, addDoc, serverTimestamp, } from "firebase/firestore"
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-// import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../App";
+
 
 export default function Chatbox(props) {
-  // chatRoomID = { chat.chatID } otherUserID = { chat.usersInfo.uid } otherUserInfo = { chat.usersInfo }
 
-  useEffect(() => {
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setCurrentUser(user)
-      } else setCurrentUser(null)
-    });
-  }, [])
+
+  const user = useContext(UserContext);
+  setCurrentUser(user)
 
 
   const [currentUser, setCurrentUser] = useState({})
   const [messages, setMessages] = useState([])
   const [currentMessage, setCurrentMessage] = useState("")
 
-  // function handleSubmit() {
-  //   const messageListRef = collection(database, "matches", `${props.chatRoomID}`, "messages")
-  //   addDoc(messageListRef, { message: currentMessage, displayName: currentUser.displayName, senderID: currentUser.uid, createdAt: serverTimestamp(), timestamp: new Date().toLocaleString([], { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }) }).then(response => {
-  //   }).catch(error => { console.log(error.message) })
-  //   setCurrentMessage("")
-  // }
 
   //useEffect to get messages
   useEffect(() => {
@@ -41,7 +29,6 @@ export default function Chatbox(props) {
     let messagesArray = []
     querySnapshot.forEach((doc) => {
       messagesArray = [...messagesArray, { id: doc.id, data: doc.data() }]
-      // doc.data() is never undefined for query doc snapshots
       console.log(doc.id, " => ", doc.data());
     });
     setMessages(messagesArray)
@@ -106,16 +93,6 @@ export default function Chatbox(props) {
         <button type="submit" onClick={handleSubmit} disabled={currentMessage === ""}>send</button>
       </div>
       <br />
-      {/* <div className="chatbox__text"> */}
-
-
-      {/* Functional testing buttons<br />
-        <button onClick={signingOut}>Sign Out!</button> */}
-      {/* <button onClick={getMessages}>Get Messages!</button> */}
-      {/* <button onClick={getUsersInformation}>Get User's info</button>
-        <button onClick={setUsersProfileInformation}>Set User's info</button> */}
-      {/* </div> */}
-
     </div>
 
   )
