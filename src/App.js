@@ -1,33 +1,44 @@
-import Chatbox from "./Components/Chatbox";
+import Chatbox from "./components/Chatbox";
 // import ChatsOverview from "./Components/ChatsOverviewPage";
-import RegisterPage from "./Components/RegisterPage"
-import SignInPage from './Components/SignInPage'
+import Register from "./components/Register"
+import SignInPage from './components/SignInPage'
 import { Link, Navigate, Route, Routes } from 'react-router-dom'
-import Home from "./Components/Home";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+// import Home from "./Components/Home";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useState, useEffect } from "react"
-import ChatsOverview from "./Components/ChatsOverviewPage";
-import { useNavigate } from "react-router-dom";
+import Home from './components/Home'
+import Chats from './components/Chats'
 
 function App() {
-  const navigate = useNavigate();
-  const [user, setCurrentUser] = useState("")
+
   const [currentChats, setCurrentChats] = useState("")
+  const [user, setCurrentUser] = useState("")
+
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        console.log(user.displayName, "signed in!")
         setCurrentUser(user)
       } else setCurrentUser(null)
     });
   }, [])
+
+  function signingOut() {
+    signOut(getAuth()).then(() => {
+      console.log("signed out!")
+
+    }).catch((error) => {
+      alert(error.message)
+    });
+  }
+
 
   function setCurrentChatsInfo(e) {
     setCurrentChats(e)
   }
 
   return (
-
     <div>
       <nav id="navbar"
         style={{
@@ -42,17 +53,16 @@ function App() {
         }}
       >
         <Link to="/">Home Page</Link>
-        <Link to="/chats">See All Chats</Link>
         {!user ? <Link to="/register">Register</Link> : null}
         {!user ? <Link to="/signIn">Sign in</Link> : null}
-
+        <Link to="/chats">See All Chats (only after login)</Link>
       </nav>
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/chats" element={<ChatsOverview setFinalChatsInfoTrigger={(e) => setCurrentChatsInfo(e)} />} />
-        <Route path="/register" element={!user ? <RegisterPage /> : <Navigate to="/chat" />} />
+        <Route path="/register" element={!user ? <Register /> : <Navigate to="/" />} />
         <Route path="/signIn" element={<SignInPage />} />
+        <Route path="/chats" element={<Chats setFinalChatsInfoTrigger={(e) => setCurrentChatsInfo(e)} />} />
 
         {currentChats.length > 0 ?
           currentChats.map(chat => {
@@ -61,6 +71,7 @@ function App() {
           : null}
 
       </Routes>
+      <button onClick={signingOut}>Sign Out!</button>
     </div>
 
   );
