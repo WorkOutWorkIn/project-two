@@ -1,79 +1,66 @@
-import Chatbox from "./components/Chatbox";
-// import ChatsOverview from "./Components/ChatsOverviewPage";
-import Register from "./components/Register"
-import SignInPage from './components/SignInPage'
+import "./App.css";
+import React from "react";
 import { Link, Navigate, Route, Routes } from 'react-router-dom'
-// import Home from "./Components/Home";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import { useState, useEffect } from "react"
-import Home from './components/Home'
+import { createContext, useState, useEffect } from "react";
+import LandingPage from "./Components/LandingPage";
+import Preferences from "./Components/Preferences";
+import Login from "./Components/Login";
+import Signup from "./Components/SignUp";
+import Profile from "./Components/Profile";
+import Sidebar from "./Components/Sidebar";
+import { onAuthStateChanged, updateProfile } from "firebase/auth";
+import { auth } from "./Db/Firebase";
+import ProfilePage from "./Components/ProfilePage";
 import Chats from './components/Chats'
+import Chatbox from "./components/Chatbox";
+
+
+export const UserContext = createContext();
 
 function App() {
-
-  const [currentChats, setCurrentChats] = useState("")
-  const [user, setCurrentUser] = useState("")
+  const [user, setUser] = useState("");
 
   useEffect(() => {
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        console.log(user.displayName, "signed in!")
-        setCurrentUser(user)
-      } else setCurrentUser(null)
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
     });
-  }, [])
 
-  function signingOut() {
-    signOut(getAuth()).then(() => {
-      console.log("signed out!")
+    return unsubscribe;
+  }, [user]);
 
-    }).catch((error) => {
-      alert(error.message)
-    });
-  }
-
+  console.log(user);
 
   function setCurrentChatsInfo(e) {
     setCurrentChats(e)
   }
 
   return (
-    <div>
-      <nav id="navbar"
-        style={{
-          borderBottom: "solid 1px",
-          paddingBottom: "1rem",
-          display: "flex",
-          gap: "4vw",
-          backgroundColor: "black",
-          padding: "3vh",
-          justifyContent: "center",
-          alignItems: "center"
-        }}
-      >
-        <Link to="/">Home Page</Link>
-        {!user ? <Link to="/register">Register</Link> : null}
-        {!user ? <Link to="/signIn">Sign in</Link> : null}
-        <Link to="/chats">See All Chats (only after login)</Link>
-      </nav>
+    <UserContext.Provider value={user}>
+      <div className="App">
+        <Sidebar />
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/register" element={!user ? <Register /> : <Navigate to="/" />} />
-        <Route path="/signIn" element={<SignInPage />} />
-        <Route path="/chats" element={<Chats setFinalChatsInfoTrigger={(e) => setCurrentChatsInfo(e)} />} />
+        <header className="App-header">
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
 
-        {currentChats.length > 0 ?
-          currentChats.map(chat => {
-            return <Route key={chat.chatID} path={`/${chat.chatID}`} element={<Chatbox chatRoomID={chat.chatID} otherUserID={chat.usersInfo.uid} otherUserInfo={chat.usersInfo} />} />
-          })
-          : null}
+            <Route path="/login" element={<Login updateUser={setUser} />} />
+            <Route path="/signup" element={<Signup />} />
 
-      </Routes>
-      <button onClick={signingOut}>Sign Out!</button>
-    </div>
-
+            <Route
+              path="/preferences"
+              element={<Preferences CurrentUser={user} />}
+            />
+            <Route path="/profile" element={<Profile CurrentUser={user} />} />
+            <Route path="/profilepage" element={<ProfilePage />} />
+            {currentChats.length > 0 ?
+              currentChats.map(chat => {
+                return <Route key={chat.chatID} path={`/${chat.chatID}`} element={<Chatbox chatRoomID={chat.chatID} otherUserID={chat.usersInfo.uid} otherUserInfo={chat.usersInfo} />} />
+              })
+              : null}
+          </Routes>
+        </header>
+      </div>
+    </UserContext.Provider>
   );
 }
 
