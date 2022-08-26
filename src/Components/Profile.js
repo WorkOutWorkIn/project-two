@@ -118,7 +118,7 @@ export default function Profile(props) {
 
     uploadBytes(storageRefInstance, fileInputFile).then(async (snapshot) => {
       //set alert
-      console.log("Uploaded File!");
+      alert("Uploaded File!");
 
       getDownloadURL(storageRefInstance).then(async (url) => {
         console.log(url);
