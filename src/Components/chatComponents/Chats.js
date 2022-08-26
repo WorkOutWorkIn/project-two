@@ -1,20 +1,21 @@
 import React from "react";
-import { useState, useEffect } from "react"
-import { database } from "../Db/Firebase";
+import { useState, useEffect, useContext } from "react"
+import { database } from "../../Db/Firebase";
 import { collection, query, getDocs, doc, getDoc, where } from "firebase/firestore"
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import UserDetails from "./UserDetails"
+import { UserContext } from "../../App";
 
 export default function Chats(props) {
-
-  const user = useContext(UserContext);
-  setCurrentUser(user)
 
   const [currentUser, setCurrentUser] = useState({})
   const [chats, setChats] = useState([])
   const [userIDs, setUserIDs] = useState([])
   const [otherUsersInfo, setOtherUsersInfo] = useState([])
   const [finalChatsInfo, setFinalChatsInfo] = useState([])
+
+  const user = useContext(UserContext);
+  setCurrentUser(user)
 
   useEffect(() => {
     getChatsAndOtherUserID()

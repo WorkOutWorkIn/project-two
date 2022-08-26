@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect, useContext } from "react"
 // import './Chatbox.css';
-import { database } from "../Db/Firebase";
+import { database } from "../../Db/Firebase";
 import { collection, getDocs, addDoc, serverTimestamp, } from "firebase/firestore"
 import { UserContext } from "../../App";
 

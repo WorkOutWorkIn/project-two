@@ -11,14 +11,16 @@ import Sidebar from "./Components/Sidebar";
 import { onAuthStateChanged, updateProfile } from "firebase/auth";
 import { auth } from "./Db/Firebase";
 import ProfilePage from "./Components/ProfilePage";
-import Chats from './components/chatComponents/Chats'
-import Chatbox from "./components/chatComponents/Chatbox";
+import Chats from './Components/chatComponents/Chats'
+import Chatbox from "./Components/chatComponents/Chatbox";
 
 
 export const UserContext = createContext();
 
 function App() {
   const [user, setUser] = useState("");
+
+  const [currentChats, setCurrentChats] = useState([])
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
