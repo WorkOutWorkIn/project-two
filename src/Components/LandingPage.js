@@ -1,6 +1,7 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@mui/material";
+import UserCards from "./UserCards";
 
 export default function MainPage() {
   const navigate = useNavigate();
@@ -14,12 +15,14 @@ export default function MainPage() {
   return (
     <div>
       <h1 style={{ color: "black" }}>MatchMage</h1>
-      {/* route to register */}
-      <Button variant="text" onSubmit={handleSubmit}>
-        Register
-      </Button>
-      {/* route to login */}
-      <Button variant="text">Log In</Button>
+      <Link to="/signup">
+        <Button variant="text" onSubmit={handleSubmit}>
+          Register
+        </Button>
+      </Link>
+      <Link to="/login">
+        <Button variant="text">Log In</Button>
+      </Link>
     </div>
   );
 }

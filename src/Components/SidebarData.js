@@ -3,12 +3,12 @@ import React from "react";
 export const SidebarData = [
   {
     title: "Profile",
-    path: "/",
+    path: "/profile",
     cName: "nav-text",
   },
   {
     title: "Matches",
-    path: "/",
+    path: "/usercards",
     cName: "nav-text",
   },
   {

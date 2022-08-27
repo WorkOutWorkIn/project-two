@@ -1,6 +1,6 @@
 import "./App.css";
 import React from "react";
-import { Link, Navigate, Route, Routes } from 'react-router-dom'
+import { Links, Link, Route, Routes } from "react-router-dom";
 import { createContext, useState, useEffect } from "react";
 import LandingPage from "./Components/LandingPage";
 import Preferences from "./Components/Preferences";
@@ -15,8 +15,9 @@ import Chats from './Components/chatComponents/Chats'
 import Chatbox from "./Components/chatComponents/Chatbox";
 
 
+import Modal from "./Components/Modal";
+import UserCards from "./Components/UserCards";
 export const UserContext = createContext();
-
 function App() {
   const [user, setUser] = useState("");
 
@@ -62,6 +63,14 @@ function App() {
               })
               : null}
           </Routes>
+          {/* <LandingPage />
+          <Link to="./login" />
+          <Link to="./signup" updateUser={setUser} />
+
+          <Link to="/preferences" state={user} />
+          <Link to="/profile" state={user} />
+          <Link to="/profilepage" state={user} />
+          <Link to="/usercards" state={user} /> */}
         </header>
       </div>
     </UserContext.Provider>

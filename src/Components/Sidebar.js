@@ -4,8 +4,9 @@ import { SidebarData } from "./SidebarData";
 import "../Sidebar.css";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
+import { useLocation } from "react-router-dom";
 
-export default function Sidebar() {
+export default function Sidebar(props) {
   const [sidebar, setSidebar] = useState(false);
 
   const showSidebar = () => setSidebar(!sidebar);
@@ -33,6 +34,11 @@ export default function Sidebar() {
               </li>
             );
           })}
+
+          {/* <Link to="/preferences">Preferences</Link>
+          <Link to="/profile">Profile</Link>
+          <Link to="/profilepage">Profile Page</Link>
+          <Link to="/usercards">Matches</Link> */}
         </ul>
       </nav>
     </>

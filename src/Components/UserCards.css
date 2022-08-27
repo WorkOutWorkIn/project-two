@@ -1,0 +1,76 @@
+.swipe-container {
+  z-index: 0;
+  height: 80vh;
+  width: 70vw;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  font-size: smaller;
+  color: black;
+}
+
+.swipe {
+  position: absolute;
+  width: 900px;
+  max-width: 70vw;
+  height: 60vh;
+  border-radius: 20px;
+  opacity: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.card {
+  height: 90%;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.popup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40vh;
+  width: 60vw;
+  z-index: 1;
+}
+
+.buttons {
+  height: 2em;
+  width: 6em;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 10px;
+}
+
+button {
+  width: 4em;
+  background-size: cover;
+  background-position: center;
+  border: none;
+  transition: 80ms;
+}
+
+button:hover {
+  transform: scale(1.3);
+}
+
+.x-button {
+  height: 3em;
+  background: url("../misc/pixel-x.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.heart-button {
+  height: 4em;
+  background: url("../misc/pixel-heart.png");
+  background-size: cover;
+  background-position: center;
+}
