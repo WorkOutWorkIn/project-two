@@ -11,12 +11,17 @@ import Sidebar from "./Components/Sidebar";
 import { onAuthStateChanged, updateProfile } from "firebase/auth";
 import { auth } from "./Db/Firebase";
 import ProfilePage from "./Components/ProfilePage";
+import Chats from './Components/chatComponents/Chats'
+import Chatbox from "./Components/chatComponents/Chatbox";
+
 
 import Modal from "./Components/Modal";
 import UserCards from "./Components/UserCards";
 export const UserContext = createContext();
 function App() {
   const [user, setUser] = useState("");
+
+  const [currentChats, setCurrentChats] = useState([])
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -27,6 +32,11 @@ function App() {
   }, [user]);
 
   console.log(user);
+
+  function setCurrentChatsInfo(e) {
+    setCurrentChats(e)
+  }
+
   return (
     <UserContext.Provider value={user}>
       <div className="App">
@@ -45,6 +55,13 @@ function App() {
             />
             <Route path="/profile" element={<Profile CurrentUser={user} />} />
             <Route path="/profilepage" element={<ProfilePage />} />
+            <Route path="/chats" element={<Chats setFinalChatsInfoTrigger={(e) => setCurrentChatsInfo(e)} />} />
+
+            {currentChats.length > 0 ?
+              currentChats.map(chat => {
+                return <Route key={chat.chatID} path={`/${chat.chatID}`} element={<Chatbox chatRoomID={chat.chatID} otherUserID={chat.usersInfo.uid} otherUserInfo={chat.usersInfo} />} />
+              })
+              : null}
           </Routes>
           {/* <LandingPage />
           <Link to="./login" />
