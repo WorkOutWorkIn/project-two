@@ -6,6 +6,7 @@ import UserDetails from "./UserDetails"
 import { UserContext } from "../../App";
 import './Chats.css'
 
+
 export default function ChatsOverview(props) {
 
   const user = useContext(UserContext);
@@ -40,6 +41,7 @@ export default function ChatsOverview(props) {
     setUserIDs(userIDs)
     setChats(chatIDs)
   }
+
 
   useEffect(() => {
     if (chats.length > 0) {
@@ -93,7 +95,7 @@ export default function ChatsOverview(props) {
 
   return (
 
-    <div className="chatContainer flex_center">
+    <div>
       {finalChatsInfo !== [] && finalChatsInfo.length >= 1 ? <UserDetails finalChatsInfo={finalChatsInfo} /> : null}
     </div>
   )

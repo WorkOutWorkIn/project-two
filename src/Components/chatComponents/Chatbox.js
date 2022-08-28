@@ -1,16 +1,12 @@
-
-import { useState, useEffect, useContext } from "react"
-import { UserContext } from "../../App";
 import React from "react";
-// import './Chatbox.css';
-import { database } from "../Db/Firebase";
+import { useState, useEffect, useRef, useContext } from "react"
+import { UserContext } from "../../App";
+import { database } from "../../Db/Firebase";
 import { collection, getDocs, addDoc, serverTimestamp, query, orderBy, where, doc, getDoc } from "firebase/firestore"
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 import './Chatbox.css'
-// import { useNavigate } from "react-router-dom";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export default function Chatbox(props) {
-  // chatRoomID = { chat.chatID } otherUserID = { chat.usersInfo.uid } otherUserInfo = { chat.usersInfo }
 
   const user = useContext(UserContext);
   setCurrentUser(user)
@@ -20,15 +16,11 @@ export default function Chatbox(props) {
   const [currentUserDetails, setCurrentUserDetails] = useState({})
   const [messages, setMessages] = useState([])
   const [currentMessage, setCurrentMessage] = useState("")
+  const [image, setImage] = useState(null);
+  const [imageUrl, setImageUrl] = useState("");
+  const imageInputRef = useRef()
 
-  // function handleSubmit() {
-  //   const messageListRef = collection(database, "matches", `${props.chatRoomID}`, "messages")
-  //   addDoc(messageListRef, { message: currentMessage, displayName: currentUser.displayName, senderID: currentUser.uid, createdAt: serverTimestamp(), timestamp: new Date().toLocaleString([], { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }) }).then(response => {
-  //   }).catch(error => { console.log(error.message) })
-  //   setCurrentMessage("")
-  // }
 
-  //useEffect to get messages
   useEffect(() => {
     getMessages()
     if (currentUser.uid) {
@@ -36,6 +28,15 @@ export default function Chatbox(props) {
     }
   }, [currentUser])
 
+  async function getMessages() {
+    const querySnapshot = await getDocs(query(collection(database, "matches", props.chatRoomID, "messages"), orderBy('createdAt')));
+    let messagesArray = []
+    querySnapshot.forEach((doc) => {
+      messagesArray = [...messagesArray, { id: doc.id, data: doc.data() }]
+      // doc.data() is never undefined for query doc snapshots
+    });
+    setMessages(messagesArray)
+  }
 
   async function getCurrentUserDetails() {
     const docRef = doc(database, "users", currentUser.uid, "profile", `${currentUser.uid}_profile`);
@@ -49,33 +50,50 @@ export default function Chatbox(props) {
   }
 
 
-  async function getMessages() {
-    const querySnapshot = await getDocs(query(collection(database, "matches", props.chatRoomID, "messages"), orderBy('createdAt')));
-    let messagesArray = []
-    querySnapshot.forEach((doc) => {
-      messagesArray = [...messagesArray, { id: doc.id, data: doc.data() }]
-      // doc.data() is never undefined for query doc snapshots
-    });
-    setMessages(messagesArray)
-  }
-
   //submitbutton
   function handleSubmit() {
     submitMessage()
   }
-
 
   async function submitMessage() {
     const docRef = await addDoc(collection(database, "matches", props.chatRoomID, "messages"), {
       name: currentUser.displayName,
       message: currentMessage,
       senderID: currentUser.uid,
+      media: imageUrl,
       createdAt: serverTimestamp()
     });
     setCurrentMessage("")
+    setImage(null)
+    imageInputRef.current.value = ""
     getMessages()
   }
 
+  const fileSelectedHandler = e => {
+    if (e.target.files[0]) {
+      setImage(e.target.files[0]);
+    }
+  };
+
+  const fileUploadedHandler = () => {
+    const storage = getStorage();
+    const storageRef = ref(storage, `chatimages/${props.chatRoomID}/${currentUser.uid}/${image.name}`);
+    uploadBytes(storageRef, image).then((snapshot) => {
+      // console.log(snapshot.metadata.fullPath);
+      return getDownloadURL(storageRef)
+    })
+      .then((url) => {
+        setImageUrl(url)
+      })
+  }
+
+  useEffect(() => {
+    if (image) {
+      fileUploadedHandler()
+    }
+    else console.log("image not yet uploaded")
+
+  }, [image])
 
   return (
     <div className="chatbox flex center">
@@ -111,23 +129,36 @@ export default function Chatbox(props) {
             {message.data.senderID === currentUser.uid ?
               //current user's messages
               <div className="flex right">
-                {message.data.name}: {message.data.message}{currentUserDetails.image[0]}
+                {message.data.name}: {message.data.message}{currentUserDetails.image[0]}{message.data.media !== "" ? <img src={message.data.media} alt="imageupload" /> : null}
+
               </div> :
               //other user's messages
               <div className="flex left">
-                {props.otherUserInfo.image[0]}{message.data.name}: {message.data.message}
+                {props.otherUserInfo.image[0]}{message.data.name}: {message.data.message}{message.data.media !== "" ? <img src={message.data.media} alt="imageupload" /> : null}
               </div>}
           </div>)}
       </div>
 
       <div className="chatbox__text">
 
-        <p >input text screen here</p>
-        <input className="inputField" type="text" value={currentMessage} onChange={(e) => setCurrentMessage(e.target.value)} /><br />
-        <button type="submit" onClick={handleSubmit} disabled={currentMessage === ""}>send</button>
+        <div className="chatInput">
+
+          <input
+            value={currentMessage}
+            onChange={(e) => setCurrentMessage(e.target.value)}
+            placeholder={`type your message...`} />
+          <button type="submit" onClick={handleSubmit}
+            disabled={currentMessage === "" && !image}>send</button>
+
+          <input type="file" onChange={fileSelectedHandler} ref={imageInputRef} />
+
+        </div>
       </div>
       <br />
     </div>
 
   )
 }
+
+
+
