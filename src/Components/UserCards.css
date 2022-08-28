@@ -18,6 +18,8 @@ h3 {
   font-size: smaller;
   color: white;
   font-family: nokiafont;
+  display: flex;
+  justify-content: flex-start;
 }
 
 .swipe {

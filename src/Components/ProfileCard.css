@@ -8,3 +8,7 @@
 .container {
   border-top: black;
 }
+
+.whole-container {
+  font-family: nokiafont;
+}
