@@ -1,14 +1,1 @@
-.flex_center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
-.button {
-  background-color: white;
-}
-
-h1 {
-  margin: 1rem;
-  color: #000;
-}

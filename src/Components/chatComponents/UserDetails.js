@@ -17,7 +17,7 @@ const UserDetails = (props) => {
                 <img src={chat.usersInfo.image[0]} alt={`${chat.usersInfo.name}'s 1st uploaded image`} />
               </div>
               <div>
-                <button className="button" onClick={() => navigate(`/${chat.chatID}`)}>Go there</button>
+                <button onClick={() => navigate(`/${chat.chatID}`)}>Go there</button>
               </div>
             </div>
 

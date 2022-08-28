@@ -7,9 +7,6 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import './Chats.css'
 import { Link, Route, Routes } from "react-router-dom";
 import { useAuth } from '../AuthContext'
-import Chatbox from "./Chatbox";
-
-
 
 export default function Chats(props) {
 
@@ -22,6 +19,7 @@ export default function Chats(props) {
 
   useEffect(() => {
     setCurrentUser(user);
+
   }, [])
 
   useEffect(() => {
@@ -94,12 +92,14 @@ export default function Chats(props) {
     props.setFinalChatsInfoTrigger(finalChatsInfo);
   }, [finalChatsInfo]);
 
+
+
   return (
     <div>
-      <div>
+
+      <div className="userDetailsContainer">
         {finalChatsInfo !== [] && finalChatsInfo.length >= 1 ? <UserDetails finalChatsInfo={finalChatsInfo} /> : null}
       </div>
     </div>
-
   )
 }
