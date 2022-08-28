@@ -1,0 +1,22 @@
+.chatContainer {
+  flex-flow: column wrap;
+  justify-content: center;
+  align-content: space-around;
+  background-color: #fff;
+  height: 100%;
+  width: 100%;
+}
+
+.individualChatContainer {
+  background-color: #520d0d;
+  color: #000;
+  margin: 4rem;
+  padding: 4rem;
+  width: 50%;
+}
+
+.flex_center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
