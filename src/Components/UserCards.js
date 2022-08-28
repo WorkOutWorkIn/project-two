@@ -19,7 +19,7 @@ import {
 import { database as db } from "../Db/Firebase";
 import "./UserCards.css";
 import Modal from "./Modal";
-import { UserContext } from "../App";
+import { UserContext } from "../UserContext";
 import { useLocation } from "react-router-dom";
 import xIcon from "../misc/pixel-x.png";
 

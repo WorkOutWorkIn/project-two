@@ -3,7 +3,7 @@ import { auth, database } from "../Db/Firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { setDoc, doc, Timestamp, collection, addDoc } from "firebase/firestore";
-import { UserContext } from "../App";
+import { UserContext } from "../UserContext";
 import { useLocation, Link } from "react-router-dom";
 
 export default function Signup(props) {

@@ -1,16 +1,24 @@
 import React from "react";
-import { useState, useEffect, useContext } from "react"
+import { useState, useEffect } from "react"
 import { database } from "../../Db/Firebase";
 import { collection, query, getDocs, doc, getDoc, where } from "firebase/firestore"
 import UserDetails from "./UserDetails"
-import { UserContext } from "../../App";
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import './Chats.css'
+import { Link } from "react-router-dom";
 
 
-export default function ChatsOverview(props) {
+export default function Chats(props) {
 
-  const user = useContext(UserContext);
-  setCurrentUser(user)
+
+  useEffect(() => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setCurrentUser(user)
+      } else setCurrentUser(null)
+    });
+  }, [])
 
   const [currentUser, setCurrentUser] = useState({})
   const [chats, setChats] = useState([])
@@ -90,13 +98,15 @@ export default function ChatsOverview(props) {
 
   useEffect(() => {
     props.setFinalChatsInfoTrigger(finalChatsInfo)
+    console.log(finalChatsInfo)
   }, [finalChatsInfo])
 
 
   return (
-
-    <div>
-      {finalChatsInfo !== [] && finalChatsInfo.length >= 1 ? <UserDetails finalChatsInfo={finalChatsInfo} /> : null}
-    </div>
+    <Link to="/chats">
+      <div>
+        {finalChatsInfo !== [] && finalChatsInfo.length >= 1 ? <UserDetails finalChatsInfo={finalChatsInfo} /> : null}
+      </div>
+    </Link>
   )
 }

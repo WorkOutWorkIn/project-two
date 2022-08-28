@@ -13,11 +13,12 @@ import { auth } from "./Db/Firebase";
 import ProfilePage from "./Components/ProfilePage";
 import Chats from './Components/chatComponents/Chats'
 import Chatbox from "./Components/chatComponents/Chatbox";
+import { UserContext } from "./UserContext";
 
 
 import Modal from "./Components/Modal";
 import UserCards from "./Components/UserCards";
-export const UserContext = createContext();
+
 function App() {
   const [user, setUser] = useState("");
 

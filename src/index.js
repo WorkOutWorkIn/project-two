@@ -12,21 +12,12 @@ import UserCards from "./Components/UserCards";
 import LandingPage from "./Components/LandingPage";
 import Preferences from "./Components/Preferences";
 import ProfilePage from "./Components/ProfilePage";
+import Chats from './Components/chatComponents/Chats'
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<App />} />
-      <Route path="/usercards" element={<UserCards />} />
-
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/landingpage" element={<LandingPage />}></Route>
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/preferences" element={<Preferences />} />
-      <Route path="/profilepage" element={<ProfilePage />} />
-    </Routes>
+    <App />
   </BrowserRouter>
 );
 

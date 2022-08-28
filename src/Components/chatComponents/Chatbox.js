@@ -1,16 +1,11 @@
 import React from "react";
 import { useState, useEffect, useRef, useContext } from "react"
-import { UserContext } from "../../App";
 import { database } from "../../Db/Firebase";
 import { collection, getDocs, addDoc, serverTimestamp, query, orderBy, where, doc, getDoc } from "firebase/firestore"
 import './Chatbox.css'
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export default function Chatbox(props) {
-
-  const user = useContext(UserContext);
-  setCurrentUser(user)
-
 
   const [currentUser, setCurrentUser] = useState({})
   const [currentUserDetails, setCurrentUserDetails] = useState({})
