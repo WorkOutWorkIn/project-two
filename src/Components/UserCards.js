@@ -19,7 +19,8 @@ import {
 import { database as db } from "../Db/Firebase";
 import "./UserCards.css";
 import Modal from "./Modal";
-import { UserContext } from "./UserContext";
+// import { UserContext } from "../App";
+import { useAuth } from "./AuthContext";
 import { useLocation } from "react-router-dom";
 import xIcon from "../misc/pixel-x.png";
 import Sidebar from "./Sidebar";
@@ -29,16 +30,15 @@ const UserCards = (props) => {
   const location = useLocation();
   const data = location.state;
   console.log(data, "data");
+  const { user } = useAuth();
 
-  const contextData = useContext(UserContext);
-  console.log(contextData, "context data");
+  // const contextData = useContext(UserContext);
+  // console.log(contextData, "context data");
 
   const [contextstuff, setContextStuff] = useState(props.CurrentUser);
   const [options, setOptions] = useState([]);
   const [optionsQuery, setOptionsQuery] = useState([]);
-  const [currentUser, setCurrentPlayer] = useState(
-    "ieqGIcqbaWRj8THgFqZ6SaAa8EH2"
-  );
+  const [currentUser, setCurrentPlayer] = useState(user.uid);
   const [modalOpen, setModalOpen] = useState(false);
   const [currentOption, setCurrentOption] = useState({});
   const [flyOff, setFlyOff] = useState(false);
@@ -141,14 +141,16 @@ const UserCards = (props) => {
   };
 
   return (
-    <div className="App-header">
-      <Sidebar />
-      <div className="swipe-container">
-        {modalOpen ? (
-          <div className="popup-container">
-            <Modal setModalOpen={setModalOpen} user2={currentOption} />
-          </div>
-        ) : null}
+    <div className="swipe-container">
+      {modalOpen ? (
+        <div className="popup-container">
+          <Modal
+            setModalOpen={setModalOpen}
+            user2={currentOption}
+            user1={user}
+          />
+        </div>
+      ) : null}
 
         {options.map((person, index) => (
           <div className="swipe" key={person.name}>

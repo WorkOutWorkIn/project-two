@@ -10,19 +10,21 @@ import {
   where,
 } from "firebase/firestore";
 import UserDetails from "./UserDetails";
-import { UserContext } from "../UserContext";
+import { useAuth } from "../AuthContext";
 import "./Chats.css";
 
 export default function ChatsOverview(props) {
-  console.log("in chats!!");
-  const user = useContext(UserContext);
-  setCurrentUser(user);
-
+  // const user = useContext(UserContext);
+  // setCurrentUser(user);
+  const { user } = useAuth();
   const [currentUser, setCurrentUser] = useState({});
   const [chats, setChats] = useState([]);
   const [userIDs, setUserIDs] = useState([]);
   const [otherUsersInfo, setOtherUsersInfo] = useState([]);
   const [finalChatsInfo, setFinalChatsInfo] = useState([]);
+
+  // const { user } = useAuth();
+  // setCurrentUser(user);
 
   useEffect(() => {
     if (currentUser.uid) {

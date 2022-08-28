@@ -16,28 +16,27 @@ import Chatbox from "./Components/chatComponents/Chatbox";
 import { UserContext } from "./Components/UserContext";
 import Modal from "./Components/Modal";
 import UserCards from "./Components/UserCards";
+import { AuthProvider } from "./Components/AuthContext";
 
 function App() {
-  const [user, setUser] = useState("");
+  // const [user, setUser] = useState("");
 
   const [currentChats, setCurrentChats] = useState([]);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-    });
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
+  //     setUser(user);
+  //   });
 
-    return unsubscribe;
-  }, [user]);
-
-  console.log(user);
+  //   return unsubscribe;
+  // }, [user]);
 
   function setCurrentChatsInfo(e) {
     setCurrentChats(e);
   }
 
   return (
-    <UserContext.Provider value={user}>
+    <AuthProvider>
       <div className="App">
         <Sidebar />
 
@@ -45,17 +44,11 @@ function App() {
           <Routes>
             <Route path="/*" element={<LandingPage />} />
 
-            <Route path="/login" element={<Login updateUser={setUser} />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route
-              path="/usercards"
-              element={<UserCards CurrentUser={user} />}
-            />
-            <Route
-              path="/preferences"
-              element={<Preferences CurrentUser={user} />}
-            />
-            <Route path="/profile" element={<Profile CurrentUser={user} />} />
+            <Route path="/usercards" element={<UserCards />} />
+            <Route path="/preferences" element={<Preferences />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/profilepage" element={<ProfilePage />} />
             <Route
               path="/chats"
@@ -94,7 +87,7 @@ function App() {
           <Link to="/usercards" state={user} /> */}
         </header>
       </div>
-    </UserContext.Provider>
+    </AuthProvider>
   );
 }
 

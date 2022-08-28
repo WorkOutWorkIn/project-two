@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { UserContext } from "../UserContext";
+// import { UserContext } from "../../App";
 import React from "react";
 // import './Chatbox.css';
 import { database } from "../../Db/Firebase";
@@ -21,8 +21,8 @@ import "./Chatbox.css";
 export default function Chatbox(props) {
   // chatRoomID = { chat.chatID } otherUserID = { chat.usersInfo.uid } otherUserInfo = { chat.usersInfo }
 
-  const user = useContext(UserContext);
-  setCurrentUser(user);
+  // const user = useContext(UserContext);
+  // setCurrentUser(user);
 
   const [currentUser, setCurrentUser] = useState({});
   const [currentUserDetails, setCurrentUserDetails] = useState({});

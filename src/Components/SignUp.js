@@ -14,75 +14,79 @@ export default function Signup(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  //move to higher component
-  // const [user, setUser] = useState("");
+
   const { signup } = useAuth();
 
-  function handleSignUp(e) {
+  async function handleSignUp(e) {
     e.preventDefault();
 
-    signup(email, password);
+    try {
+      await signup(name, email, password);
+    } catch {
+      console.log("Failed to create account");
+    }
   }
 
   // const handleSignUp = async (event) => {
   //   event.preventDefault();
 
-  //   createUserWithEmailAndPassword(auth, email, password)
-  //     .then(async (cred) => {
-  //       console.log("Signed Up", cred.user.uid);
-  //       // props.updateUser(cred);
-  //       // navigate("/");
-  //       return cred;
-  //     })
-  //     .then(async (cred) => {
-  //       console.log("sent to db");
-  //       console.log(cred);
-  //       try {
-  //         console.log(cred.user.uid, email, name);
-  //         console.log(database);
-  //         console.log("try", "catch");
+  // createUserWithEmailAndPassword(auth, email, password)
+  //   .then(async (cred) => {
+  //     console.log("Signed Up", cred.user.uid);
+  //     // props.updateUser(cred);
+  //     // navigate("/");
+  //     return cred;
+  //   })
+  //   .then(async (cred) => {
+  //     console.log("sent to db");
+  //     console.log(cred);
+  //     try {
+  //       console.log(cred.user.uid, email, name);
+  //       console.log(database);
+  //       console.log("try", "catch");
 
-  //         await updateProfile(auth.currentUser, { displayName: name });
-  //         await setDoc(
-  //           doc(
-  //             database,
-  //             `userstest2`,
-  //             `${cred.user.uid}`,
-  //             "profile",
-  //             `${cred.user.uid}_profile`
-  //           ),
-  //           {
-  //             uid: cred.user.uid,
-  //             email: email,
-  //             name: name,
-  //             gender: "",
-  //             age: "",
-  //             smoker: "",
-  //             height: "",
-  //             religion: "",
-  //             location: "",
-  //             funfact: "",
-  //             bio: "",
-  //             promptfield: "",
-  //             image: [],
-  //           }
-  //         );
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //       setEmail("");
-  //       setPassword("");
-  //       setName("");
-  //     })
-
-  //     .catch((error) => {
+  //       await updateProfile(auth.currentUser, { displayName: name });
+  //       await setDoc(
+  //         doc(
+  //           database,
+  //           `userstest2`,
+  //           `${cred.user.uid}`,
+  //           "profile",
+  //           `${cred.user.uid}_profile`
+  //         ),
+  //         {
+  //           uid: cred.user.uid,
+  //           email: email,
+  //           name: name,
+  //           gender: "",
+  //           age: "",
+  //           smoker: "",
+  //           height: "",
+  //           religion: "",
+  //           location: "",
+  //           funfact: "",
+  //           bio: "",
+  //           promptfield: "",
+  //           image: [],
+  //         }
+  //       );
+  //     } catch (error) {
   //       console.log(error);
-  //     });
+  //     }
+  //     setEmail("");
+  //     setPassword("");
+  //     setName("");
+  //   })
+
+  //   .catch((error) => {
+  //     console.log(error);
+  //   });
   // };
 
   return (
     <div className="signupFrm">
       {/* Conditional output? */}
+
       <form onSubmit={(e) => handleSignUp(e, email, password)} className="form">
         <h2 className="title">Signup</h2>
         <div className="inputContainer">
