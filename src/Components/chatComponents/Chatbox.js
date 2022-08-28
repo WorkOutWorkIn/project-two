@@ -1,43 +1,63 @@
-import React from "react";
-import { useState, useEffect, useContext } from "react"
-// import './Chatbox.css';
-import { database } from "../../Db/Firebase";
-import { collection, getDocs, addDoc, serverTimestamp, } from "firebase/firestore"
-import { UserContext } from "../../App";
 
+import { useState, useEffect, useContext } from "react"
+import { UserContext } from "../../App";
+import React from "react";
+// import './Chatbox.css';
+import { database } from "../Db/Firebase";
+import { collection, getDocs, addDoc, serverTimestamp, query, orderBy, where, doc, getDoc } from "firebase/firestore"
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import './Chatbox.css'
+// import { useNavigate } from "react-router-dom";
 
 export default function Chatbox(props) {
-
+  // chatRoomID = { chat.chatID } otherUserID = { chat.usersInfo.uid } otherUserInfo = { chat.usersInfo }
 
   const user = useContext(UserContext);
   setCurrentUser(user)
 
 
   const [currentUser, setCurrentUser] = useState({})
+  const [currentUserDetails, setCurrentUserDetails] = useState({})
   const [messages, setMessages] = useState([])
   const [currentMessage, setCurrentMessage] = useState("")
 
+  // function handleSubmit() {
+  //   const messageListRef = collection(database, "matches", `${props.chatRoomID}`, "messages")
+  //   addDoc(messageListRef, { message: currentMessage, displayName: currentUser.displayName, senderID: currentUser.uid, createdAt: serverTimestamp(), timestamp: new Date().toLocaleString([], { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }) }).then(response => {
+  //   }).catch(error => { console.log(error.message) })
+  //   setCurrentMessage("")
+  // }
 
   //useEffect to get messages
   useEffect(() => {
     getMessages()
+    if (currentUser.uid) {
+      getCurrentUserDetails()
+    }
   }, [currentUser])
 
 
+  async function getCurrentUserDetails() {
+    const docRef = doc(database, "users", currentUser.uid, "profile", `${currentUser.uid}_profile`);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      setCurrentUserDetails(docSnap.data())
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  }
+
+
   async function getMessages() {
-    const querySnapshot = await getDocs(collection(database, "matches", props.chatRoomID, "messages"));
+    const querySnapshot = await getDocs(query(collection(database, "matches", props.chatRoomID, "messages"), orderBy('createdAt')));
     let messagesArray = []
     querySnapshot.forEach((doc) => {
       messagesArray = [...messagesArray, { id: doc.id, data: doc.data() }]
-      console.log(doc.id, " => ", doc.data());
+      // doc.data() is never undefined for query doc snapshots
     });
     setMessages(messagesArray)
   }
-
-  useEffect(() => {
-    console.log(messages)
-  }, [messages])
-
 
   //submitbutton
   function handleSubmit() {
@@ -54,10 +74,7 @@ export default function Chatbox(props) {
     });
     setCurrentMessage("")
     getMessages()
-    console.log("Document written with ID: ", docRef.id);
   }
-
-
 
 
   return (
@@ -72,24 +89,41 @@ export default function Chatbox(props) {
 
       {/* random fact about user plus other user */}
       <div className="chatbox__other flex">
-        <p>Here's a random fact about {props.otherUserInfo.name}:<br />
-          {props.otherUserInfo.funfact}
-
-        </p>
+        <div>Here's a fun fact about {props.otherUserInfo.name}:
+          <div className="flex left">
+            {props.otherUserInfo.funfact}
+          </div>
+        </div>
       </div>
 
+      <div className="chatbox__main flex right">
+        <div>We shared your fun fact to {props.otherUserInfo.name}:
+          <div className="flex right">
+            {currentUserDetails.funfact}
+          </div>
+        </div>
+      </div>
 
       <div className="chatbox__display flex">
         {messages.map(message =>
+          //each message
           <div key={message.id}>
-            {message.data.senderID === currentUser.uid ? <div className="flex right">{message.data.name}: {message.data.message} </div> : <div className="flex left">{message.data.name}: {message.data.message}</div>}
+            {message.data.senderID === currentUser.uid ?
+              //current user's messages
+              <div className="flex right">
+                {message.data.name}: {message.data.message}{currentUserDetails.image[0]}
+              </div> :
+              //other user's messages
+              <div className="flex left">
+                {props.otherUserInfo.image[0]}{message.data.name}: {message.data.message}
+              </div>}
           </div>)}
       </div>
 
       <div className="chatbox__text">
 
-        <p>input text screen here</p>
-        <input type="text" value={currentMessage} onChange={(e) => setCurrentMessage(e.target.value)} /><br />
+        <p >input text screen here</p>
+        <input className="inputField" type="text" value={currentMessage} onChange={(e) => setCurrentMessage(e.target.value)} /><br />
         <button type="submit" onClick={handleSubmit} disabled={currentMessage === ""}>send</button>
       </div>
       <br />
