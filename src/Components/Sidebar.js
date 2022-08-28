@@ -42,6 +42,11 @@ export default function Sidebar(props) {
                 </li>
               );
             })}
+            <li className="nav-text sign-out" onClick={() => signOut()}>
+              <Link to="/">
+                <span>Log out</span>
+              </Link>
+            </li>
           </ul>
         </nav>
       </IconContext.Provider>
