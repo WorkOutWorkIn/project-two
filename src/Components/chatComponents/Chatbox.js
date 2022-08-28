@@ -1,7 +1,8 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react"
 import { database } from "../../Db/Firebase"
-import { collection, getDocs, addDoc, serverTimestamp, query, orderBy, doc, getDoc } from "firebase/firestore"
+import { collection, getDocs, addDoc, serverTimestamp, query, orderBy, where, doc, getDoc } from "firebase/firestore"
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import './Chatbox.css'
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useAuth } from '../AuthContext'

@@ -67,14 +67,6 @@ function App() {
             })
               : null}
           </Routes>
-          {/* <LandingPage />
-          <Link to="./login" />
-          <Link to="./signup" updateUser={setUser} />
-
-          <Link to="/preferences" state={user} />
-          <Link to="/profile" state={user} />
-          <Link to="/profilepage" state={user} />
-          <Link to="/usercards" state={user} /> */}
         </header>
       </div>
     </AuthProvider>
