@@ -5,8 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { setDoc, doc, Timestamp, collection, addDoc } from "firebase/firestore";
 import { useAuth } from "./AuthContext";
 import "./Registration.css";
+import { useLocation, Link } from "react-router-dom";
 
 export default function Signup(props) {
+  const location = useLocation();
+  const data = location.state;
+  console.log(data, "data");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");

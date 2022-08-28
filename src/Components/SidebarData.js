@@ -8,12 +8,12 @@ export const SidebarData = [
   },
   {
     title: "Matches",
-    path: "/",
+    path: "/usercards",
     cName: "nav-text",
   },
   {
     title: "Chats",
-    path: "/",
+    path: "/chats",
     cName: "nav-text",
   },
   {

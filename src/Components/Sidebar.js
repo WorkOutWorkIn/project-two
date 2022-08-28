@@ -4,9 +4,10 @@ import { SidebarData } from "./SidebarData";
 import "./Sidebar.css";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
+import { useLocation } from "react-router-dom";
 import { IconContext } from "react-icons";
 
-export default function Sidebar() {
+export default function Sidebar(props) {
   const [sidebar, setSidebar] = useState(false);
 
   const showSidebar = () => setSidebar(!sidebar);

@@ -1,0 +1,103 @@
+.popup-container {
+  height: 60vh;
+  width: 70vw;
+  color: black;
+}
+
+.option-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 20vh;
+}
+
+.actual-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 50vh;
+}
+
+.image {
+  position: relative;
+  width: 30vh;
+  height: 30vh;
+  background-size: cover;
+  background-position: center;
+  margin: 2em;
+  border-radius: 20px;
+  display: flex;
+}
+
+.modal-container {
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  background-color: bisque;
+
+  width: 50vw;
+  height: 60vh;
+  border-radius: 20px;
+  flex-direction: column;
+}
+
+.love-potion {
+  width: 5em;
+  margin-bottom: 2em;
+  filter: drop-shadow(5px 5px 5px #222);
+  animation: fadeGlow 0.2s alternate infinite;
+}
+
+@keyframes fadeGlow {
+  from {
+    opacity: 0.8;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.match-text-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: 2em;
+  margin-top: 2em;
+}
+
+.match-text-container > button {
+  cursor: pointer;
+  height: 5em;
+  width: 8em;
+  background: transparent;
+}
+
+h3 {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  text-align: end;
+  margin-left: 0.5em;
+  margin-bottom: 0;
+}
+
+.exit-button {
+  display: flex;
+  align-items: flex-start;
+  height: 3em;
+  width: 3em;
+  background-color: transparent;
+  border: none;
+  margin-left: 2em;
+  cursor: pointer;
+  background: url("../misc/x-icon.png");
+  background-size: cover;
+}
+/* 
+.exit-button:hover {
+  transform: scale(1.3);
+  filter: drop-shadow(0 0 2em black);
+} */

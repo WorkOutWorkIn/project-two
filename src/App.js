@@ -1,6 +1,6 @@
 import "./App.css";
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Links, Link, Route, Routes } from "react-router-dom";
 import { createContext, useState, useEffect } from "react";
 import LandingPage from "./Components/LandingPage";
 import Preferences from "./Components/Preferences";
@@ -11,13 +11,17 @@ import Sidebar from "./Components/Sidebar";
 import { onAuthStateChanged, updateProfile } from "firebase/auth";
 import { auth } from "./Db/Firebase";
 import ProfilePage from "./Components/ProfilePage";
+import Chats from "./Components/chatComponents/Chats";
+import Chatbox from "./Components/chatComponents/Chatbox";
 
+import Modal from "./Components/Modal";
+import UserCards from "./Components/UserCards";
 export const UserContext = createContext();
-
 function App() {
   const [user, setUser] = useState("");
 
-  //pass to auth
+  const [currentChats, setCurrentChats] = useState([]);
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
@@ -27,6 +31,11 @@ function App() {
   }, [user]);
 
   console.log(user);
+
+  function setCurrentChatsInfo(e) {
+    setCurrentChats(e);
+  }
+
   return (
     <UserContext.Provider value={user}>
       <div className="App">
@@ -45,7 +54,41 @@ function App() {
             />
             <Route path="/profile" element={<Profile CurrentUser={user} />} />
             <Route path="/profilepage" element={<ProfilePage />} />
+            <Route
+              path="/chats"
+              element={
+                <Chats
+                  setFinalChatsInfoTrigger={(e) => setCurrentChatsInfo(e)}
+                />
+              }
+            />
+
+            {currentChats.length > 0
+              ? currentChats.map((chat) => {
+                  return (
+                    <Route
+                      key={chat.chatID}
+                      path={`/${chat.chatID}`}
+                      element={
+                        <Chatbox
+                          chatRoomID={chat.chatID}
+                          otherUserID={chat.usersInfo.uid}
+                          otherUserInfo={chat.usersInfo}
+                        />
+                      }
+                    />
+                  );
+                })
+              : null}
           </Routes>
+          {/* <LandingPage />
+          <Link to="./login" />
+          <Link to="./signup" updateUser={setUser} />
+
+          <Link to="/preferences" state={user} />
+          <Link to="/profile" state={user} />
+          <Link to="/profilepage" state={user} />
+          <Link to="/usercards" state={user} /> */}
         </header>
       </div>
     </UserContext.Provider>
