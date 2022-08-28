@@ -16,6 +16,7 @@ import AliceCarousel from "react-alice-carousel";
 import { onAuthStateChanged } from "@firebase/auth";
 import { auth } from "../Db/Firebase";
 import "react-alice-carousel/lib/alice-carousel.css";
+import { useAuth } from "./AuthContext";
 
 export default function ProfilePage(props) {
   const [userName, SetUserName] = useState([]);
@@ -26,7 +27,8 @@ export default function ProfilePage(props) {
   const [profileImage, setProfileImage] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  // const [profileImage, setProfileImage] = useState([]);
+
+  const { user } = useAuth();
 
   //main function
   const getUsersProfile = async (user) => {

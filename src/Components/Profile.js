@@ -17,6 +17,7 @@ import {
   arrayUnion,
 } from "firebase/firestore";
 import "./Form.css";
+import { useAuth } from "./AuthContext";
 
 export default function Profile(props) {
   const [name, setName] = useState("");
@@ -34,33 +35,31 @@ export default function Profile(props) {
   const [fileInputFile, setFileInputFile] = useState(null);
   const [currImages, setCurrImages] = useState([]);
 
-  //useEffect/ function call to compare the images if it exist or not.
-  // if it does not exist .. concat into the image array
-  // Handle Submit for data transfer to DB
+  const { user } = useAuth();
 
-  useEffect(() => {
-    async function getUsersProfile() {
-      try {
-        const userInformationListRef = doc(
-          database,
-          `userstest2`,
-          `${props.CurrentUser.uid}`,
-          "profile",
-          `${props.CurrentUser.uid}_profile`
-        );
-        const userInfo = await getDoc(query(userInformationListRef));
-        let userInfoToUse = userInfo.data();
-        console.log(userInfoToUse);
-        if (userInfo.data()) {
-          setCurrImages(userInfoToUse.image);
-          console.log(currImages);
-        }
-      } catch (error) {
-        alert(error.message);
-      }
-    }
-    getUsersProfile();
-  }, []);
+  // useEffect(() => {
+  //   async function getUsersProfile() {
+  //     try {
+  //       const userInformationListRef = doc(
+  //         database,
+  //         `userstest2`,
+  //         `${user.uid}`,
+  //         "profile",
+  //         `${user.uid}_profile`
+  //       );
+  //       const userInfo = await getDoc(query(userInformationListRef));
+  //       let userInfoToUse = userInfo.data();
+  //       console.log(userInfoToUse);
+  //       if (userInfo.data()) {
+  //         setCurrImages(userInfoToUse.image);
+  //         console.log(currImages);
+  //       }
+  //     } catch (error) {
+  //       alert(error.message);
+  //     }
+  //   }
+  //   getUsersProfile();
+  // }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -69,9 +68,9 @@ export default function Profile(props) {
       doc(
         database,
         `userstest2`,
-        `${props.CurrentUser.uid}`,
+        `${user.uid}`,
         "profile",
-        `${props.CurrentUser.uid}_profile`
+        `${user.uid}_profile`
       ),
       {
         name: name,
@@ -104,15 +103,15 @@ export default function Profile(props) {
     console.log(fileInputFile, fileInputValue);
     const storageRefInstance = storageRef(
       storage,
-      `user_${props.CurrentUser.uid}/${fileInputFile.name}`
+      `user_${user.uid}/${fileInputFile.name}`
     );
 
     const profileRef = doc(
       database,
       `userstest2`,
-      `${props.CurrentUser.uid}`,
+      `${user.uid}`,
       "profile",
-      `${props.CurrentUser.uid}_profile`
+      `${user.uid}_profile`
     );
 
     uploadBytes(storageRefInstance, fileInputFile).then(async (snapshot) => {

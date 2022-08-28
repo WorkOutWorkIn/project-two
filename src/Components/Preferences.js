@@ -2,6 +2,7 @@ import { addDoc, collection, doc, updateDoc, setDoc } from "firebase/firestore";
 import React, { useState, useEffect } from "react";
 import { database } from "../Db/Firebase";
 import "./Form.css";
+import { useAuth } from "./AuthContext";
 
 export default function Preferences(props) {
   //create state for all options
@@ -12,6 +13,8 @@ export default function Preferences(props) {
   const [height, setHeight] = useState("");
   const [religion, setReligion] = useState("");
   const [location, setLocation] = useState("");
+
+  const { user } = useAuth();
 
   //change all value to state.
   // enter type and name to all option/input value
@@ -27,9 +30,9 @@ export default function Preferences(props) {
       doc(
         database,
         `userstest2`,
-        `${props.CurrentUser.uid}`,
+        `${user.uid}`,
         "preferences",
-        `${props.CurrentUser.uid}_preferences`
+        `${user.uid}_preferences`
       ),
       {
         gender: gender,

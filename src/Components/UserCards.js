@@ -36,7 +36,7 @@ const UserCards = () => {
 
   const [options, setOptions] = useState([]);
   const [optionsQuery, setOptionsQuery] = useState([]);
-  const [currentUser, setCurrentPlayer] = useState(user.uid);
+  const [currentUser, setCurrentPlayer] = useState(user);
   const [modalOpen, setModalOpen] = useState(false);
   const [currentOption, setCurrentOption] = useState({});
   const [flyOff, setFlyOff] = useState(false);
