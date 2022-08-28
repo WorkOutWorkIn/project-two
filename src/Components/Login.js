@@ -42,7 +42,7 @@ export default function Login(props) {
   // };
 
   return (
-    <div>
+    <div className="App-header">
       <h2>Login</h2>
       {/* Conditional output? */}
       <form onSubmit={(e) => handleLogin(e, email, password)}>

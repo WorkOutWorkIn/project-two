@@ -1,6 +1,5 @@
 .navbar {
   background-color: #c1dcec;
-
   display: flex;
   justify-content: start;
   align-items: center;
@@ -17,11 +16,13 @@
   width: 250px;
   height: 100vh;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   position: fixed;
   top: 0;
   left: -100%;
   transition: 850ms;
+  flex-direction: column;
+  align-items: center;
 }
 
 .nav-menu.active {
@@ -86,4 +87,17 @@ span {
   position: absolute;
   top: 0.5em;
   right: 0.5em;
+}
+
+.sign-out {
+  width: 250px;
+  height: 60px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  font-family: nokiafont;
+  background-color: transparent;
+  color: black;
+  font-size: 18px;
 }

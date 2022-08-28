@@ -19,12 +19,12 @@ import {
 import { database as db } from "../Db/Firebase";
 import "./UserCards.css";
 import Modal from "./Modal";
-import { UserContext } from "../App";
+import { UserContext } from "./UserContext";
 import { useLocation } from "react-router-dom";
 import xIcon from "../misc/pixel-x.png";
 import Sidebar from "./Sidebar";
 
-const UserCards = () => {
+const UserCards = (props) => {
   console.log("in usercards");
   const location = useLocation();
   const data = location.state;
@@ -33,6 +33,7 @@ const UserCards = () => {
   const contextData = useContext(UserContext);
   console.log(contextData, "context data");
 
+  const [contextstuff, setContextStuff] = useState(props.CurrentUser);
   const [options, setOptions] = useState([]);
   const [optionsQuery, setOptionsQuery] = useState([]);
   const [currentUser, setCurrentPlayer] = useState(

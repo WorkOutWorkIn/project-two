@@ -21,9 +21,4 @@ export const SidebarData = [
     path: "/profile",
     cName: "nav-text",
   },
-  {
-    title: "Log Out",
-    path: "/",
-    cName: "nav-text",
-  },
 ];

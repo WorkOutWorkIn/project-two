@@ -11,17 +11,16 @@ import Sidebar from "./Components/Sidebar";
 import { onAuthStateChanged, updateProfile } from "firebase/auth";
 import { auth } from "./Db/Firebase";
 import ProfilePage from "./Components/ProfilePage";
-import Chats from './Components/chatComponents/Chats'
+import Chats from "./Components/chatComponents/Chats";
 import Chatbox from "./Components/chatComponents/Chatbox";
-
-
+import { UserContext } from "./Components/UserContext";
 import Modal from "./Components/Modal";
 import UserCards from "./Components/UserCards";
-export const UserContext = createContext();
+
 function App() {
   const [user, setUser] = useState("");
 
-  const [currentChats, setCurrentChats] = useState([])
+  const [currentChats, setCurrentChats] = useState([]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -34,7 +33,7 @@ function App() {
   console.log(user);
 
   function setCurrentChatsInfo(e) {
-    setCurrentChats(e)
+    setCurrentChats(e);
   }
 
   return (
@@ -44,23 +43,45 @@ function App() {
 
         <header className="App-header">
           <Routes>
-            <Route path="/" element={<LandingPage />} />
+            <Route path="/*" element={<LandingPage />} />
 
             <Route path="/login" element={<Login updateUser={setUser} />} />
             <Route path="/signup" element={<Signup />} />
-
+            <Route
+              path="/usercards"
+              element={<UserCards CurrentUser={user} />}
+            />
             <Route
               path="/preferences"
               element={<Preferences CurrentUser={user} />}
             />
             <Route path="/profile" element={<Profile CurrentUser={user} />} />
             <Route path="/profilepage" element={<ProfilePage />} />
-            <Route path="/chats" element={<Chats setFinalChatsInfoTrigger={(e) => setCurrentChatsInfo(e)} />} />
+            <Route
+              path="/chats"
+              element={
+                <Chats
+                  setFinalChatsInfoTrigger={(e) => setCurrentChatsInfo(e)}
+                />
+              }
+            />
 
-            {currentChats.length > 0 ?
-              currentChats.map(chat => {
-                return <Route key={chat.chatID} path={`/${chat.chatID}`} element={<Chatbox chatRoomID={chat.chatID} otherUserID={chat.usersInfo.uid} otherUserInfo={chat.usersInfo} />} />
-              })
+            {currentChats.length > 0
+              ? currentChats.map((chat) => {
+                  return (
+                    <Route
+                      key={chat.chatID}
+                      path={`/${chat.chatID}`}
+                      element={
+                        <Chatbox
+                          chatRoomID={chat.chatID}
+                          otherUserID={chat.usersInfo.uid}
+                          otherUserInfo={chat.usersInfo}
+                        />
+                      }
+                    />
+                  );
+                })
               : null}
           </Routes>
           {/* <LandingPage />

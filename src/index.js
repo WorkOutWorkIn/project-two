@@ -12,6 +12,7 @@ import UserCards from "./Components/UserCards";
 import LandingPage from "./Components/LandingPage";
 import Preferences from "./Components/Preferences";
 import ProfilePage from "./Components/ProfilePage";
+import ChatsOverview from "./Components/chatComponents/Chats";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -19,7 +20,7 @@ root.render(
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="/usercards" element={<UserCards />} />
-
+      <Route path="/chats" element={<ChatsOverview />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/landingpage" element={<LandingPage />}></Route>
       <Route path="/login" element={<Login />} />
