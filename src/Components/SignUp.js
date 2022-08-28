@@ -4,6 +4,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { setDoc, doc, Timestamp, collection, addDoc } from "firebase/firestore";
 import { UserContext } from "../App";
+import "./Registration.css";
 
 export default function Signup(props) {
   const [email, setEmail] = useState("");
@@ -72,39 +73,41 @@ export default function Signup(props) {
   };
 
   return (
-    <div>
-      <h2>Signup</h2>
+    <div className="signupFrm">
       {/* Conditional output? */}
-      <form onSubmit={(e) => handleSignUp(e, email, password)}>
-        <br />
-        <label>Name:</label> <br />
-        <input
-          name="name"
-          type="name"
-          onChange={(e) => setName(e.target.value)}
-          value={name}
-          placeholder="enter name"
-        />
-        <br />
-        <label>Email:</label> <br />
-        <input
-          name="email"
-          type="email"
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-          placeholder="enter email"
-        />
-        <br />
-        <label>Password:</label> <br />
-        <input
-          name="password"
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-          placeholder="enter password"
-        />
-        <br />
-        <input type="submit" value="Sign up" />
+      <form onSubmit={(e) => handleSignUp(e, email, password)} className="form">
+        <h2 className="title">Signup</h2>
+        <div className="inputContainer">
+          <input
+            name="name"
+            type="name"
+            onChange={(e) => setName(e.target.value)}
+            value={name}
+            className="input"
+          />
+          <label className="label">Name:</label>
+        </div>
+        <div className="inputContainer">
+          <input
+            name="email"
+            type="email"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            className="input"
+          />
+          <label className="label">Email:</label>
+        </div>
+        <div className="inputContainer">
+          <input
+            name="password"
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            className="input"
+          />
+          <label className="label">Password:</label>
+        </div>
+        <input type="submit" value="Sign up" className="submitBtn" />
       </form>
     </div>
   );
