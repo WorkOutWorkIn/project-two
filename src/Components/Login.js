@@ -15,12 +15,17 @@ export default function Login(props) {
   console.log(data, "data");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
 
-  const { login } = useAuth();
+  const { login, user } = useAuth();
   const navigate = useNavigate();
 
   async function handleLogin(e) {
     e.preventDefault();
+
+    if (email.length == 0 || password == 0) {
+      setError(true);
+    }
 
     try {
       await login(email, password);
@@ -28,30 +33,6 @@ export default function Login(props) {
       console.log("Failed to login");
     }
   }
-
-  // const handleLogin = (e, email, password) => {
-  //   e.preventDefault();
-  //   signInWithEmailAndPassword(auth, email, password)
-  //     .then((userCredential) => {
-  //       props.updateUser(userCredential.user);
-
-  //       console.log("Signed in! Welcome!", userCredential.user);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
-
-  // const signout = (e) => {
-  //   e.preventDefault();
-  //   signOut(auth).then(() => {
-  //     console.log("You have signed out!");
-  //     navigate("/");
-  //   })
-  //   .catch((err)=>{
-  //    console.log(err.message)
-  // });
-  // };
 
   return (
     <div className="signupFrm">
@@ -66,7 +47,13 @@ export default function Login(props) {
             className="input"
           />
           <label className="label">Email:</label>
+          {error && email.length <= 0 ? (
+            <label className="labelerror">wrong email! try again.</label>
+          ) : (
+            ""
+          )}
         </div>
+
         <div className="inputContainer">
           <input
             name="password"
@@ -76,6 +63,12 @@ export default function Login(props) {
             className="input"
           />
           <label className="label">Password:</label>
+
+          {error && password.length <= 0 ? (
+            <label className="labelerror">wrong password! try again.</label>
+          ) : (
+            ""
+          )}
         </div>
         <input type="submit" value="Login" className="submitBtn" />
       </form>

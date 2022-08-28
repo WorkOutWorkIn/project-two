@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { database } from "../Db/Firebase";
 import "./Form.css";
 import { useAuth } from "./AuthContext";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 
 export default function Preferences(props) {
   //create state for all options

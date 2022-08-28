@@ -17,6 +17,7 @@ import { onAuthStateChanged } from "@firebase/auth";
 import { auth } from "../Db/Firebase";
 import "react-alice-carousel/lib/alice-carousel.css";
 import { useAuth } from "./AuthContext";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 
 export default function ProfilePage(props) {
   const [userName, SetUserName] = useState([]);

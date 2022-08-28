@@ -18,6 +18,7 @@ import {
 } from "firebase/firestore";
 import "./Form.css";
 import { useAuth } from "./AuthContext";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 
 export default function Profile(props) {
   const [name, setName] = useState("");
@@ -36,6 +37,7 @@ export default function Profile(props) {
   const [currImages, setCurrImages] = useState([]);
 
   const { user } = useAuth();
+  let navigate = useNavigate();
 
   // useEffect(() => {
   //   async function getUsersProfile() {
@@ -91,7 +93,7 @@ export default function Profile(props) {
       .catch(function (err) {
         console.log(err);
       });
-
+    navigate("/usercards");
     console.log(`Submitted`);
   };
   //transfer form data into realtime DB
