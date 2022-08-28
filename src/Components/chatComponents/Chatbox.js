@@ -1,8 +1,7 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react"
 import { database } from "../../Db/Firebase"
-import { collection, getDocs, addDoc, serverTimestamp, query, orderBy, where, doc, getDoc } from "firebase/firestore"
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { collection, getDocs, addDoc, serverTimestamp, query, orderBy, doc, getDoc } from "firebase/firestore"
 import './Chatbox.css'
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useAuth } from '../AuthContext'
@@ -42,7 +41,7 @@ export default function Chatbox(props) {
   }
 
   async function getCurrentUserDetails() {
-    const docRef = doc(database, "users", currentUser.uid, "profile", `${currentUser.uid}_profile`);
+    const docRef = doc(database, "userstest2", currentUser.uid, "profile", `${currentUser.uid}_profile`);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       setCurrentUserDetails(docSnap.data())

@@ -107,7 +107,7 @@ export default function ProfilePage(props) {
   };
 
   return (
-    <div>
+    <div className="whole-container">
       <h1>Profile Page</h1>
       {loading}
       {error}

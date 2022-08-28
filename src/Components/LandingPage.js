@@ -1,7 +1,8 @@
 import React from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Button } from "@mui/material";
+
 import UserCards from "./UserCards";
+import "../LandingPage.css";
 
 export default function MainPage() {
   const navigate = useNavigate();
@@ -13,16 +14,17 @@ export default function MainPage() {
   };
 
   return (
-    <div>
+    <div className="landing-container">
       <h1 style={{ color: "black" }}>MatchMage</h1>
-      <Link to="/signup">
-        <Button variant="text" onSubmit={handleSubmit}>
-          Register
-        </Button>
-      </Link>
-      <Link to="/login">
-        <Button variant="text">Log In</Button>
-      </Link>
+      <div className="button-container">
+        <Link to="/signup">
+          <button className="left-side" onSubmit={handleSubmit}></button>
+        </Link>
+        <div className="cleavage-cover"></div>
+        <Link to="/login">
+          <button className="right-side"></button>
+        </Link>
+      </div>
     </div>
   );
 }
