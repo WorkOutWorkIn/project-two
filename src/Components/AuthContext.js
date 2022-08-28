@@ -6,7 +6,7 @@ import {
   updateProfile,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { setDoc, doc } from "firebase/firestore";
+import { setDoc, doc, collection } from "firebase/firestore";
 
 const AuthContext = React.createContext();
 
@@ -62,6 +62,19 @@ export function AuthProvider({ children }) {
               image: [],
             }
           );
+
+          setDoc(
+            doc(
+              database,
+              `userstest2`,
+              `${cred.user.uid}`,
+              `hearts`,
+              `${cred.user.uid}_hearts`
+            ),
+            {
+              uid: "",
+            }
+          );
         } catch (error) {
           console.log(error);
         }
@@ -89,6 +102,7 @@ export function AuthProvider({ children }) {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user);
       setLoading(false);
+      console.log(user);
     });
     return unsubscribe;
   }, []);

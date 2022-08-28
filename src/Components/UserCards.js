@@ -21,7 +21,7 @@ import "./UserCards.css";
 import Modal from "./Modal";
 // import { UserContext } from "../App";
 import { useAuth } from "./AuthContext";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import xIcon from "../misc/pixel-x.png";
 import Sidebar from "./Sidebar";
 

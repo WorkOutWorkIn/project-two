@@ -46,7 +46,7 @@ const Modal = (props) => {
           </div>
           <div className="match-text-container">
             You've matched!
-            <Link to="/profile">
+            <Link to="/chats">
               <button className="message-button">
                 Drop a message? <img src={loveLetter} className="love-letter" />
               </button>

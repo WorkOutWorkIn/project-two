@@ -55,6 +55,18 @@
   z-index: 0;
 }
 
+.labelerror {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  padding: 0 4px;
+  background-color: #749db8;
+  color: #222222;
+  font-size: 12px;
+  transition: 0.5s;
+  z-index: 0;
+}
+
 ::placeholder {
   color: transparent;
 }
