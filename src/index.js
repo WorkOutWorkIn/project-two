@@ -12,6 +12,7 @@ import UserCards from "./Components/UserCards";
 import LandingPage from "./Components/LandingPage";
 import Preferences from "./Components/Preferences";
 import ProfilePage from "./Components/ProfilePage";
+import Chats from './Components/chatComponents/Chats'
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

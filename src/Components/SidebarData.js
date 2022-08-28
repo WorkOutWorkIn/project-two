@@ -7,6 +7,12 @@ export const SidebarData = [
     cName: "nav-text",
   },
   {
+    title: "Edit profile",
+    path: "/profile",
+    cName: "nav-text",
+  },
+
+  {
     title: "Matches",
     path: "/usercards",
     cName: "nav-text",
@@ -19,11 +25,6 @@ export const SidebarData = [
   {
     title: "Preferences",
     path: "/preferences",
-    cName: "nav-text",
-  },
-  {
-    title: "Log Out",
-    path: "/",
     cName: "nav-text",
   },
 ];

@@ -136,7 +136,7 @@ export default function Profile(props) {
   };
 
   return (
-    <div>
+    <div className="main-container">
       {/* <form> */}
       {/* <h1>Profile Setup</h1> */}
       {/* <input
@@ -152,7 +152,7 @@ export default function Profile(props) {
         />
         <button onClick={(e) => sendData(e)}>Send</button>
       </form> */}
-      <h1 style={{ align: "center" }}>Profile Setup</h1>
+      <h1 style={{ align: "center", color: "black" }}>Profile Setup</h1>
       <form onSubmit={handleSubmit} id="pardot-form">
         <fieldset>
           <label>
