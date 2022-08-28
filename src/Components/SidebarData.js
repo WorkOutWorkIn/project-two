@@ -3,7 +3,7 @@ import React from "react";
 export const SidebarData = [
   {
     title: "Profile",
-    path: "/profile",
+    path: "/profilepage",
     cName: "nav-text",
   },
   {
@@ -18,7 +18,7 @@ export const SidebarData = [
   },
   {
     title: "Preferences",
-    path: "/profile",
+    path: "/preferences",
     cName: "nav-text",
   },
 ];

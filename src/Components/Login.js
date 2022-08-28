@@ -7,6 +7,7 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { useLocation, Link, useNavigate } from "react-router-dom";
+import "./Registration.css";
 
 export default function Login(props) {
   const location = useLocation();
@@ -42,30 +43,30 @@ export default function Login(props) {
   // };
 
   return (
-    <div className="App-header">
-      <h2>Login</h2>
-      {/* Conditional output? */}
-      <form onSubmit={(e) => handleLogin(e, email, password)}>
-        <br />
-        <label>Email:</label> <br />
-        <input
-          name="email"
-          type="email"
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-          placeholder="enter email"
-        />
-        <br />
-        <label>Password:</label> <br />
-        <input
-          name="password"
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-          placeholder="enter password"
-        />
-        <br />
-        <input type="submit" value="Login" />
+    <div className="signupFrm">
+      <form onSubmit={(e) => handleLogin(e, email, password)} className="form">
+        <h2 className="title">Login</h2>
+        <div className="inputContainer">
+          <input
+            name="email"
+            type="email"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            className="input"
+          />
+          <label className="label">Email:</label>
+        </div>
+        <div className="inputContainer">
+          <input
+            name="password"
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            className="input"
+          />
+          <label className="label">Password:</label>
+        </div>
+        <input type="submit" value="Login" className="submitBtn" />
       </form>
     </div>
   );

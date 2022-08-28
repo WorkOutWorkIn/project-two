@@ -16,8 +16,7 @@ import {
   setDoc,
   arrayUnion,
 } from "firebase/firestore";
-import { async } from "@firebase/util";
-import { useScrollTrigger } from "@mui/material";
+import "./Form.css";
 
 export default function Profile(props) {
   const [name, setName] = useState("");
@@ -139,9 +138,9 @@ export default function Profile(props) {
 
   return (
     <div>
-      <h1>Profile Setup</h1>
-      <form>
-        <input
+      {/* <form> */}
+      {/* <h1>Profile Setup</h1> */}
+      {/* <input
           type="file"
           name="fileInputFile"
           value={fileInputValue}
@@ -153,9 +152,41 @@ export default function Profile(props) {
           }}
         />
         <button onClick={(e) => sendData(e)}>Send</button>
-      </form>
-      <form onSubmit={handleSubmit}>
+      </form> */}
+      <h1 style={{ align: "center" }}>Profile Setup</h1>
+      <form onSubmit={handleSubmit} id="pardot-form">
         <fieldset>
+          <label>
+            <p>Upload your images here!</p>
+            <input
+              type="file"
+              name="fileInputFile"
+              value={fileInputValue}
+              onChange={(e) => {
+                console.log(e.target.files[0].name);
+
+                setFileInputFile(e.target.files[0]);
+                setFileInputValue(e.target.value);
+              }}
+            />
+            <button onClick={(e) => sendData(e)} className="uploadbtn">
+              Upload!
+            </button>
+          </label>
+          {/* <input
+            type="file"
+            name="fileInputFile"
+            value={fileInputValue}
+            onChange={(e) => {
+              console.log(e.target.files[0].name);
+
+              setFileInputFile(e.target.files[0]);
+              setFileInputValue(e.target.value);
+            }}
+          />
+
+          <button onClick={(e) => sendData(e)}>Upload!</button> */}
+
           <label>
             <p>Name</p>
             <input
@@ -165,8 +196,7 @@ export default function Profile(props) {
               onChange={(e) => setName(e.target.value)}
             />
           </label>
-        </fieldset>
-        <fieldset>
+
           <label>
             <p>Gender</p>
             <select
@@ -179,8 +209,7 @@ export default function Profile(props) {
               <option value="female">Female</option>
             </select>
           </label>
-        </fieldset>
-        <fieldset>
+
           <label>
             <p>Age Range</p>
             <select
@@ -196,8 +225,7 @@ export default function Profile(props) {
               <option value="56andAbove">56 and above</option>
             </select>
           </label>
-        </fieldset>
-        <fieldset>
+
           <label>
             <p>Smoking Habits</p>
             <select
@@ -210,8 +238,7 @@ export default function Profile(props) {
               <option value="smoker">Smoker</option>
             </select>
           </label>
-        </fieldset>
-        <fieldset>
+
           <label>
             <p>Height</p>
             <select
@@ -226,8 +253,7 @@ export default function Profile(props) {
               <option value="181andAbove">181cm and above</option>
             </select>
           </label>
-        </fieldset>
-        <fieldset>
+
           <label>
             <p>Religion</p>
             <select
@@ -243,8 +269,7 @@ export default function Profile(props) {
               <option value="sikhism">Sikhism</option>
             </select>
           </label>
-        </fieldset>
-        <fieldset>
+
           <label>
             <p>Location</p>
             <select
@@ -263,8 +288,7 @@ export default function Profile(props) {
               <option value="west">West</option>
             </select>
           </label>
-        </fieldset>
-        <fieldset>
+
           <label>
             <p>A funfact about yourself!</p>
             <textarea
@@ -272,10 +296,10 @@ export default function Profile(props) {
               placeholder="tell us something interesting!"
               value={funfact}
               onChange={(e) => setFunFact(e.target.value)}
+              style={{ width: "95%" }}
             />
           </label>
-        </fieldset>
-        <fieldset>
+
           <label>
             <p>Biography</p>
             <select
@@ -307,10 +331,12 @@ export default function Profile(props) {
               placeholder=""
               value={bio}
               onChange={(e) => setBio(e.target.value)}
+              style={{ width: "95%" }}
             />
           </label>
+          <br />
+          <input type="submit" value="Submit" />
         </fieldset>
-        <input type="submit" value="Submit" />
       </form>
     </div>
   );

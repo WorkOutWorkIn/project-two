@@ -3,7 +3,8 @@ import { auth, database } from "../Db/Firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { setDoc, doc, Timestamp, collection, addDoc } from "firebase/firestore";
-import { UserContext } from "../UserContext";
+import { useAuth } from "./AuthContext";
+import "./Registration.css";
 import { useLocation, Link } from "react-router-dom";
 
 export default function Signup(props) {
@@ -15,102 +16,106 @@ export default function Signup(props) {
   const [name, setName] = useState("");
   //move to higher component
   // const [user, setUser] = useState("");
-  const context = useContext(UserContext);
-  const navigate = useNavigate();
-  // const colRef = collection(database, "user");
+  const { signup } = useAuth();
 
-  const handleSignUp = async (event) => {
-    event.preventDefault();
+  function handleSignUp(e) {
+    e.preventDefault();
 
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(async (cred) => {
-        console.log("Signed Up", cred.user.uid);
-        // props.updateUser(cred);
-        // navigate("/");
-        return cred;
-      })
-      .then(async (cred) => {
-        console.log("sent to db");
-        console.log(cred);
-        try {
-          console.log(cred.user.uid, email, name);
-          console.log(database);
-          console.log("try", "catch");
+    signup(email, password);
+  }
 
-          await updateProfile(auth.currentUser, { displayName: name });
-          await setDoc(
-            doc(
-              database,
-              `userstest2`,
-              `${cred.user.uid}`,
-              "profile",
-              `${cred.user.uid}_profile`
-            ),
-            {
-              uid: cred.user.uid,
-              email: email,
-              name: name,
-              gender: "",
-              age: "",
-              smoker: "",
-              height: "",
-              religion: "",
-              location: "",
-              funfact: "",
-              bio: "",
-              promptfield: "",
-              image: [],
-            }
-          );
-        } catch (error) {
-          console.log(error);
-        }
-        setEmail("");
-        setPassword("");
-        setName("");
-      })
+  // const handleSignUp = async (event) => {
+  //   event.preventDefault();
 
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  //   createUserWithEmailAndPassword(auth, email, password)
+  //     .then(async (cred) => {
+  //       console.log("Signed Up", cred.user.uid);
+  //       // props.updateUser(cred);
+  //       // navigate("/");
+  //       return cred;
+  //     })
+  //     .then(async (cred) => {
+  //       console.log("sent to db");
+  //       console.log(cred);
+  //       try {
+  //         console.log(cred.user.uid, email, name);
+  //         console.log(database);
+  //         console.log("try", "catch");
+
+  //         await updateProfile(auth.currentUser, { displayName: name });
+  //         await setDoc(
+  //           doc(
+  //             database,
+  //             `userstest2`,
+  //             `${cred.user.uid}`,
+  //             "profile",
+  //             `${cred.user.uid}_profile`
+  //           ),
+  //           {
+  //             uid: cred.user.uid,
+  //             email: email,
+  //             name: name,
+  //             gender: "",
+  //             age: "",
+  //             smoker: "",
+  //             height: "",
+  //             religion: "",
+  //             location: "",
+  //             funfact: "",
+  //             bio: "",
+  //             promptfield: "",
+  //             image: [],
+  //           }
+  //         );
+  //       } catch (error) {
+  //         console.log(error);
+  //       }
+  //       setEmail("");
+  //       setPassword("");
+  //       setName("");
+  //     })
+
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 
   return (
-    <div>
-      <h2>Signup</h2>
+    <div className="signupFrm">
       {/* Conditional output? */}
-      <form onSubmit={(e) => handleSignUp(e, email, password)}>
-        <br />
-        <label>Name:</label> <br />
-        <input
-          name="name"
-          type="name"
-          onChange={(e) => setName(e.target.value)}
-          value={name}
-          placeholder="enter name"
-        />
-        <br />
-        <label>Email:</label> <br />
-        <input
-          name="email"
-          type="email"
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-          placeholder="enter email"
-        />
-        <br />
-        <label>Password:</label> <br />
-        <input
-          name="password"
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-          placeholder="enter password"
-        />
-        <br />
-        <Link to="/">
-          <input type="submit" value="Sign up" />
-        </Link>
+      <form onSubmit={(e) => handleSignUp(e, email, password)} className="form">
+        <h2 className="title">Signup</h2>
+        <div className="inputContainer">
+          <input
+            name="name"
+            type="name"
+            onChange={(e) => setName(e.target.value)}
+            value={name}
+            className="input"
+          />
+          <label className="label">Name:</label>
+        </div>
+        <div className="inputContainer">
+          <input
+            name="email"
+            type="email"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            className="input"
+          />
+          <label className="label">Email:</label>
+        </div>
+        <div className="inputContainer">
+          <input
+            name="password"
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            className="input"
+          />
+          <label className="label">Password:</label>
+        </div>
+        <input type="submit" value="Sign up" className="submitBtn" />
       </form>
     </div>
   );

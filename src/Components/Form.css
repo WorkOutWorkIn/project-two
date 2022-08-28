@@ -1,0 +1,50 @@
+#pardot-form select {
+  background: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="red"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>')
+    96% 40% no-repeat transparent;
+  background-color: white;
+  border: solid 1px #e2e2e2;
+  font-size: 15px;
+  color: #757575;
+
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 100%;
+  font-family: "Rubik", sans-serif;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  -webkit-appearance: none; /* Safari and Chrome */
+}
+
+label {
+  padding: 10px;
+}
+
+input[type="file"]::file-selector-button {
+  font-size: 1.25em;
+  font-weight: 700;
+  color: white;
+  background-color: #6899b4;
+  display: inline-block;
+}
+
+.uploadbtn {
+  font-size: 1.25em;
+  font-weight: 500;
+  color: white;
+  background-color: #6899b4;
+  display: inline-block;
+}
+
+.inputfile + label {
+  cursor: pointer; /* "hand" cursor */
+}
+
+#pardot-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
