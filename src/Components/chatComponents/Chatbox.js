@@ -17,9 +17,9 @@ export default function Chatbox(props) {
 
 
   useEffect(() => {
-    getMessages()
+    getMessages();
     if (currentUser.uid) {
-      getCurrentUserDetails()
+      getCurrentUserDetails();
     }
   }, [currentUser])
 
@@ -34,10 +34,16 @@ export default function Chatbox(props) {
   }
 
   async function getCurrentUserDetails() {
-    const docRef = doc(database, "users", currentUser.uid, "profile", `${currentUser.uid}_profile`);
+    const docRef = doc(
+      database,
+      "users",
+      currentUser.uid,
+      "profile",
+      `${currentUser.uid}_profile`
+    );
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      setCurrentUserDetails(docSnap.data())
+      setCurrentUserDetails(docSnap.data());
     } else {
       // doc.data() will be undefined in this case
       console.log("No such document!");
@@ -47,7 +53,7 @@ export default function Chatbox(props) {
 
   //submitbutton
   function handleSubmit() {
-    submitMessage()
+    submitMessage();
   }
 
   async function submitMessage() {
@@ -94,34 +100,36 @@ export default function Chatbox(props) {
     <div className="chatbox flex center">
       <div className="chatbox__header flex left">
         {/* templated message, taking in other user's displayName */}
-        <p>It's a match! You and {props.otherUserInfo.name} like each other!<br />
-          Get to know each other and if sparks fly, take the conversation offline to meet up in person.<br />
-          This chat closes automatically after 7 days of inactivity</p>
+        <p>
+          It's a match! You and {props.otherUserInfo.name} like each other!
+          <br />
+          Get to know each other and if sparks fly, take the conversation
+          offline to meet up in person.
+          <br />
+          This chat closes automatically after 7 days of inactivity
+        </p>
       </div>
-
 
       {/* random fact about user plus other user */}
       <div className="chatbox__other flex">
-        <div>Here's a fun fact about {props.otherUserInfo.name}:
-          <div className="flex left">
-            {props.otherUserInfo.funfact}
-          </div>
+        <div>
+          Here's a fun fact about {props.otherUserInfo.name}:
+          <div className="flex left">{props.otherUserInfo.funfact}</div>
         </div>
       </div>
 
       <div className="chatbox__main flex right">
-        <div>We shared your fun fact to {props.otherUserInfo.name}:
-          <div className="flex right">
-            {currentUserDetails.funfact}
-          </div>
+        <div>
+          We shared your fun fact to {props.otherUserInfo.name}:
+          <div className="flex right">{currentUserDetails.funfact}</div>
         </div>
       </div>
 
       <div className="chatbox__display flex">
-        {messages.map(message =>
+        {messages.map((message) => (
           //each message
           <div key={message.id}>
-            {message.data.senderID === currentUser.uid ?
+            {message.data.senderID === currentUser.uid ? (
               //current user's messages
               <div className="flex right">
                 {message.data.name}: {message.data.message}{currentUserDetails.image[0]}{message.data.media !== "" ? <img src={message.data.media} alt="imageupload" /> : null}

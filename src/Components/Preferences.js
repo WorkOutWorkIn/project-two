@@ -1,6 +1,7 @@
 import { addDoc, collection, doc, updateDoc, setDoc } from "firebase/firestore";
 import React, { useState, useEffect } from "react";
 import { database } from "../Db/Firebase";
+import "./Form.css";
 
 export default function Preferences(props) {
   //create state for all options
@@ -63,20 +64,9 @@ export default function Preferences(props) {
   //transfer form data into realtime DB
   //Ensure routing of the file is right
   return (
-    <div>
-      <h1>Preferences Page</h1>
+    <div id="pardot-form">
       <form onSubmit={handleSubmit}>
-        {/* <fieldset>
-          <label>
-            <p>Name</p>
-            <input
-              name="name"
-              value={name}
-              placeholder="How would you like to be address"
-              onChange={(e) => setName(e.target.value)}
-            />
-          </label>
-        </fieldset> */}
+        <h1>Preferences Page</h1>
         <fieldset>
           <label>
             <p>Gender</p>
@@ -90,8 +80,7 @@ export default function Preferences(props) {
               <option value="female">Female</option>
             </select>
           </label>
-        </fieldset>
-        <fieldset>
+
           <label>
             <p>Age Range</p>
             <select
@@ -107,8 +96,7 @@ export default function Preferences(props) {
               <option value="56andAbove">56 and above</option>
             </select>
           </label>
-        </fieldset>
-        <fieldset>
+
           <label>
             <p>Smoking Habits</p>
             <select
@@ -121,8 +109,7 @@ export default function Preferences(props) {
               <option value="smoker">Smoker</option>
             </select>
           </label>
-        </fieldset>
-        <fieldset>
+
           <label>
             <p>Height</p>
             <select
@@ -137,8 +124,7 @@ export default function Preferences(props) {
               <option value="181andAbove">181cm and above</option>
             </select>
           </label>
-        </fieldset>
-        <fieldset>
+
           <label>
             <p>Religion</p>
             <select
@@ -154,8 +140,7 @@ export default function Preferences(props) {
               <option value="sikhism">Sikhism</option>
             </select>
           </label>
-        </fieldset>
-        <fieldset>
+
           <label>
             <p>Location</p>
             <select
@@ -174,9 +159,8 @@ export default function Preferences(props) {
               <option value="west">West</option>
             </select>
           </label>
+          <input type="submit" value="Submit" />
         </fieldset>
-
-        <input type="submit" value="Submit" />
       </form>
     </div>
   );
