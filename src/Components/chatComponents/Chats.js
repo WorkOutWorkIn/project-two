@@ -1,30 +1,28 @@
 import React from "react";
 import { useState, useEffect, useContext } from "react";
 import { database } from "../../Db/Firebase";
-import {
-  collection,
-  query,
-  getDocs,
-  doc,
-  getDoc,
-  where,
-} from "firebase/firestore";
-import UserDetails from "./UserDetails";
-import { useAuth } from "../AuthContext";
-import "./Chats.css";
+import { collection, query, getDocs, doc, getDoc, where } from "firebase/firestore"
+import UserDetails from "./UserDetails"
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import './Chats.css'
+import { Link, Route, Routes } from "react-router-dom";
+import { useAuth } from '../AuthContext'
+import Chatbox from "./Chatbox";
 
-export default function ChatsOverview(props) {
-  // const user = useContext(UserContext);
-  // setCurrentUser(user);
+
+
+export default function Chats(props) {
+
+  const [currentUser, setCurrentUser] = useState({})
   const { user } = useAuth();
-  const [currentUser, setCurrentUser] = useState({});
-  const [chats, setChats] = useState([]);
-  const [userIDs, setUserIDs] = useState([]);
-  const [otherUsersInfo, setOtherUsersInfo] = useState([]);
-  const [finalChatsInfo, setFinalChatsInfo] = useState([]);
+  const [chats, setChats] = useState([])
+  const [userIDs, setUserIDs] = useState([])
+  const [otherUsersInfo, setOtherUsersInfo] = useState([])
+  const [finalChatsInfo, setFinalChatsInfo] = useState([])
 
-  // const { user } = useAuth();
-  // setCurrentUser(user);
+  useEffect(() => {
+    setCurrentUser(user);
+  }, [])
 
   useEffect(() => {
     if (currentUser.uid) {
@@ -33,10 +31,7 @@ export default function ChatsOverview(props) {
   }, [currentUser]);
 
   async function getChatsAndOtherUserID() {
-    const q = query(
-      collection(database, "matches"),
-      where("users", "array-contains", `${currentUser.uid}`)
-    );
+    const q = query(collection(database, "matches"), where("users", "array-contains", `${currentUser.uid}`));
     const querySnapshot = await getDocs(q);
     let chatIDs = [];
     let userIDs = [];
@@ -52,6 +47,7 @@ export default function ChatsOverview(props) {
     setChats(chatIDs);
   }
 
+
   useEffect(() => {
     if (chats.length > 0) {
       loopThroughUserIDs();
@@ -65,7 +61,7 @@ export default function ChatsOverview(props) {
   }
 
   async function getaSingleProfile(ID) {
-    const docRef = doc(database, "users", ID, "profile", `${ID}_profile`);
+    const docRef = doc(database, "userstest2", ID, "profile", `${ID}_profile`);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       setOtherUsersInfo((arr) => [...arr, docSnap.data()]);
@@ -99,10 +95,11 @@ export default function ChatsOverview(props) {
   }, [finalChatsInfo]);
 
   return (
-    <div className="chatContainer flex_center">
-      {finalChatsInfo !== [] && finalChatsInfo.length >= 1 ? (
-        <UserDetails finalChatsInfo={finalChatsInfo} />
-      ) : null}
+    <div>
+      <div>
+        {finalChatsInfo !== [] && finalChatsInfo.length >= 1 ? <UserDetails finalChatsInfo={finalChatsInfo} /> : null}
+      </div>
     </div>
-  );
+
+  )
 }
