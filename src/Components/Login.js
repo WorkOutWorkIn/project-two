@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { auth } from "../Db/Firebase";
 import {
-  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./Registration.css";
+import { useAuth } from "./AuthContext";
 
 export default function Login(props) {
   const location = useLocation();
@@ -15,20 +15,32 @@ export default function Login(props) {
   console.log(data, "data");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user, setUser] = useState("");
 
-  const handleLogin = (e, email, password) => {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  async function handleLogin(e) {
     e.preventDefault();
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        props.updateUser(userCredential.user);
 
-        console.log("Signed in! Welcome!", userCredential.user);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+    try {
+      await login(email, password);
+    } catch {
+      console.log("Failed to login");
+    }
+  }
+
+  // const handleLogin = (e, email, password) => {
+  //   e.preventDefault();
+  //   signInWithEmailAndPassword(auth, email, password)
+  //     .then((userCredential) => {
+  //       props.updateUser(userCredential.user);
+
+  //       console.log("Signed in! Welcome!", userCredential.user);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 
   // const signout = (e) => {
   //   e.preventDefault();

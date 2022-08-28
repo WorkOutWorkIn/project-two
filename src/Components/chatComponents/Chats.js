@@ -1,100 +1,108 @@
 import React from "react";
-import { useState, useEffect, useContext } from "react"
+import { useState, useEffect, useContext } from "react";
 import { database } from "../../Db/Firebase";
-import { collection, query, getDocs, doc, getDoc, where } from "firebase/firestore"
-import UserDetails from "./UserDetails"
-import { UserContext } from "../../App";
-import './Chats.css'
+import {
+  collection,
+  query,
+  getDocs,
+  doc,
+  getDoc,
+  where,
+} from "firebase/firestore";
+import UserDetails from "./UserDetails";
+import { useAuth } from "../AuthContext";
+import "./Chats.css";
 
 export default function ChatsOverview(props) {
+  // const user = useContext(UserContext);
+  // setCurrentUser(user);
+  const { user } = useAuth();
+  const [currentUser, setCurrentUser] = useState({});
+  const [chats, setChats] = useState([]);
+  const [userIDs, setUserIDs] = useState([]);
+  const [otherUsersInfo, setOtherUsersInfo] = useState([]);
+  const [finalChatsInfo, setFinalChatsInfo] = useState([]);
 
-  const user = useContext(UserContext);
-  setCurrentUser(user)
-
-  const [currentUser, setCurrentUser] = useState({})
-  const [chats, setChats] = useState([])
-  const [userIDs, setUserIDs] = useState([])
-  const [otherUsersInfo, setOtherUsersInfo] = useState([])
-  const [finalChatsInfo, setFinalChatsInfo] = useState([])
+  // const { user } = useAuth();
+  // setCurrentUser(user);
 
   useEffect(() => {
     if (currentUser.uid) {
-      getChatsAndOtherUserID()
+      getChatsAndOtherUserID();
     }
-  }, [currentUser])
+  }, [currentUser]);
 
   async function getChatsAndOtherUserID() {
-    const q = query(collection(database, "matches"), where("users", "array-contains", `${currentUser.uid}`));
+    const q = query(
+      collection(database, "matches"),
+      where("users", "array-contains", `${currentUser.uid}`)
+    );
     const querySnapshot = await getDocs(q);
-    let chatIDs = []
-    let userIDs = []
+    let chatIDs = [];
+    let userIDs = [];
 
     querySnapshot.forEach((doc) => {
-      chatIDs = [...chatIDs, doc.id]
+      chatIDs = [...chatIDs, doc.id];
 
       if (doc.data().users[0] === currentUser.uid) {
-        userIDs = [...userIDs, doc.data().users[1]]
-      } else userIDs = [...userIDs, doc.data().users[0]]
-
+        userIDs = [...userIDs, doc.data().users[1]];
+      } else userIDs = [...userIDs, doc.data().users[0]];
     });
-    setUserIDs(userIDs)
-    setChats(chatIDs)
+    setUserIDs(userIDs);
+    setChats(chatIDs);
   }
 
   useEffect(() => {
     if (chats.length > 0) {
-      loopThroughUserIDs()
+      loopThroughUserIDs();
     }
-  }, [chats])
+  }, [chats]);
 
   function loopThroughUserIDs() {
-    userIDs.forEach(userID => {
-      getaSingleProfile(userID)
-    })
+    userIDs.forEach((userID) => {
+      getaSingleProfile(userID);
+    });
   }
 
   async function getaSingleProfile(ID) {
-    const docRef = doc(database, "users", ID, "profile", `${ID}_profile`,);
+    const docRef = doc(database, "users", ID, "profile", `${ID}_profile`);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      setOtherUsersInfo(arr => [...arr, docSnap.data()])
+      setOtherUsersInfo((arr) => [...arr, docSnap.data()]);
     } else {
       console.log("No such user!");
     }
   }
 
-
   useEffect(() => {
     if (otherUsersInfo.length === chats.length) {
-      getFinalChatsInfo()
-    } else { console.log("generating final chats info") }
-
-  }, [otherUsersInfo])
-
+      getFinalChatsInfo();
+    } else {
+      console.log("generating final chats info");
+    }
+  }, [otherUsersInfo]);
 
   function getFinalChatsInfo() {
-    let arr = []
+    let arr = [];
     for (let i = 0; i < chats.length; i++) {
-      arr = [...arr, { chatID: chats[i], usersInfo: otherUsersInfo[i] }]
+      arr = [...arr, { chatID: chats[i], usersInfo: otherUsersInfo[i] }];
     }
-    return setFinalChatsInfoFunction(arr)
+    return setFinalChatsInfoFunction(arr);
   }
 
   function setFinalChatsInfoFunction(arr) {
-    setFinalChatsInfo(arr)
+    setFinalChatsInfo(arr);
   }
 
-
-
   useEffect(() => {
-    props.setFinalChatsInfoTrigger(finalChatsInfo)
-  }, [finalChatsInfo])
-
+    props.setFinalChatsInfoTrigger(finalChatsInfo);
+  }, [finalChatsInfo]);
 
   return (
-
     <div className="chatContainer flex_center">
-      {finalChatsInfo !== [] && finalChatsInfo.length >= 1 ? <UserDetails finalChatsInfo={finalChatsInfo} /> : null}
+      {finalChatsInfo !== [] && finalChatsInfo.length >= 1 ? (
+        <UserDetails finalChatsInfo={finalChatsInfo} />
+      ) : null}
     </div>
-  )
+  );
 }

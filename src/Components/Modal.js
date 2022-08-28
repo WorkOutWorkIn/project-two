@@ -9,15 +9,7 @@ const Modal = (props) => {
   const user2 = props.user2;
   const modal = props.setModalOpen;
 
-  const [options, setOptions] = useState([
-    {
-      email: "allie@allie.com",
-      image:
-        "https://img.freepik.com/premium-vector/chicken-pixel-art-style_475147-1485.jpg",
-      name: "allie",
-    },
-    user2,
-  ]);
+  const [options, setOptions] = useState([props.user1, user2]);
 
   return (
     <div>
