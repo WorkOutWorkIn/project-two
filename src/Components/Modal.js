@@ -9,6 +9,7 @@ const Modal = (props) => {
   // if (!open) return null;
   const user2 = props.user2;
   const modal = props.setModalOpen;
+  console.log(user2, props.user1, "props in modal");
 
   const [options, setOptions] = useState([props.user1, user2]);
 

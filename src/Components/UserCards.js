@@ -96,7 +96,7 @@ const UserCards = (props) => {
   };
   const handleClickYes = (person, index) => {
     console.log("clicked heart");
-    console.log(options[index], person);
+    console.log(options[index], person, "options index");
     setCurrentOption(options[index]);
     setModalOpen(true);
 
@@ -117,9 +117,10 @@ const UserCards = (props) => {
     };
     // check if person uid exists in current user heart collection
     const checkUID = async () => {
+      console.log("in check uid");
       const queryRef = doc(
         db,
-        "userstest",
+        "userstest2",
         currentUser,
         "hearts",
         `${currentUser}_hearts`
@@ -127,7 +128,7 @@ const UserCards = (props) => {
 
       try {
         const q = getDoc(queryRef).then((snapshot) => {
-          console.log(snapshot.data().uid, person.uid);
+          console.log(snapshot.data().uid, person.uid, "in try");
           if (snapshot.data().uid !== person.uid) {
             generateArray();
             console.log("user does not exist in current hearts");
@@ -135,11 +136,6 @@ const UserCards = (props) => {
             console.log("uid already exists in current user hearts");
           }
         });
-
-        setOptions([
-          ...options.slice(0, index),
-          ...options.slice(index + 1, options.length),
-        ]);
       } catch (error) {
         console.log(error);
       }
@@ -147,9 +143,15 @@ const UserCards = (props) => {
     // if exists, auto-gen doc id, create user array with both uids
     const generateArray = async () => {
       const docRef = await addDoc(collection(db, "matches"), {
-        users: [currentUser, person.uid],
+        users: [currentUser.uid, person.uid],
       });
+      console.log("in generate array");
     };
+
+    setOptions([
+      ...options.slice(0, index),
+      ...options.slice(index + 1, options.length),
+    ]);
     addUIDToPerson();
   };
 
