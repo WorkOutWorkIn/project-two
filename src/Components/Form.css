@@ -19,6 +19,30 @@
   -webkit-appearance: none; /* Safari and Chrome */
 }
 
+label {
+  padding: 10px;
+}
+
+input[type="file"]::file-selector-button {
+  font-size: 1.25em;
+  font-weight: 700;
+  color: white;
+  background-color: #6899b4;
+  display: inline-block;
+}
+
+.uploadbtn {
+  font-size: 1.25em;
+  font-weight: 500;
+  color: white;
+  background-color: #6899b4;
+  display: inline-block;
+}
+
+.inputfile + label {
+  cursor: pointer; /* "hand" cursor */
+}
+
 #pardot-form {
   display: flex;
   justify-content: center;

@@ -156,7 +156,7 @@ export default function Profile(props) {
       <h1 style={{ align: "center" }}>Profile Setup</h1>
       <form onSubmit={handleSubmit} id="pardot-form">
         <fieldset>
-          <fieldset>
+          <label>
             <p>Upload your images here!</p>
             <input
               type="file"
@@ -169,9 +169,24 @@ export default function Profile(props) {
                 setFileInputValue(e.target.value);
               }}
             />
-            <br />
-            <button onClick={(e) => sendData(e)}>Send</button>
-          </fieldset>
+            <button onClick={(e) => sendData(e)} className="uploadbtn">
+              Upload!
+            </button>
+          </label>
+          {/* <input
+            type="file"
+            name="fileInputFile"
+            value={fileInputValue}
+            onChange={(e) => {
+              console.log(e.target.files[0].name);
+
+              setFileInputFile(e.target.files[0]);
+              setFileInputValue(e.target.value);
+            }}
+          />
+
+          <button onClick={(e) => sendData(e)}>Upload!</button> */}
+
           <label>
             <p>Name</p>
             <input

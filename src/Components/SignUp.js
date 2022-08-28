@@ -3,7 +3,7 @@ import { auth, database } from "../Db/Firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { setDoc, doc, Timestamp, collection, addDoc } from "firebase/firestore";
-import { UserContext } from "../App";
+import { useAuth } from "./AuthContext";
 import "./Registration.css";
 
 export default function Signup(props) {
@@ -12,9 +12,6 @@ export default function Signup(props) {
   const [name, setName] = useState("");
   //move to higher component
   // const [user, setUser] = useState("");
-  const context = useContext(UserContext);
-  const navigate = useNavigate();
-  // const colRef = collection(database, "user");
 
   const handleSignUp = async (event) => {
     event.preventDefault();

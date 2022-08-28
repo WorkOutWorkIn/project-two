@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../App.css";
+import "./ProfileCard.css";
 import { database } from "../Db/Firebase";
 import {
   doc,
@@ -16,7 +16,6 @@ import AliceCarousel from "react-alice-carousel";
 import { onAuthStateChanged } from "@firebase/auth";
 import { auth } from "../Db/Firebase";
 import "react-alice-carousel/lib/alice-carousel.css";
-import { left } from "@popperjs/core";
 
 export default function ProfilePage(props) {
   const [userName, SetUserName] = useState([]);
@@ -107,13 +106,6 @@ export default function ProfilePage(props) {
     paddingRight: 100,
   };
 
-  // profile info
-  // const displayName =
-
-  // const displayBio =
-
-  // const displayFunFact =
-
   return (
     <div>
       <h1>Profile Page</h1>
@@ -121,7 +113,7 @@ export default function ProfilePage(props) {
       {error}
       <div className="card">
         {/* carousell on top */}
-        {/* <button onClick={getUsersProfile}> get Data</button> */}
+
         <AliceCarousel
           mouseTracking
           // infinite
@@ -135,8 +127,7 @@ export default function ProfilePage(props) {
         <div className="container">
           {/* map information accordingly */}
 
-          <p>name:</p>
-          <p>{userName}</p>
+          <h2>{userName}</h2>
 
           <br />
           <p>bio:</p>

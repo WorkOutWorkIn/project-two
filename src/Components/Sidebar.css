@@ -4,6 +4,7 @@
   display: flex;
   justify-content: start;
   align-items: center;
+  /* background-color: transparent; */
 }
 
 .menu-bars {
