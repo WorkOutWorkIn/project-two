@@ -12,62 +12,69 @@ export default function Signup(props) {
   const [name, setName] = useState("");
   //move to higher component
   // const [user, setUser] = useState("");
+  const { signup } = useAuth();
 
-  const handleSignUp = async (event) => {
-    event.preventDefault();
+  function handleSignUp(e) {
+    e.preventDefault();
 
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(async (cred) => {
-        console.log("Signed Up", cred.user.uid);
-        // props.updateUser(cred);
-        // navigate("/");
-        return cred;
-      })
-      .then(async (cred) => {
-        console.log("sent to db");
-        console.log(cred);
-        try {
-          console.log(cred.user.uid, email, name);
-          console.log(database);
-          console.log("try", "catch");
+    signup(email, password);
+  }
 
-          await updateProfile(auth.currentUser, { displayName: name });
-          await setDoc(
-            doc(
-              database,
-              `userstest2`,
-              `${cred.user.uid}`,
-              "profile",
-              `${cred.user.uid}_profile`
-            ),
-            {
-              uid: cred.user.uid,
-              email: email,
-              name: name,
-              gender: "",
-              age: "",
-              smoker: "",
-              height: "",
-              religion: "",
-              location: "",
-              funfact: "",
-              bio: "",
-              promptfield: "",
-              image: [],
-            }
-          );
-        } catch (error) {
-          console.log(error);
-        }
-        setEmail("");
-        setPassword("");
-        setName("");
-      })
+  // const handleSignUp = async (event) => {
+  //   event.preventDefault();
 
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  //   createUserWithEmailAndPassword(auth, email, password)
+  //     .then(async (cred) => {
+  //       console.log("Signed Up", cred.user.uid);
+  //       // props.updateUser(cred);
+  //       // navigate("/");
+  //       return cred;
+  //     })
+  //     .then(async (cred) => {
+  //       console.log("sent to db");
+  //       console.log(cred);
+  //       try {
+  //         console.log(cred.user.uid, email, name);
+  //         console.log(database);
+  //         console.log("try", "catch");
+
+  //         await updateProfile(auth.currentUser, { displayName: name });
+  //         await setDoc(
+  //           doc(
+  //             database,
+  //             `userstest2`,
+  //             `${cred.user.uid}`,
+  //             "profile",
+  //             `${cred.user.uid}_profile`
+  //           ),
+  //           {
+  //             uid: cred.user.uid,
+  //             email: email,
+  //             name: name,
+  //             gender: "",
+  //             age: "",
+  //             smoker: "",
+  //             height: "",
+  //             religion: "",
+  //             location: "",
+  //             funfact: "",
+  //             bio: "",
+  //             promptfield: "",
+  //             image: [],
+  //           }
+  //         );
+  //       } catch (error) {
+  //         console.log(error);
+  //       }
+  //       setEmail("");
+  //       setPassword("");
+  //       setName("");
+  //     })
+
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 
   return (
     <div className="signupFrm">

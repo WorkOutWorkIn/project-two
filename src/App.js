@@ -17,6 +17,7 @@ export const UserContext = createContext();
 function App() {
   const [user, setUser] = useState("");
 
+  //pass to auth
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
