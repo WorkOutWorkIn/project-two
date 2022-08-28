@@ -96,15 +96,15 @@ const UserCards = (props) => {
   };
   const handleClickYes = (person, index) => {
     console.log("clicked heart");
-    console.log(options[index], person, "options index");
-    setCurrentOption(options[index]);
+    console.log(options[index], person, index, "options index");
+    setCurrentOption(person);
     setModalOpen(true);
 
     // add current user to person heart collection
     const addUIDToPerson = async () => {
       const queryRef = doc(
         db,
-        "userstest",
+        "userstest2",
         person.uid,
         "hearts",
         `${person.uid}_hearts`
@@ -113,7 +113,6 @@ const UserCards = (props) => {
       const q = await setDoc(queryRef, {
         uid: currentUser,
       });
-      checkUID();
     };
     // check if person uid exists in current user heart collection
     const checkUID = async () => {
@@ -121,24 +120,21 @@ const UserCards = (props) => {
       const queryRef = doc(
         db,
         "userstest2",
-        currentUser,
+        currentUser.uid,
         "hearts",
-        `${currentUser}_hearts`
+        `${currentUser.uid}_hearts`
       );
+      console.log(queryRef, "query ref in check uid");
 
-      try {
-        const q = getDoc(queryRef).then((snapshot) => {
-          console.log(snapshot.data().uid, person.uid, "in try");
-          if (snapshot.data().uid !== person.uid) {
-            generateArray();
-            console.log("user does not exist in current hearts");
-          } else {
-            console.log("uid already exists in current user hearts");
-          }
-        });
-      } catch (error) {
-        console.log(error);
-      }
+      const q = await getDoc(queryRef).then((snapshot) => {
+        console.log(snapshot.data().uid, person.uid, "in try");
+        if (snapshot.data().uid !== person.uid) {
+          generateArray();
+          console.log("user does not exist in current hearts");
+        } else {
+          console.log("uid already exists in current user hearts");
+        }
+      });
     };
     // if exists, auto-gen doc id, create user array with both uids
     const generateArray = async () => {
@@ -152,6 +148,7 @@ const UserCards = (props) => {
       ...options.slice(0, index),
       ...options.slice(index + 1, options.length),
     ]);
+    checkUID();
     addUIDToPerson();
   };
 

@@ -1,37 +1,47 @@
 import React from "react";
 import { useState, useEffect, useContext } from "react";
 import { database } from "../../Db/Firebase";
-import { collection, query, getDocs, doc, getDoc, where } from "firebase/firestore"
-import UserDetails from "./UserDetails"
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
-import './Chats.css'
+import {
+  collection,
+  query,
+  getDocs,
+  doc,
+  getDoc,
+  where,
+} from "firebase/firestore";
+import UserDetails from "./UserDetails";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import "./Chats.css";
 import { Link, Route, Routes } from "react-router-dom";
-import { useAuth } from '../AuthContext'
+import { useAuth } from "../AuthContext";
 import Chatbox from "./Chatbox";
 
-
-
 export default function Chats(props) {
+  console.log("in chats");
 
-  const [currentUser, setCurrentUser] = useState({})
+  const [currentUser, setCurrentUser] = useState({});
   const { user } = useAuth();
-  const [chats, setChats] = useState([])
-  const [userIDs, setUserIDs] = useState([])
-  const [otherUsersInfo, setOtherUsersInfo] = useState([])
-  const [finalChatsInfo, setFinalChatsInfo] = useState([])
+  const [chats, setChats] = useState([]);
+  const [userIDs, setUserIDs] = useState([]);
+  const [otherUsersInfo, setOtherUsersInfo] = useState([]);
+  const [finalChatsInfo, setFinalChatsInfo] = useState([]);
 
   useEffect(() => {
     setCurrentUser(user);
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (currentUser.uid) {
       getChatsAndOtherUserID();
     }
+    console.log(currentUser.uid, "current user in 2nd use effect");
   }, [currentUser]);
 
   async function getChatsAndOtherUserID() {
-    const q = query(collection(database, "matches"), where("users", "array-contains", `${currentUser.uid}`));
+    const q = query(
+      collection(database, "matches"),
+      where("users", "array-contains", `${currentUser.uid}`)
+    );
     const querySnapshot = await getDocs(q);
     let chatIDs = [];
     let userIDs = [];
@@ -47,11 +57,11 @@ export default function Chats(props) {
     setChats(chatIDs);
   }
 
-
   useEffect(() => {
     if (chats.length > 0) {
       loopThroughUserIDs();
     }
+    console.log(chats, "chats use effect");
   }, [chats]);
 
   function loopThroughUserIDs() {
@@ -97,9 +107,10 @@ export default function Chats(props) {
   return (
     <div>
       <div>
-        {finalChatsInfo !== [] && finalChatsInfo.length >= 1 ? <UserDetails finalChatsInfo={finalChatsInfo} /> : null}
+        {finalChatsInfo !== [] && finalChatsInfo.length >= 1 ? (
+          <UserDetails finalChatsInfo={finalChatsInfo} />
+        ) : null}
       </div>
     </div>
-
-  )
+  );
 }
