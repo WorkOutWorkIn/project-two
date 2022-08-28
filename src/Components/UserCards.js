@@ -152,28 +152,27 @@ const UserCards = (props) => {
         </div>
       ) : null}
 
-        {options.map((person, index) => (
-          <div className="swipe" key={person.name}>
-            <div
-              className="card"
-              style={{ backgroundImage: `url(${person.image})` }}
-            >
-              <h3>{person.name}</h3>
-            </div>
-            <div className="buttons">
-              <button
-                className="x-button"
-                onClick={() => handleClickX(person, index)}
-              />
-
-              <button
-                className="heart-button"
-                onClick={() => handleClickYes(person, index)}
-              />
-            </div>
+      {options.map((person, index) => (
+        <div className="swipe" key={person.name}>
+          <div
+            className="card"
+            style={{ backgroundImage: `url(${person.image})` }}
+          >
+            <h3>{person.name}</h3>
           </div>
-        ))}
-      </div>
+          <div className="buttons">
+            <button
+              className="x-button"
+              onClick={() => handleClickX(person, index)}
+            />
+
+            <button
+              className="heart-button"
+              onClick={() => handleClickYes(person, index)}
+            />
+          </div>
+        </div>
+      ))}
     </div>
   );
 };
