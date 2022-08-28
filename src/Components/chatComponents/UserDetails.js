@@ -1,19 +1,26 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import "./UserDetails.css"
 
 const UserDetails = (props) => {
+  const navigate = useNavigate()
   return (
-    <div>
+    <div className="chatContainer flex_center">
       {
         props.finalChatsInfo !== [] && props.finalChatsInfo.length >= 1 ?
           props.finalChatsInfo.map(chat =>
-            <div key={chat.chatID}>
-              {chat.chatID}<br />
-              {chat.usersInfo.uid}<br />
-              {chat.usersInfo.image[0]}<br />
-              {chat.usersInfo.funfact}       <br />
-              <button className="button"><Link to={`/${chat.chatID}`}>Go there</Link></button>
+            <div key={chat.chatID} className="individualChatContainer">
+              <div>
+                {chat.usersInfo.name}
+              </div>
+              <div>
+                <img src={chat.usersInfo.image[0]} alt={`${chat.usersInfo.name}'s 1st uploaded image`} />
+              </div>
+              <div>
+                <button className="button" onClick={() => navigate(`/${chat.chatID}`)}>Go there</button>
+              </div>
             </div>
+
           )
           : null
       }
@@ -23,4 +30,3 @@ const UserDetails = (props) => {
 };
 
 export default UserDetails;
-
