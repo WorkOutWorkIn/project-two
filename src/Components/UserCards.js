@@ -38,12 +38,28 @@ const UserCards = (props) => {
   const [contextstuff, setContextStuff] = useState(props.CurrentUser);
   const [options, setOptions] = useState([]);
   const [optionsQuery, setOptionsQuery] = useState([]);
-  const [currentUser, setCurrentPlayer] = useState(user.uid);
+  const [currentUser, setCurrentUser] = useState(user);
   const [modalOpen, setModalOpen] = useState(false);
   const [currentOption, setCurrentOption] = useState({});
   const [flyOff, setFlyOff] = useState(false);
 
   useEffect(() => {
+    const getCurrentUser = () => {
+      const queryRef = doc(
+        db,
+        "userstest2",
+        currentUser.uid,
+        "profile",
+        `${currentUser.uid}_profile`
+      );
+      const q = getDoc(queryRef).then((snapshot) => {
+        setCurrentUser(snapshot.data());
+        console.log(snapshot, snapshot.data(), "snapshot in get current user");
+      });
+      console.log(queryRef, "query path in get current user");
+    };
+    getCurrentUser();
+
     const getUsers = async () => {
       // 1) query userstest collection n save docs
       // 2) query in each doc -> subcollection -> profile
@@ -58,10 +74,7 @@ const UserCards = (props) => {
         });
 
         const filteredData = data.filter((obj) => {
-          return (
-            obj.uid !== currentUser &&
-            obj.uid !== "wYniduJymrYezQh4xBmLZozBEpC2"
-          );
+          return obj.uid !== currentUser.uid;
         });
         setOptions(...options, filteredData);
       } catch (error) {
@@ -147,7 +160,7 @@ const UserCards = (props) => {
           <Modal
             setModalOpen={setModalOpen}
             user2={currentOption}
-            user1={user}
+            user1={currentUser}
           />
         </div>
       ) : null}

@@ -48,7 +48,7 @@
 }
 
 .left-side {
-  background: url("./misc/heart-left2.png");
+  background: url("./misc/heart-left.png");
   height: 60vh;
   width: 15vw;
   background-size: contain;
@@ -60,7 +60,7 @@
 }
 
 .right-side {
-  background: url("./misc/heart-right3.png");
+  background: url("./misc/heart-right.png");
   height: 60vh;
   width: 15vw;
   background-size: contain;
@@ -86,4 +86,20 @@
   height: 40vh;
   width: 0.7em;
   background-color: black;
+}
+
+.button-text {
+  font-size: 30px;
+  font-family: nokiafont;
+  padding: 40px;
+}
+
+.right {
+  margin-left: -2em;
+  filter: drop-shadow(0px 3px 1px #222);
+}
+
+.left {
+  margin-right: -2em;
+  filter: drop-shadow(0px 3px 1px #222);
 }
