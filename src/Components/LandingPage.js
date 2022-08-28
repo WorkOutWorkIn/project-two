@@ -18,11 +18,15 @@ export default function MainPage() {
       <h1 style={{ color: "black" }}>MatchMage</h1>
       <div className="button-container">
         <Link to="/signup">
-          <button className="left-side" onSubmit={handleSubmit}></button>
+          <button className="left-side" onSubmit={handleSubmit}>
+            <div className="button-text left"> SIGN UP</div>
+          </button>
         </Link>
         <div className="cleavage-cover"></div>
         <Link to="/login">
-          <button className="right-side"></button>
+          <button className="right-side">
+            <div className="button-text right">SIGN IN</div>
+          </button>
         </Link>
       </div>
     </div>
