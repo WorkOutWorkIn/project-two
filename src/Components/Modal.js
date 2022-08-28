@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "./Modal.css";
-import lovePotion from "../misc/love-potion.png";
+import lovePotion from "../misc/love-potion2.png";
 import xIcon from "../misc/x-icon.png";
 import { Link } from "react-router-dom";
+import loveLetter from "../misc/message-letter.png";
 
 const Modal = (props) => {
   // if (!open) return null;
@@ -34,24 +35,28 @@ const Modal = (props) => {
                 className="image"
                 style={{ backgroundImage: `url(${options[0].image})` }}
               >
-                <h3>{options[0].name}</h3>
+                <div className="name-text">{options[0].name}</div>
               </div>
             </div>
-            <img src={lovePotion} className="love-potion" alt="love-potion" />
+            <div className="more-animation">
+              <img src={lovePotion} className="love-potion" alt="love-potion" />
+            </div>
 
             <div className="person" key={user2.name}>
               <div
                 className="image"
                 style={{ backgroundImage: `url(${user2.image})` }}
               >
-                <h3>{options[1].name}</h3>
+                <div className="name-text">{options[1].name}</div>
               </div>
             </div>
           </div>
           <div className="match-text-container">
             You've matched!
             <Link to="/profile">
-              <button>Would you like to send a message?</button>
+              <button className="message-button">
+                Drop a message? <img src={loveLetter} className="love-letter" />
+              </button>
             </Link>
           </div>
         </div>

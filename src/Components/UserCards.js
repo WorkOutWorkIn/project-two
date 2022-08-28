@@ -22,6 +22,7 @@ import Modal from "./Modal";
 import { UserContext } from "../App";
 import { useLocation } from "react-router-dom";
 import xIcon from "../misc/pixel-x.png";
+import Sidebar from "./Sidebar";
 
 const UserCards = () => {
   console.log("in usercards");
@@ -139,34 +140,37 @@ const UserCards = () => {
   };
 
   return (
-    <div className="swipe-container">
-      {modalOpen ? (
-        <div className="popup-container">
-          <Modal setModalOpen={setModalOpen} user2={currentOption} />
-        </div>
-      ) : null}
-
-      {options.map((person, index) => (
-        <div className="swipe" key={person.name}>
-          <div
-            className="card"
-            style={{ backgroundImage: `url(${person.image})` }}
-          >
-            <h3>{person.name}</h3>
+    <div className="App-header">
+      <Sidebar />
+      <div className="swipe-container">
+        {modalOpen ? (
+          <div className="popup-container">
+            <Modal setModalOpen={setModalOpen} user2={currentOption} />
           </div>
-          <div className="buttons">
-            <button
-              className="x-button"
-              onClick={() => handleClickX(person, index)}
-            />
+        ) : null}
 
-            <button
-              className="heart-button"
-              onClick={() => handleClickYes(person, index)}
-            />
+        {options.map((person, index) => (
+          <div className="swipe" key={person.name}>
+            <div
+              className="card"
+              style={{ backgroundImage: `url(${person.image})` }}
+            >
+              <h3>{person.name}</h3>
+            </div>
+            <div className="buttons">
+              <button
+                className="x-button"
+                onClick={() => handleClickX(person, index)}
+              />
+
+              <button
+                className="heart-button"
+                onClick={() => handleClickYes(person, index)}
+              />
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

@@ -1,0 +1,86 @@
+h1 {
+  text-shadow: 0 1px 0 #5186aa, 0 2px 0 #5186aa, 0 3px 0 #5186aa,
+    0 4px 0 #5186aa, 0 5px 0 #5186aa, 0 6px 0 #5186aa,
+    0 20px 30px rgba(0, 0, 0, 0.5);
+}
+
+.landing-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  height: 80vh;
+  font-family: nokiafont;
+  margin-top: 4em;
+}
+
+@keyframes float {
+  0% {
+    filter: drop-shadow(5px 15px 5px #222);
+    transform: translatey(0px);
+  }
+  50% {
+    filter: drop-shadow(5px 25px 5px #222);
+    transform: translatey(-20px);
+  }
+  100% {
+    filter: drop-shadow(5px 15px 5px #222);
+    transform: translatey(0px);
+  }
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  width: 50vw;
+  margin-top: 2em;
+  flex-direction: row;
+  padding: 0;
+  transition: 80ms;
+  filter: drop-shadow(5px 5px 5px #222);
+  transform: translatey(0px);
+  animation: float 6s ease-in-out infinite;
+}
+
+.left-side {
+  background: url("./misc/heart-left2.png");
+  height: 60vh;
+  width: 15vw;
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-top: -0.2em;
+  cursor: pointer;
+  background-position: right;
+  transform-origin: center right;
+}
+
+.right-side {
+  background: url("./misc/heart-right3.png");
+  height: 60vh;
+  width: 15vw;
+  background-size: contain;
+  background-repeat: no-repeat;
+  transform-origin: left 50%;
+  cursor: pointer;
+  background-position: left;
+  transform-origin: left;
+}
+
+.right-side:hover {
+  transform: translateX(0.7em) scale(1.1);
+}
+
+.left-side:hover {
+  transform: translateX(-0.7em) scale(1.1);
+}
+
+.cleavage-cover {
+  z-index: -1;
+  position: absolute;
+  margin-top: 5.4em;
+  height: 14.5em;
+  width: 0.7em;
+  background-color: black;
+}

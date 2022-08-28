@@ -1,12 +1,23 @@
+.navbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 .swipe-container {
   z-index: 0;
   height: 80vh;
   width: 70vw;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
+}
+
+h3 {
+  text-shadow: 0 0 5px #1f1f1f;
   font-size: smaller;
-  color: black;
+  color: white;
+  font-family: nokiafont;
 }
 
 .swipe {
@@ -44,9 +55,11 @@
   height: 2em;
   width: 6em;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 30px;
+  transition: 80ms;
+  cursor: pointer;
 }
 
 button {
@@ -54,11 +67,16 @@ button {
   background-size: cover;
   background-position: center;
   border: none;
-  transition: 80ms;
 }
 
-button:hover {
+.x-button:hover {
   transform: scale(1.3);
+  filter: drop-shadow(0 0 1em red);
+}
+
+.heart-button:hover {
+  transform: scale(1.3);
+  filter: drop-shadow(0 0 1em red);
 }
 
 .x-button {

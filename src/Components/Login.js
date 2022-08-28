@@ -6,7 +6,7 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 
 export default function Login(props) {
   const location = useLocation();
@@ -15,6 +15,7 @@ export default function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState("");
+  const navigate = useNavigate("/usercards");
 
   const handleLogin = (e, email, password) => {
     e.preventDefault();
