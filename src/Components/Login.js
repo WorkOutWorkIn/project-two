@@ -32,6 +32,7 @@ export default function Login(props) {
     } catch {
       console.log("Failed to login");
     }
+    navigate("/usercards");
   }
 
   return (
