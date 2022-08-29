@@ -165,7 +165,7 @@ const UserCards = (props) => {
       ) : null}
 
       {options.map((person, index) => (
-        <div className="swipe" key={person.name}>
+        <div className="swipe" key={person.uid}>
           <div
             className="card"
             style={{ backgroundImage: `url(${person.image})` }}
@@ -185,6 +185,8 @@ const UserCards = (props) => {
           </div>
         </div>
       ))}
+
+      <div className="end-array">that's all for now!</div>
     </div>
   );
 };

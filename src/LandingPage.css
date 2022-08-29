@@ -103,3 +103,7 @@
   margin-right: -2em;
   filter: drop-shadow(0px 3px 1px #222);
 }
+
+.end-array {
+  color: black;
+}
