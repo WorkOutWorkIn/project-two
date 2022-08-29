@@ -126,9 +126,9 @@ export default function ProfilePage(props) {
           // stagePadding={stagePadding}
           autoHeight
           items={items}
-          // responsive={responsive}
-          // disableSlideInfo
-          // controlsStrategy="alternate"
+        // responsive={responsive}
+        // disableSlideInfo
+        // controlsStrategy="alternate"
         />
         {/* </div> */}
         <div className="container">

@@ -139,6 +139,7 @@ export default function Profile(props) {
           <label>
             <p>Upload your images here!</p>
             <input
+              className="uploadImageButton"
               type="file"
               name="fileInputFile"
               value={fileInputValue}
@@ -159,12 +160,10 @@ export default function Profile(props) {
             value={fileInputValue}
             onChange={(e) => {
               console.log(e.target.files[0].name);
-
               setFileInputFile(e.target.files[0]);
               setFileInputValue(e.target.value);
             }}
           />
-
           <button onClick={(e) => sendData(e)}>Upload!</button> */}
 
           <label>
@@ -326,7 +325,6 @@ export default function Profile(props) {
           value={fileInputValue}
           onChange={(e) => {
             console.log(e.target.files[0].name);
-
             setFileInputFile(e.target.files[0]);
             setFileInputValue(e.target.value);
           }}

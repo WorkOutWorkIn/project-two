@@ -146,7 +146,7 @@ export default function Preferences(props) {
               <option value="west">West</option>
             </select>
           </label>
-          <input type="submit" value="Submit" />
+          <input className="preferencesInputSubmit" type="submit" value="Submit" />
         </fieldset>
       </form>
     </div>
