@@ -22,8 +22,7 @@ export function AuthProvider({ children }) {
     createUserWithEmailAndPassword(auth, email, password)
       .then(async (cred) => {
         console.log("Signed Up", cred.user.uid);
-        // props.updateUser(cred);
-        // navigate("/");
+
         return cred;
       })
       .then(async (cred) => {

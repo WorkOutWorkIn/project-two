@@ -38,7 +38,7 @@ export default function ProfilePage(props) {
     try {
       const userInformationListRef = doc(
         database,
-        `userstest2`,
+        `users`,
         `${user.uid}`,
         `profile`,
         `${user.uid}_profile`
@@ -131,11 +131,10 @@ export default function ProfilePage(props) {
         <div className="container">
           {/* map information accordingly */}
 
-          <h2>{userName}</h2>
-
+          <h2 className="anime">{userName}</h2>
           <br />
-          <p>bio:</p>
-          <p>{promptfield}</p>
+
+          <p>bio: {promptfield}</p>
           <p className="white-container">{bio}</p>
           <br />
           <p>FunFact:</p>
