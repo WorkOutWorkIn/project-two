@@ -71,7 +71,7 @@ export default function Chats(props) {
   }
 
   async function getaSingleProfile(ID) {
-    const docRef = doc(database, "userstest2", ID, "profile", `${ID}_profile`);
+    const docRef = doc(database, "users", ID, "profile", `${ID}_profile`);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       setOtherUsersInfo((arr) => [...arr, docSnap.data()]);
@@ -101,8 +101,13 @@ export default function Chats(props) {
   }
 
   useEffect(() => {
-    props.setFinalChatsInfoTrigger(finalChatsInfo);
-  }, [finalChatsInfo]);
+    if (finalChatsInfo.length === 0) {
+      console.log("chats info empty");
+    } else {
+      props.setFinalChatsInfoTrigger(finalChatsInfo);
+      console.log("chats info populated");
+    }
+  }, []);
 
   return (
     <div>
