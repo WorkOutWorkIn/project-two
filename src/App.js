@@ -13,7 +13,7 @@ import { auth } from "./Db/Firebase";
 import ProfilePage from "./Components/ProfilePage";
 import Chats from "./Components/chatComponents/Chats";
 import Chatbox from "./Components/chatComponents/Chatbox";
-// import { UserContext } from "./Components/UserContext";
+
 import Modal from "./Components/Modal";
 import UserCards from "./Components/UserCards";
 import { AuthProvider } from "./Components/AuthContext";
@@ -33,7 +33,7 @@ function App() {
 
   function setCurrentChatsInfo(e) {
     setCurrentChats(e);
-    console.log(currentChats)
+    console.log(currentChats);
   }
 
   return (
@@ -50,21 +50,31 @@ function App() {
             <Route path="/preferences" element={<Preferences />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/profilepage" element={<ProfilePage />} />
-            <Route path="/chats" element={<Chats setFinalChatsInfoTrigger={(e) => setCurrentChatsInfo(e)} />} />
+            <Route
+              path="/chats"
+              element={
+                <Chats
+                  setFinalChatsInfoTrigger={(e) => setCurrentChatsInfo(e)}
+                />
+              }
+            />
 
-            {currentChats.length > 0 ? currentChats.map((chat) => {
-              return <Route
-                key={chat.chatID}
-                path={`/${chat.chatID}`}
-                element={
-                  <Chatbox
-                    chatRoomID={chat.chatID}
-                    otherUserID={chat.usersInfo.uid}
-                    otherUserInfo={chat.usersInfo}
-                  />
-                }
-              />
-            })
+            {currentChats.length > 0
+              ? currentChats.map((chat) => {
+                  return (
+                    <Route
+                      key={chat.chatID}
+                      path={`/${chat.chatID}`}
+                      element={
+                        <Chatbox
+                          chatRoomID={chat.chatID}
+                          otherUserID={chat.usersInfo.uid}
+                          otherUserInfo={chat.usersInfo}
+                        />
+                      }
+                    />
+                  );
+                })
               : null}
           </Routes>
         </header>

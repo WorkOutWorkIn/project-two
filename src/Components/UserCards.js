@@ -15,6 +15,8 @@ import {
   DocumentSnapshot,
   setDoc,
   addDoc,
+  updateDoc,
+  arrayUnion,
 } from "firebase/firestore";
 import { database as db } from "../Db/Firebase";
 import "./UserCards.css";
@@ -91,14 +93,14 @@ const UserCards = (props) => {
     const addUIDToPerson = async () => {
       const queryRef = doc(
         db,
-        "userstest",
+        "users",
         person.uid,
         "hearts",
         `${person.uid}_hearts`
       );
 
-      const q = await setDoc(queryRef, {
-        uid: currentUser,
+      const q = await updateDoc(queryRef, {
+        uid: arrayUnion(currentUser.uid),
       });
       checkUID();
     };
@@ -106,7 +108,7 @@ const UserCards = (props) => {
     const checkUID = async () => {
       const queryRef = doc(
         db,
-        "userstest",
+        "users",
         currentUser,
         "hearts",
         `${currentUser}_hearts`

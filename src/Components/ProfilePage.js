@@ -116,17 +116,18 @@ export default function ProfilePage(props) {
       {error}
       <div className="card">
         {/* carousell on top */}
-
-        <AliceCarousel
-          mouseTracking
-          // infinite
-          // autoPlayInterval={2000}
-          // animationDuration={1500}
-          stagePadding={stagePadding}
-          items={items}
-          responsive={responsive}
-          disableSlideInfo
-        />
+        <div>
+          <AliceCarousel
+            mouseTracking
+            // infinite
+            // autoPlayInterval={2000}
+            // animationDuration={1500}
+            stagePadding={stagePadding}
+            items={items}
+            responsive={responsive}
+            disableSlideInfo
+          />
+        </div>
         <div className="container">
           {/* map information accordingly */}
 
@@ -135,11 +136,10 @@ export default function ProfilePage(props) {
           <br />
           <p>bio:</p>
           <p>{promptfield}</p>
-
-          <p>{bio}</p>
+          <p className="white-container">{bio}</p>
           <br />
           <p>FunFact:</p>
-          <p>{funfact}</p>
+          <p className="white-container">{funfact}</p>
         </div>
       </div>
     </div>

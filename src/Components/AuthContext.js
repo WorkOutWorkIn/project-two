@@ -2,11 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { auth, database } from "../Db/Firebase";
 import {
   createUserWithEmailAndPassword,
-  onAuthStateChanged,
   updateProfile,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { setDoc, doc, collection } from "firebase/firestore";
+import { setDoc, doc } from "firebase/firestore";
 
 const AuthContext = React.createContext();
 
@@ -16,9 +15,7 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+
   const [loading, setLoading] = useState(true);
 
   async function signup(name, email, password) {
@@ -63,7 +60,7 @@ export function AuthProvider({ children }) {
             }
           );
 
-          setDoc(
+          await setDoc(
             doc(
               database,
               `userstest2`,
@@ -72,15 +69,12 @@ export function AuthProvider({ children }) {
               `${cred.user.uid}_hearts`
             ),
             {
-              uid: "",
+              uid: [],
             }
           );
         } catch (error) {
           console.log(error);
         }
-        setEmail("");
-        setPassword("");
-        setName("");
       })
 
       .catch((error) => {
