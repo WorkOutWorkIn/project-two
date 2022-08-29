@@ -34,8 +34,12 @@ function App() {
   // }, [user]);
 
   function setCurrentChatsInfo(e) {
-    setCurrentChats(e);
-    console.log(currentChats);
+    if (e.length === 0) {
+      console.log("e is empty");
+    } else {
+      setCurrentChats(e);
+      console.log(currentChats, "e is not empty");
+    }
   }
 
   const SidebarLayout = () => (
