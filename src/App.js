@@ -1,6 +1,6 @@
 import "./App.css";
 import React from "react";
-import { Links, Link, Route, Routes } from "react-router-dom";
+import { Links, Link, Route, Routes, useNavigate } from "react-router-dom";
 import { createContext, useState, useEffect } from "react";
 import LandingPage from "./Components/LandingPage";
 import Preferences from "./Components/Preferences";
@@ -38,6 +38,7 @@ function App() {
       console.log("e is empty");
     } else {
       setCurrentChats(e);
+
       console.log(currentChats, "e is not empty");
     }
   }
@@ -71,6 +72,7 @@ function App() {
                   />
                 }
               />
+
               {currentChats.length > 0
                 ? currentChats.map((chat) => {
                     return (
