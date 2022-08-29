@@ -42,7 +42,7 @@ export default function Chatbox(props) {
   }
 
   async function getCurrentUserDetails() {
-    const docRef = doc(database, "userstest2", currentUser.uid, "profile", `${currentUser.uid}_profile`);
+    const docRef = doc(database, "users", currentUser.uid, "profile", `${currentUser.uid}_profile`);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       setCurrentUserDetails(docSnap.data())
@@ -68,6 +68,7 @@ export default function Chatbox(props) {
     });
     setCurrentMessage("")
     setImage(null)
+    setImageUrl("")
     imageInputRef.current.value = ""
     getMessages()
   }
@@ -100,61 +101,73 @@ export default function Chatbox(props) {
 
   return (
     <div className="chatbox flex center">
-      <div className="chatbox__header flex left">
+      <div className="chatbox__header flex center">
         {/* templated message, taking in other user's displayName */}
-        <p>It's a match! You and {props.otherUserInfo.name} like each other!<br />
-          Get to know each other and if sparks fly, take the conversation offline to meet up in person.<br />
-          This chat closes automatically after 7 days of inactivity</p>
+        <p className="nokiaFont">It's a match!</p>
+        <br /><br />
+        You and {props.otherUserInfo.name} like each other!<br />
+        Get to know each other and if sparks fly, <br />
+        take the conversation offline to meet up in person.
       </div>
 
 
       {/* random fact about user plus other user */}
       <div className="chatbox__other flex">
-        <div>Here's a fun fact about {props.otherUserInfo.name}:
-          <div className="flex left">
+        <div><p className="nokiaFont">Here's a fun fact about {props.otherUserInfo.name}:</p>
+          <div className="flex left-align">
             {props.otherUserInfo.funfact}
           </div>
         </div>
       </div>
 
-      <div className="chatbox__main flex right">
-        <div>We shared your fun fact to {props.otherUserInfo.name}:
-          <div className="flex right">
+      <div className="chatbox__main flex">
+        <div><p className="nokiaFont">We shared your fun fact to {props.otherUserInfo.name}:</p>
+          <div className="flex right-align">
             {currentUserDetails.funfact}
           </div>
         </div>
       </div>
 
-      <div className="chatbox__display flex">
+      <div className="chatbox__display" >
         {messages.map(message =>
           //each message
           <div key={message.id}>
             {message.data.senderID === currentUser.uid ?
               //current user's messages
-              <div className="flex right">
-                {message.data.name}: {message.data.message}{currentUserDetails.image[0]}{message.data.media !== "" ? <img src={message.data.media} alt="imageupload" /> : null}
+              <div className="mainUserContainer">
+                <div className="mainUser">{message.data.name} sent:<br /><br />{message.data.message}<br />
+                  <div className="mainImageContainer">{message.data.media !== "" ? <img src={message.data.media} alt="imageupload" className="imageInChat" /> : null}
+                  </div>
+                </div>
+              </div>
 
-              </div> :
+              :
               //other user's messages
-              <div className="flex left">
-                {props.otherUserInfo.image[0]}{message.data.name}: {message.data.message}{message.data.media !== "" ? <img src={message.data.media} alt="imageupload" /> : null}
+              <div className="otherUserContainer">
+                <div className="otherUser">{message.data.name} sent: <br /><br />{message.data.message}<br />
+                  <div className="otherImageContainer">{message.data.media !== "" ? <img src={message.data.media} alt="imageupload" className="imageInChat" /> : null}
+                  </div>
+                </div>
               </div>}
+
+
           </div>)}
       </div>
 
       <div className="chatbox__text">
-
         <div className="chatInput">
-
-          <input
-            value={currentMessage}
-            onChange={(e) => setCurrentMessage(e.target.value)}
-            placeholder={`type your message...`} />
-          <button type="submit" onClick={handleSubmit}
-            disabled={currentMessage === "" && !image}>send</button>
-
-          <input type="file" onChange={fileSelectedHandler} ref={imageInputRef} />
-
+          <div className="chatInputFieldContainer">
+            <textarea
+              className="chatInput__field"
+              value={currentMessage}
+              onChange={(e) => setCurrentMessage(e.target.value)}
+              placeholder={`type your message...`} />
+            <button type="submit" className="sendMessageButton" onClick={handleSubmit}
+              disabled={currentMessage === "" && !image}>send</button>
+          </div>
+          <div className="uploadImageContainer">
+            <input type="file" className="uploadImageSelector" onChange={fileSelectedHandler} ref={imageInputRef} />
+          </div>
         </div>
       </div>
       <br />

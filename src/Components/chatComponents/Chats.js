@@ -59,7 +59,7 @@ export default function Chats(props) {
   }
 
   async function getaSingleProfile(ID) {
-    const docRef = doc(database, "userstest2", ID, "profile", `${ID}_profile`);
+    const docRef = doc(database, "users", ID, "profile", `${ID}_profile`);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       setOtherUsersInfo((arr) => [...arr, docSnap.data()]);
@@ -95,11 +95,13 @@ export default function Chats(props) {
 
 
   return (
-    <div>
-
-      <div className="userDetailsContainer">
-        {finalChatsInfo !== [] && finalChatsInfo.length >= 1 ? <UserDetails finalChatsInfo={finalChatsInfo} /> : null}
+    <div className="chatsOverview_container">
+      <div className="chatsHeader_container">
+        <u>Your Chats</u>
+        <hr />
       </div>
+      {finalChatsInfo !== [] && finalChatsInfo.length >= 1 ? <UserDetails finalChatsInfo={finalChatsInfo} /> : null}
     </div>
   )
 }
+

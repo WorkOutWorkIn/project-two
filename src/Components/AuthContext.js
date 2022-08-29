@@ -41,7 +41,7 @@ export function AuthProvider({ children }) {
           await setDoc(
             doc(
               database,
-              `userstest2`,
+              `users`,
               `${cred.user.uid}`,
               "profile",
               `${cred.user.uid}_profile`
@@ -66,7 +66,7 @@ export function AuthProvider({ children }) {
           setDoc(
             doc(
               database,
-              `userstest2`,
+              `users`,
               `${cred.user.uid}`,
               `hearts`,
               `${cred.user.uid}_hearts`
