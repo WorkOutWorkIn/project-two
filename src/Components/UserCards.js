@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, arrayUnion } from "react";
 import {
   collectionGroup,
   query,
@@ -40,12 +40,28 @@ const UserCards = (props) => {
   const [contextstuff, setContextStuff] = useState(props.CurrentUser);
   const [options, setOptions] = useState([]);
   const [optionsQuery, setOptionsQuery] = useState([]);
-  const [currentUser, setCurrentPlayer] = useState(user);
+  const [currentUser, setCurrentUser] = useState(user);
   const [modalOpen, setModalOpen] = useState(false);
   const [currentOption, setCurrentOption] = useState({});
   const [flyOff, setFlyOff] = useState(false);
 
   useEffect(() => {
+    const getCurrentUser = () => {
+      const queryRef = doc(
+        db,
+        "users",
+        currentUser.uid,
+        "profile",
+        `${currentUser.uid}_profile`
+      );
+      const q = getDoc(queryRef).then((snapshot) => {
+        setCurrentUser(snapshot.data());
+        console.log(snapshot, snapshot.data(), "snapshot in get current user");
+      });
+      console.log(queryRef, "query path in get current user");
+    };
+    getCurrentUser();
+
     const getUsers = async () => {
       // 1) query userstest collection n save docs
       // 2) query in each doc -> subcollection -> profile
@@ -60,10 +76,7 @@ const UserCards = (props) => {
         });
 
         const filteredData = data.filter((obj) => {
-          return (
-            obj.uid !== currentUser &&
-            obj.uid !== "wYniduJymrYezQh4xBmLZozBEpC2"
-          );
+          return obj.uid !== currentUser.uid;
         });
         setOptions(...options, filteredData);
       } catch (error) {
@@ -85,8 +98,8 @@ const UserCards = (props) => {
   };
   const handleClickYes = (person, index) => {
     console.log("clicked heart");
-    console.log(options[index], person);
-    setCurrentOption(options[index]);
+    console.log(options[index], person, index, "options index");
+    setCurrentOption(person);
     setModalOpen(true);
 
     // add current user to person heart collection
@@ -99,46 +112,45 @@ const UserCards = (props) => {
         `${person.uid}_hearts`
       );
 
-      const q = await updateDoc(queryRef, {
-        uid: arrayUnion(currentUser.uid),
+      const q = await setDoc(queryRef, {
+        users: arrayUnion(currentUser.uid),
       });
-      checkUID();
     };
     // check if person uid exists in current user heart collection
     const checkUID = async () => {
+      console.log("in check uid");
       const queryRef = doc(
         db,
         "users",
-        currentUser,
+        currentUser.uid,
         "hearts",
-        `${currentUser}_hearts`
+        `${currentUser.uid}_hearts`
       );
+      console.log(queryRef, "query ref in check uid");
 
-      try {
-        const q = getDoc(queryRef).then((snapshot) => {
-          console.log(snapshot.data().uid, person.uid);
-          if (snapshot.data().uid !== person.uid) {
-            generateArray();
-            console.log("user does not exist in current hearts");
-          } else {
-            console.log("uid already exists in current user hearts");
-          }
-        });
-
-        setOptions([
-          ...options.slice(0, index),
-          ...options.slice(index + 1, options.length),
-        ]);
-      } catch (error) {
-        console.log(error);
-      }
+      const q = await getDoc(queryRef).then((snapshot) => {
+        console.log(snapshot.data().uid, person.uid, "in try");
+        if (snapshot.data().uid !== person.uid) {
+          generateArray();
+          console.log("user does not exist in current hearts");
+        } else {
+          console.log("uid already exists in current user hearts");
+        }
+      });
     };
     // if exists, auto-gen doc id, create user array with both uids
     const generateArray = async () => {
       const docRef = await addDoc(collection(db, "matches"), {
-        users: [currentUser, person.uid],
+        users: [currentUser.uid, person.uid],
       });
+      console.log("in generate array");
     };
+
+    setOptions([
+      ...options.slice(0, index),
+      ...options.slice(index + 1, options.length),
+    ]);
+    checkUID();
     addUIDToPerson();
   };
 
@@ -149,13 +161,13 @@ const UserCards = (props) => {
           <Modal
             setModalOpen={setModalOpen}
             user2={currentOption}
-            user1={user}
+            user1={currentUser}
           />
         </div>
       ) : null}
 
       {options.map((person, index) => (
-        <div className="swipe" key={person.name}>
+        <div className="swipe" key={person.uid}>
           <div
             className="card"
             style={{ backgroundImage: `url(${person.image})` }}
@@ -175,6 +187,8 @@ const UserCards = (props) => {
           </div>
         </div>
       ))}
+
+      <div className="end-array">that's all for now!</div>
     </div>
   );
 };

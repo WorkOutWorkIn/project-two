@@ -11,7 +11,7 @@
   flex-direction: column;
   height: 80vh;
   font-family: nokiafont;
-  margin-top: 4em;
+  margin-top: 1em;
   text-shadow: 0 1px 0 #5186aa, 0 2px 0 #5186aa, 0 3px 0 #5186aa,
     0 4px 0 #5186aa, 0 5px 0 #5186aa, 0 6px 0 #5186aa,
     0 20px 30px rgba(0, 0, 0, 0.5);
@@ -48,7 +48,7 @@
 }
 
 .left-side {
-  background: url("./misc/heart-left2.png");
+  background: url("./misc/heart-left.png");
   height: 60vh;
   width: 15vw;
   background-size: contain;
@@ -60,7 +60,7 @@
 }
 
 .right-side {
-  background: url("./misc/heart-right3.png");
+  background: url("./misc/heart-right.png");
   height: 60vh;
   width: 15vw;
   background-size: contain;
@@ -86,4 +86,20 @@
   height: 40vh;
   width: 0.7em;
   background-color: black;
+}
+
+.button-text {
+  font-size: 30px;
+  font-family: nokiafont;
+  padding: 40px;
+}
+
+.right {
+  margin-left: -2em;
+  filter: drop-shadow(0px 3px 1px #222);
+}
+
+.left {
+  margin-right: -2em;
+  filter: drop-shadow(0px 3px 1px #222);
 }

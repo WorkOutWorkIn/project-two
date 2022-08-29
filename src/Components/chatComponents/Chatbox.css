@@ -1,17 +1,18 @@
 * {
   margin: 0;
   padding: 0;
+  font-family: nokiafont;
 }
 
 .flex {
   display: flex;
 }
 
-.left {
+.lefty {
   justify-content: start;
 }
 
-.right {
+.righty {
   justify-content: end;
 }
 
