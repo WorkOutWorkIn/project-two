@@ -67,13 +67,7 @@ export default function Profile(props) {
     e.preventDefault();
 
     await updateDoc(
-      doc(
-        database,
-        `userstest2`,
-        `${user.uid}`,
-        "profile",
-        `${user.uid}_profile`
-      ),
+      doc(database, `users`, `${user.uid}`, "profile", `${user.uid}_profile`),
       {
         name: name,
         gender: gender,
@@ -110,7 +104,7 @@ export default function Profile(props) {
 
     const profileRef = doc(
       database,
-      `userstest2`,
+      `users`,
       `${user.uid}`,
       "profile",
       `${user.uid}_profile`
