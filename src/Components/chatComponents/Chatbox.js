@@ -57,7 +57,7 @@ export default function Chatbox(props) {
   async function getCurrentUserDetails() {
     const docRef = doc(
       database,
-      "userstest2",
+      "users",
       currentUser.uid,
       "profile",
       `${currentUser.uid}_profile`
