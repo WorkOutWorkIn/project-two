@@ -89,19 +89,20 @@ export default function ProfilePage(props) {
   const items = profileImage?.map((data) => {
     return (
       <div key={data}>
-        <img src={data} alt={data} height="400" style={{ marginBottom: 10 }} />
+        <img
+          src={data}
+          alt={data}
+          height="400"
+          style={{ marginBottom: 10, paddingLeft: "10px" }}
+        />
       </div>
     );
   });
 
   const responsive = {
-    0: {
-      items: 2,
-    },
+    0: { items: 1 },
 
-    1024: {
-      items: 4,
-    },
+    1024: { items: 4 },
   };
 
   const stagePadding = {
@@ -116,18 +117,20 @@ export default function ProfilePage(props) {
       {error}
       <div className="card">
         {/* carousell on top */}
-        <div>
-          <AliceCarousel
-            mouseTracking
-            // infinite
-            // autoPlayInterval={2000}
-            // animationDuration={1500}
-            stagePadding={stagePadding}
-            items={items}
-            responsive={responsive}
-            disableSlideInfo
-          />
-        </div>
+        {/* <div> */}
+        <AliceCarousel
+          mouseTracking
+          infinite
+          // autoPlayInterval={2000}
+          // animationDuration={1500}
+          // stagePadding={stagePadding}
+          autoHeight
+          items={items}
+          // responsive={responsive}
+          // disableSlideInfo
+          // controlsStrategy="alternate"
+        />
+        {/* </div> */}
         <div className="container">
           {/* map information accordingly */}
 
