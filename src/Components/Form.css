@@ -27,13 +27,24 @@ label {
   border: none;
 }
 
-input[type="file"]::file-selector-button {
+.uploadImageButton::file-selector-button {
   font-size: 1.25em;
   font-weight: 700;
   color: black;
   background-color: #6899b4;
   display: inline-block;
   font-family: nokiafont;
+  cursor: pointer;
+}
+
+.preferencesInputSubmit {
+  font-size: 1.25em;
+  font-weight: 700;
+  color: black;
+  background-color: #6899b4;
+  display: inline-block;
+  font-family: nokiafont;
+  cursor: pointer;
 }
 
 .uploadbtn {
