@@ -12,8 +12,8 @@ export default function Sidebar(props) {
   const [sidebar, setSidebar] = useState(false);
 
   const showSidebar = () => setSidebar(!sidebar);
-  const signOut = () => {
-    signOut(auth).then(() => {
+  const signOut = async () => {
+    await signOut(auth).then(() => {
       console.log("You have signed out!");
     });
   };

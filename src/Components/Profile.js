@@ -67,13 +67,7 @@ export default function Profile(props) {
     e.preventDefault();
 
     await updateDoc(
-      doc(
-        database,
-        `userstest2`,
-        `${user.uid}`,
-        "profile",
-        `${user.uid}_profile`
-      ),
+      doc(database, `users`, `${user.uid}`, "profile", `${user.uid}_profile`),
       {
         name: name,
         gender: gender,
@@ -110,7 +104,7 @@ export default function Profile(props) {
 
     const profileRef = doc(
       database,
-      `userstest2`,
+      `users`,
       `${user.uid}`,
       "profile",
       `${user.uid}_profile`
@@ -138,24 +132,9 @@ export default function Profile(props) {
   };
 
   return (
-    <div className="main-container">
-      {/* <form> */}
-      {/* <h1>Profile Setup</h1> */}
-      {/* <input
-          type="file"
-          name="fileInputFile"
-          value={fileInputValue}
-          onChange={(e) => {
-            console.log(e.target.files[0].name);
-
-            setFileInputFile(e.target.files[0]);
-            setFileInputValue(e.target.value);
-          }}
-        />
-        <button onClick={(e) => sendData(e)}>Send</button>
-      </form> */}
-      <h1 style={{ align: "center", color: "black" }}>Profile Setup</h1>
-      <form onSubmit={handleSubmit} id="pardot-form">
+    <div id="pardot-form">
+      <form onSubmit={handleSubmit}>
+        <h1>Profile Setup</h1>
         <fieldset>
           <label>
             <p>Upload your images here!</p>
@@ -180,18 +159,17 @@ export default function Profile(props) {
             value={fileInputValue}
             onChange={(e) => {
               console.log(e.target.files[0].name);
-
               setFileInputFile(e.target.files[0]);
               setFileInputValue(e.target.value);
             }}
           />
-
           <button onClick={(e) => sendData(e)}>Upload!</button> */}
 
           <label>
             <p>Name</p>
             <input
               name="name"
+              className="text-box"
               value={name}
               placeholder="How would you like to be address"
               onChange={(e) => setName(e.target.value)}
@@ -227,7 +205,7 @@ export default function Profile(props) {
             </select>
           </label>
 
-          <label>
+          {/* <label>
             <p>Smoking Habits</p>
             <select
               name="smoker"
@@ -238,7 +216,7 @@ export default function Profile(props) {
               <option value="non-smoker">Non-smoker</option>
               <option value="smoker">Smoker</option>
             </select>
-          </label>
+          </label> */}
 
           <label>
             <p>Height</p>
@@ -255,7 +233,7 @@ export default function Profile(props) {
             </select>
           </label>
 
-          <label>
+          {/* <label>
             <p>Religion</p>
             <select
               name="religion"
@@ -269,7 +247,7 @@ export default function Profile(props) {
               <option value="christianity">Christianity</option>
               <option value="sikhism">Sikhism</option>
             </select>
-          </label>
+          </label> */}
 
           <label>
             <p>Location</p>
@@ -293,11 +271,11 @@ export default function Profile(props) {
           <label>
             <p>A funfact about yourself!</p>
             <textarea
+              className="text-box"
               name="funfact"
               placeholder="tell us something interesting!"
               value={funfact}
               onChange={(e) => setFunFact(e.target.value)}
-              style={{ width: "95%" }}
             />
           </label>
 
@@ -328,16 +306,30 @@ export default function Profile(props) {
             </select>
             <br />
             <textarea
+              className="text-box"
               name="bio"
-              placeholder=""
+              placeholder="Share some thoughts!"
               value={bio}
               onChange={(e) => setBio(e.target.value)}
-              style={{ width: "95%" }}
             />
           </label>
           <br />
-          <input type="submit" value="Submit" />
+          <input type="submit" className="submit-button" value="Submit" />
         </fieldset>
+        {/* <form> */}
+        {/* <h1>Profile Setup</h1> */}
+        {/* <input
+          type="file"
+          name="fileInputFile"
+          value={fileInputValue}
+          onChange={(e) => {
+            console.log(e.target.files[0].name);
+            setFileInputFile(e.target.files[0]);
+            setFileInputValue(e.target.value);
+          }}
+        />
+        <button onClick={(e) => sendData(e)}>Send</button>
+      </form> */}
       </form>
     </div>
   );

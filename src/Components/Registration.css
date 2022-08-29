@@ -105,8 +105,16 @@
   z-index: 10;
   font-size: 14px;
   font-weight: 600;
+  /* background: linear-gradient(180deg, red 5%, #a4c4cd 45%); */
 }
 
 .input:focus {
   border: 2px solid #a4c4cd;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #749db8 inset !important;
 }

@@ -38,7 +38,7 @@ export default function ProfilePage(props) {
     try {
       const userInformationListRef = doc(
         database,
-        `userstest2`,
+        `users`,
         `${user.uid}`,
         `profile`,
         `${user.uid}_profile`
@@ -89,19 +89,20 @@ export default function ProfilePage(props) {
   const items = profileImage?.map((data) => {
     return (
       <div key={data}>
-        <img src={data} alt={data} height="400" style={{ marginBottom: 10 }} />
+        <img
+          src={data}
+          alt={data}
+          height="400"
+          style={{ marginBottom: 10, paddingLeft: "10px" }}
+        />
       </div>
     );
   });
 
   const responsive = {
-    0: {
-      items: 2,
-    },
+    0: { items: 1 },
 
-    1024: {
-      items: 4,
-    },
+    1024: { items: 4 },
   };
 
   const stagePadding = {
@@ -116,30 +117,31 @@ export default function ProfilePage(props) {
       {error}
       <div className="card">
         {/* carousell on top */}
-
+        {/* <div> */}
         <AliceCarousel
           mouseTracking
-          // infinite
+          infinite
           // autoPlayInterval={2000}
           // animationDuration={1500}
-          stagePadding={stagePadding}
+          // stagePadding={stagePadding}
+          autoHeight
           items={items}
-          responsive={responsive}
-          disableSlideInfo
+        // responsive={responsive}
+        // disableSlideInfo
+        // controlsStrategy="alternate"
         />
+        {/* </div> */}
         <div className="container">
           {/* map information accordingly */}
 
-          <h2>{userName}</h2>
-
+          <h2 className="anime">{userName}</h2>
           <br />
-          <p>bio:</p>
-          <p>{promptfield}</p>
 
-          <p>{bio}</p>
+          <p>bio: {promptfield}</p>
+          <p className="white-container">{bio}</p>
           <br />
           <p>FunFact:</p>
-          <p>{funfact}</p>
+          <p className="white-container">{funfact}</p>
         </div>
       </div>
     </div>

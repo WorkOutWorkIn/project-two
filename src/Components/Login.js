@@ -23,7 +23,7 @@ export default function Login(props) {
   async function handleLogin(e) {
     e.preventDefault();
 
-    if (email.length == 0 || password == 0) {
+    if (email.length === 0 || password === 0) {
       setError(true);
     }
 
