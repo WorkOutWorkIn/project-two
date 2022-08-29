@@ -13,15 +13,17 @@ import { auth } from "./Db/Firebase";
 import ProfilePage from "./Components/ProfilePage";
 import Chats from "./Components/chatComponents/Chats";
 import Chatbox from "./Components/chatComponents/Chatbox";
-// import { UserContext } from "./Components/UserContext";
+
 import Modal from "./Components/Modal";
 import UserCards from "./Components/UserCards";
 import { AuthProvider } from "./Components/AuthContext";
+import { Outlet } from "react-router-dom";
 
 function App() {
   // const [user, setUser] = useState("");
 
   const [currentChats, setCurrentChats] = useState([]);
+  const [renderSideBar, setRenderSideBar] = useState(false);
 
   // useEffect(() => {
   //   const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -33,39 +35,56 @@ function App() {
 
   function setCurrentChatsInfo(e) {
     setCurrentChats(e);
-    console.log(currentChats)
+    console.log(currentChats);
   }
+
+  const SidebarLayout = () => (
+    <>
+      <Sidebar />
+      <Outlet />
+    </>
+  );
 
   return (
     <AuthProvider>
       <div className="App">
-        <Sidebar />
-
         <header className="App-header">
+          {/* {showSideBar ? <Sidebar /> : ""} */}
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/usercards" element={<UserCards />} />
-            <Route path="/preferences" element={<Preferences />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/profilepage" element={<ProfilePage />} />
-            <Route path="/chats" element={<Chats setFinalChatsInfoTrigger={(e) => setCurrentChatsInfo(e)} />} />
-
-            {currentChats.length > 0 ? currentChats.map((chat) => {
-              return <Route
-                key={chat.chatID}
-                path={`/${chat.chatID}`}
+            <Route element={<SidebarLayout />}>
+              <Route path="/usercards" element={<UserCards />} />
+              <Route path="/preferences" element={<Preferences />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/profilepage" element={<ProfilePage />} />
+              <Route
+                path="/chats"
                 element={
-                  <Chatbox
-                    chatRoomID={chat.chatID}
-                    otherUserID={chat.usersInfo.uid}
-                    otherUserInfo={chat.usersInfo}
+                  <Chats
+                    setFinalChatsInfoTrigger={(e) => setCurrentChatsInfo(e)}
                   />
                 }
               />
-            })
-              : null}
+              {currentChats.length > 0
+                ? currentChats.map((chat) => {
+                    return (
+                      <Route
+                        key={chat.chatID}
+                        path={`/${chat.chatID}`}
+                        element={
+                          <Chatbox
+                            chatRoomID={chat.chatID}
+                            otherUserID={chat.usersInfo.uid}
+                            otherUserInfo={chat.usersInfo}
+                          />
+                        }
+                      />
+                    );
+                  })
+                : null}
+            </Route>
           </Routes>
         </header>
       </div>

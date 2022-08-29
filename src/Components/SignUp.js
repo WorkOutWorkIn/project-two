@@ -21,7 +21,7 @@ export default function Signup(props) {
   async function handleSignUp(e) {
     e.preventDefault();
 
-    if (name.length == 0 || email.length == 0 || password.length == 0) {
+    if (name.length === 0 || email.length === 0 || password.length === 0) {
       setError(true);
     }
 

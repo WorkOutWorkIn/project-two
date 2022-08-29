@@ -15,6 +15,8 @@ import {
   DocumentSnapshot,
   setDoc,
   addDoc,
+  updateDoc,
+  arrayUnion,
 } from "firebase/firestore";
 import { database as db } from "../Db/Firebase";
 import "./UserCards.css";
@@ -47,7 +49,7 @@ const UserCards = (props) => {
     const getCurrentUser = () => {
       const queryRef = doc(
         db,
-        "userstest2",
+        "users",
         currentUser.uid,
         "profile",
         `${currentUser.uid}_profile`
@@ -96,60 +98,67 @@ const UserCards = (props) => {
   };
   const handleClickYes = (person, index) => {
     console.log("clicked heart");
-    console.log(options[index], person);
-    setCurrentOption(options[index]);
-    setModalOpen(true);
+    console.log(options[index], person, index, "options index");
+    setCurrentOption(person);
 
     // add current user to person heart collection
     const addUIDToPerson = async () => {
       const queryRef = doc(
         db,
-        "userstest",
+        "users",
         person.uid,
         "hearts",
         `${person.uid}_hearts`
       );
 
-      const q = await setDoc(queryRef, {
-        uid: currentUser,
+      console.log(queryRef, "query ref in add uid", currentUser.uid);
+
+      const q = await updateDoc(queryRef, {
+        uid: arrayUnion(currentUser.uid),
       });
-      checkUID();
     };
     // check if person uid exists in current user heart collection
     const checkUID = async () => {
+      console.log("in check uid");
       const queryRef = doc(
         db,
-        "userstest",
-        currentUser,
+        "users",
+        currentUser.uid,
         "hearts",
-        `${currentUser}_hearts`
+        `${currentUser.uid}_hearts`
       );
+      console.log(queryRef, "query ref in check uid");
 
-      try {
-        const q = getDoc(queryRef).then((snapshot) => {
-          console.log(snapshot.data().uid, person.uid);
-          if (snapshot.data().uid !== person.uid) {
-            generateArray();
-            console.log("user does not exist in current hearts");
-          } else {
-            console.log("uid already exists in current user hearts");
-          }
-        });
-
-        setOptions([
-          ...options.slice(0, index),
-          ...options.slice(index + 1, options.length),
-        ]);
-      } catch (error) {
-        console.log(error);
-      }
+      const q = getDoc(queryRef).then((snapshot) => {
+        console.log(
+          snapshot.data().uid,
+          person.uid,
+          "in try",
+          snapshot.data(),
+          snapshot.data().uid.includes(person.uid)
+        );
+        if (snapshot.data().uid.includes(person.uid)) {
+          generateArray();
+          setModalOpen(true);
+          console.log("user does not exist in current hearts");
+        } else {
+          console.log("uid already exists in current user hearts");
+        }
+      });
     };
     // if exists, auto-gen doc id, create user array with both uids
     const generateArray = async () => {
       const docRef = await addDoc(collection(db, "matches"), {
-        users: [currentUser, person.uid],
+        users: [currentUser.uid, person.uid],
       });
+      console.log("in generate array");
     };
+
+    setOptions([
+      ...options.slice(0, index),
+      ...options.slice(index + 1, options.length),
+    ]);
+    checkUID();
     addUIDToPerson();
   };
 
@@ -166,7 +175,7 @@ const UserCards = (props) => {
       ) : null}
 
       {options.map((person, index) => (
-        <div className="swipe" key={person.name}>
+        <div className="swipe" key={person.uid}>
           <div
             className="card"
             style={{ backgroundImage: `url(${person.image})` }}
@@ -186,6 +195,8 @@ const UserCards = (props) => {
           </div>
         </div>
       ))}
+
+      <div className="end-array">that's all for now!</div>
     </div>
   );
 };

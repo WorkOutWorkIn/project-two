@@ -94,3 +94,9 @@ button {
   background-size: cover;
   background-position: center;
 }
+
+.end-array {
+  position: absolute;
+  color: black;
+  z-index: -1;
+}

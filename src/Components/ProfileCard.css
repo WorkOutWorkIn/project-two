@@ -3,12 +3,19 @@
   max-width: 800px;
   margin: auto;
   text-align: center;
+  padding: 12px 20px;
+  border-style: ridge #fff;
+  font-size: 24px;
 }
 
 .container {
-  border-top: black;
+  border-style: ridge;
 }
 
 .whole-container {
   font-family: nokiafont;
+}
+
+.white-container {
+  background-color: darkcyan;
 }

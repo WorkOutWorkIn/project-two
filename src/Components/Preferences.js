@@ -7,7 +7,7 @@ import { useLocation, Link, useNavigate } from "react-router-dom";
 
 export default function Preferences(props) {
   //create state for all options
-  // const [name, setName] = useState("");
+
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
   const [smoker, setSmoker] = useState("");
@@ -17,11 +17,6 @@ export default function Preferences(props) {
 
   const { user } = useAuth();
 
-  //change all value to state.
-  // enter type and name to all option/input value
-
-  // Handle Change for input fields
-
   // Handle Submit for data transfer to DB
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +25,7 @@ export default function Preferences(props) {
     await setDoc(
       doc(
         database,
-        `userstest2`,
+        `users`,
         `${user.uid}`,
         "preferences",
         `${user.uid}_preferences`
@@ -50,18 +45,6 @@ export default function Preferences(props) {
       .catch(function (err) {
         console.log(err);
       });
-
-    // const data = new FormData(e.currentTarget);
-    // console.log({
-    //   name: data.get("name"),
-    //   gender: data.get("gender"),
-    //   age: data.get("age"),
-    //   smoker: data.get("smoker"),
-    //   height: data.get("height"),
-    //   religion: data.get("religion"),
-    //   location: data.get("location"),
-    //   funfact: data.get("funfact"),
-    // });
 
     console.log(`Submitted`);
   };
