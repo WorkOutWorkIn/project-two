@@ -1,14 +1,17 @@
-.flex_center {
+.chatsOverview_container {
+  width: 70vw;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-content: center;
   align-items: center;
 }
 
-.button {
-  background-color: white;
-}
-
-h1 {
-  margin: 1rem;
+.chatsHeader_container {
+  margin: 1em 0 0 0;
+  padding: 1em 0 0 0;
   color: #000;
+  font-size: larger;
+  font-weight: 200;
+  font-family: nokiafont;
 }
