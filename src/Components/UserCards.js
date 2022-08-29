@@ -47,7 +47,7 @@ const UserCards = (props) => {
     const getCurrentUser = () => {
       const queryRef = doc(
         db,
-        "userstest2",
+        "users",
         currentUser.uid,
         "profile",
         `${currentUser.uid}_profile`
@@ -104,7 +104,7 @@ const UserCards = (props) => {
     const addUIDToPerson = async () => {
       const queryRef = doc(
         db,
-        "userstest2",
+        "users",
         person.uid,
         "hearts",
         `${person.uid}_hearts`
@@ -119,7 +119,7 @@ const UserCards = (props) => {
       console.log("in check uid");
       const queryRef = doc(
         db,
-        "userstest2",
+        "users",
         currentUser.uid,
         "hearts",
         `${currentUser.uid}_hearts`
