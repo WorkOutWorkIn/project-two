@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, arrayUnion } from "react";
 import {
   collectionGroup,
   query,
@@ -111,7 +111,7 @@ const UserCards = (props) => {
       );
 
       const q = await setDoc(queryRef, {
-        uid: currentUser,
+        users: arrayUnion(currentUser.uid),
       });
     };
     // check if person uid exists in current user heart collection

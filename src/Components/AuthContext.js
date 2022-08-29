@@ -72,7 +72,7 @@ export function AuthProvider({ children }) {
               `${cred.user.uid}_hearts`
             ),
             {
-              uid: "",
+              uid: [],
             }
           );
         } catch (error) {
