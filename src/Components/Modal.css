@@ -4,6 +4,8 @@
   color: black;
   font-family: nokiafont;
   filter: drop-shadow(0px 15px 15px #222);
+  display: flex;
+  flex-direction: column;
 }
 
 .option-container {
@@ -32,6 +34,7 @@
   margin: 2em;
   border-radius: 20px;
   display: flex;
+  filter: drop-shadow(0px 10px 5px #222);
 }
 
 .modal-container {
@@ -39,7 +42,7 @@
   display: flex;
   justify-content: center;
   background-color: #6899b4;
-
+  align-items: center;
   width: 50vw;
   height: 60vh;
   border-radius: 20px;
@@ -101,6 +104,8 @@
   flex-direction: column;
   border: 2em;
   margin-top: 2em;
+  text-shadow: 0 1px 0 #5186aa, 0 2px 0 #5186aa, 0 3px 0 #5186aa,
+    0 4px 0 #416c88;
 }
 
 .message-button {
@@ -118,17 +123,17 @@
 
 .name-text {
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-end;
+  justify-content: center;
+  align-items: flex-start;
   text-align: end;
   margin-left: 0.5em;
-  margin-bottom: 0;
+  margin-top: -1.5em;
   font-size: smaller;
 }
 
 .exit-button {
-  display: flex;
-  align-items: flex-start;
+  position: relative;
+  right: -27rem;
   height: 4em;
   width: 3em;
   background-color: transparent;
