@@ -146,20 +146,20 @@ function App() {
             />
             {currentChats.length > 0
               ? currentChats.map((chat) => {
-                return (
-                  <Route
-                    key={chat.chatID}
-                    path={`/${chat.chatID}`}
-                    element={
-                      <Chatbox
-                        chatRoomID={chat.chatID}
-                        otherUserID={chat.usersInfo.uid}
-                        otherUserInfo={chat.usersInfo}
-                      />
-                    }
-                  />
-                );
-              })
+                  return (
+                    <Route
+                      key={chat.chatID}
+                      path={`/${chat.chatID}`}
+                      element={
+                        <Chatbox
+                          chatRoomID={chat.chatID}
+                          otherUserID={chat.usersInfo.uid}
+                          otherUserInfo={chat.usersInfo}
+                        />
+                      }
+                    />
+                  );
+                })
               : null}
           </Routes>
         </header>
